@@ -1,0 +1,231 @@
+var_orig,label_orig,type_orig,var_new,type_new,label_new,keep
+interview__key,Interview key (identifier in XX-XX-XX-XX format),character,interview__key,character,Clé entretien,1
+interview__id,Unique 32-character long identifier of the interview,character,interview__id,character,Identifiant entretien,1
+s00q00,Pays,character,,,,0
+s00q01,Région,labelled,region,numeric,Région,1
+s00q02,Département,labelled,departement,numeric,Département,1
+s00q03,Commune,labelled,commune,numeric,Commune,1
+s00q04,Milieu de résidence,labelled,milieu,numeric,"Milieu de résidence (1=Urbain, 2=Rural)",1
+s00q05,Village/Secteur,character,,,,0
+dr,DR,character,dr,character,District de recensement,1
+s00q06,Numéro du ménage dans la DR,character,,,,0
+grappe,Grappe,numeric,grappe,numeric,Identifiant grappe,1
+num_menage,Numero ménage dans la concession,character,num_menage,numeric,Numéro du ménage dans la grappe,1
+consentement,consentement,labelled,,,,0
+menage,Menage,numeric,,,,0
+chef_menage,Nom du chef de,character,,,,0
+gps__Latitude,Coordonnées GPS: Latitude,numeric,latitude,numeric,Latitude GPS,1
+gps__Longitude,Coordonnées GPS: Longitude,numeric,longitude,numeric,Longitude GPS,1
+gps__Accuracy,Coordonnées GPS: Accuracy,numeric,,,,0
+gps__Altitude,Coordonnées GPS: Altitude,numeric,,,,0
+gps__Timestamp,Coordonnées GPS: Timestamp,character,,,,0
+localisation,Adresse (localisation) du ménage,character,,,,0
+s00q10,Résultat de l'interview,labelled,,,,0
+s00q11,0.11 . Motif,labelled,,,,0
+repondant,Prénoms et nom du répondant,character,,,,0
+lien_repondant,Lien de parenté du répondant avec le chef de ménage,labelled,,,,0
+lien_repondant_autre,Autre lien de parenté,character,,,,0
+s00q12,0.12 - Premier numéro de téléphone portable du chef de ménage,character,,,,0
+s00q12b,0.12b - Deuxième numéro de téléphone portable du chef de ménage,character,,,,0
+s00q13,0.13 - Nom d'un autre membre du ménage possédant un numéro de téléphone portable,character,,,,0
+s00q14,0.14 - Numéro de téléphone portable de cet autre membre du ménage,character,,,,0
+s00q15,0.15 - Nom d'un premier contact non membre du ménage possédant un numéro de télé,character,,,,0
+s00q16,0.16 - Numéro de téléphone portable de cette autre personne,character,,,,0
+s00q17,0.17 - Nom d'un second contact non membre du ménage possédant un numéro de télép,character,,,,0
+s00q18,0.18 - Numéro de téléphone portable de cette  autre personne,character,,,,0
+s00q19,00.19 Adresse email&nbsp;:,character,,,,0
+s00q20,00.20 Deuxième adresse email ou celle d'un proche&nbsp;:,character,,,,0
+s01aq01,1a.01 - Quel est le statut d'occupation du logement de votre ménage,labelled,statut_logement,numeric,Statut d'occupation du logement,1
+s01aq01_autre,autres évènements,character,,,,0
+s01aq02__1,"1a.02- Si propriétaire, comment avez-vous acquis votre maison (sources de financ",numeric,,,,0
+s01aq02__2,"1a.02- Si propriétaire, comment avez-vous acquis votre maison (sources de financ",numeric,,,,0
+s01aq02__3,"1a.02- Si propriétaire, comment avez-vous acquis votre maison (sources de financ",numeric,,,,0
+s01aq02__4,"1a.02- Si propriétaire, comment avez-vous acquis votre maison (sources de financ",numeric,,,,0
+s01aq02__96,"1a.02- Si propriétaire, comment avez-vous acquis votre maison (sources de financ",numeric,,,,0
+s01aq02_autre,autres évènements,character,,,,0
+s01aq03,1a.03 -Quelle est la source principale d’approvisionnement en eau de boisson de,labelled,source_eau,numeric,Source principale d'eau de boisson,1
+s01aq03_autre,autres évènements,character,,,,0
+s01aq04__1,1a.04 -	Quelles sont les sources d’énergie(mode d'éclairages) que vous utilisez,numeric,s01aq04__1,numeric,Choix multiple : s01aq04__1,1
+s01aq04__2,1a.04 -	Quelles sont les sources d’énergie(mode d'éclairages) que vous utilisez,numeric,s01aq04__2,numeric,Choix multiple : s01aq04__2,1
+s01aq04__3,1a.04 -	Quelles sont les sources d’énergie(mode d'éclairages) que vous utilisez,numeric,s01aq04__3,numeric,Choix multiple : s01aq04__3,1
+s01aq04__4,1a.04 -	Quelles sont les sources d’énergie(mode d'éclairages) que vous utilisez,numeric,s01aq04__4,numeric,Choix multiple : s01aq04__4,1
+s01aq04__5,1a.04 -	Quelles sont les sources d’énergie(mode d'éclairages) que vous utilisez,numeric,s01aq04__5,numeric,Choix multiple : s01aq04__5,1
+s01aq04__6,1a.04 -	Quelles sont les sources d’énergie(mode d'éclairages) que vous utilisez,numeric,s01aq04__6,numeric,Choix multiple : s01aq04__6,1
+s01aq04__7,1a.04 -	Quelles sont les sources d’énergie(mode d'éclairages) que vous utilisez,numeric,s01aq04__7,numeric,Choix multiple : s01aq04__7,1
+s01aq04__8,1a.04 -	Quelles sont les sources d’énergie(mode d'éclairages) que vous utilisez,numeric,s01aq04__8,numeric,Choix multiple : s01aq04__8,1
+s01aq04__9,1a.04 -	Quelles sont les sources d’énergie(mode d'éclairages) que vous utilisez,numeric,s01aq04__9,numeric,Choix multiple : s01aq04__9,1
+s01aq04__10,1a.04 -	Quelles sont les sources d’énergie(mode d'éclairages) que vous utilisez,numeric,s01aq04__10,numeric,Choix multiple : s01aq04__10,1
+s01aq04__96,1a.04 -	Quelles sont les sources d’énergie(mode d'éclairages) que vous utilisez,numeric,s01aq04__96,numeric,Choix multiple : s01aq04__96,1
+s01aq04_autre,Autre  principale source d'énergie d'éclairage,character,,,,0
+s01aq05__1,1a.05	Quelles sont les sources d’énergie pour la cuisson que vous utilisez ?:Ele,numeric,s01aq05__1,numeric,Choix multiple : s01aq05__1,1
+s01aq05__2,1a.05	Quelles sont les sources d’énergie pour la cuisson que vous utilisez ?:Éle,numeric,s01aq05__2,numeric,Choix multiple : s01aq05__2,1
+s01aq05__3,1a.05	Quelles sont les sources d’énergie pour la cuisson que vous utilisez ?:Pan,numeric,s01aq05__3,numeric,Choix multiple : s01aq05__3,1
+s01aq05__4,1a.05	Quelles sont les sources d’énergie pour la cuisson que vous utilisez ?:Gro,numeric,s01aq05__4,numeric,Choix multiple : s01aq05__4,1
+s01aq05__5,1a.05	Quelles sont les sources d’énergie pour la cuisson que vous utilisez ?:Éol,numeric,s01aq05__5,numeric,Choix multiple : s01aq05__5,1
+s01aq05__6,1a.05	Quelles sont les sources d’énergie pour la cuisson que vous utilisez ?:Boi,numeric,s01aq05__6,numeric,Choix multiple : s01aq05__6,1
+s01aq05__7,1a.05	Quelles sont les sources d’énergie pour la cuisson que vous utilisez ?:GAZ,numeric,s01aq05__7,numeric,Choix multiple : s01aq05__7,1
+s01aq05__8,1a.05	Quelles sont les sources d’énergie pour la cuisson que vous utilisez ?:Bio,numeric,s01aq05__8,numeric,Choix multiple : s01aq05__8,1
+s01aq05__96,1a.05	Quelles sont les sources d’énergie pour la cuisson que vous utilisez ?:Aut,numeric,s01aq05__96,numeric,Choix multiple : s01aq05__96,1
+s01aq05_autre,Autre principale source d'énergie pour la cuisson,character,,,,0
+s01aq06__1,1a.06 Quels sont les moyens de déplacement fonctionnels que dispose le ménage?:V,numeric,s01aq06__1,numeric,Choix multiple : s01aq06__1,1
+s01aq06__2,1a.06 Quels sont les moyens de déplacement fonctionnels que dispose le ménage?:M,numeric,s01aq06__2,numeric,Choix multiple : s01aq06__2,1
+s01aq06__3,1a.06 Quels sont les moyens de déplacement fonctionnels que dispose le ménage?:B,numeric,s01aq06__3,numeric,Choix multiple : s01aq06__3,1
+s01aq06__4,1a.06 Quels sont les moyens de déplacement fonctionnels que dispose le ménage?:C,numeric,s01aq06__4,numeric,Choix multiple : s01aq06__4,1
+s01aq06__5,1a.06 Quels sont les moyens de déplacement fonctionnels que dispose le ménage?:C,numeric,s01aq06__5,numeric,Choix multiple : s01aq06__5,1
+s01aq06__6,1a.06 Quels sont les moyens de déplacement fonctionnels que dispose le ménage?:P,numeric,s01aq06__6,numeric,Choix multiple : s01aq06__6,1
+s01aq06__7,1a.06 Quels sont les moyens de déplacement fonctionnels que dispose le ménage?:T,numeric,s01aq06__7,numeric,Choix multiple : s01aq06__7,1
+s01aq06__96,1a.06 Quels sont les moyens de déplacement fonctionnels que dispose le ménage?:A,numeric,s01aq06__96,numeric,Choix multiple : s01aq06__96,1
+s01aq06_autre,Autre principale moyen de déplacement,character,,,,0
+s01aq07__1,"1a.07 Quels sont les biens audiovisuels et de télécommunication 
+dont disposent",numeric,s01aq07__1,numeric,Choix multiple : s01aq07__1,1
+s01aq07__2,"1a.07 Quels sont les biens audiovisuels et de télécommunication 
+dont disposent",numeric,s01aq07__2,numeric,Choix multiple : s01aq07__2,1
+s01aq07__3,"1a.07 Quels sont les biens audiovisuels et de télécommunication 
+dont disposent",numeric,s01aq07__3,numeric,Choix multiple : s01aq07__3,1
+s01aq07__4,"1a.07 Quels sont les biens audiovisuels et de télécommunication 
+dont disposent",numeric,s01aq07__4,numeric,Choix multiple : s01aq07__4,1
+s01aq07__5,"1a.07 Quels sont les biens audiovisuels et de télécommunication 
+dont disposent",numeric,s01aq07__5,numeric,Choix multiple : s01aq07__5,1
+s01aq07__6,"1a.07 Quels sont les biens audiovisuels et de télécommunication 
+dont disposent",numeric,s01aq07__6,numeric,Choix multiple : s01aq07__6,1
+s01aq07__7,"1a.07 Quels sont les biens audiovisuels et de télécommunication 
+dont disposent",numeric,s01aq07__7,numeric,Choix multiple : s01aq07__7,1
+s01aq07__96,"1a.07 Quels sont les biens audiovisuels et de télécommunication 
+dont disposent",numeric,s01aq07__96,numeric,Choix multiple : s01aq07__96,1
+s01aq07_autre,Autre principale moyen de déplacement,character,,,,0
+s01aq08__1,1a.08 Quelles sont les  sources de revenus du ménage?:Revenus d'activités non sa,numeric,s01aq08__1,numeric,Choix multiple : s01aq08__1,1
+s01aq08__2,1a.08 Quelles sont les  sources de revenus du ménage?:Revenus d’une activité sal,numeric,s01aq08__2,numeric,Choix multiple : s01aq08__2,1
+s01aq08__3,1a.08 Quelles sont les  sources de revenus du ménage?:Revenus d’une autre activi,numeric,s01aq08__3,numeric,Choix multiple : s01aq08__3,1
+s01aq08__4,1a.08 Quelles sont les  sources de revenus du ménage?:Pension retraite,numeric,s01aq08__4,numeric,Choix multiple : s01aq08__4,1
+s01aq08__5,1a.08 Quelles sont les  sources de revenus du ménage?:Réception de transfert/don,numeric,s01aq08__5,numeric,Choix multiple : s01aq08__5,1
+s01aq08__96,1a.08 Quelles sont les  sources de revenus du ménage?:Autre (à préciser),numeric,s01aq08__96,numeric,Choix multiple : s01aq08__96,1
+s01aq08_autre,Autre principale moyen de déplacement,character,,,,0
+s01aq09,1a.09 Combien de personnes de votre ménage gagnent un revenu ?,numeric,nb_personnes_revenu,numeric,Nombre de personnes avec un revenu,1
+s01aq10,1a.10 Quelle est la fréquence du revenu du ménage y compris le  chef de ménage ?,labelled,,,,0
+s01aq10_autre,Autre principale moyen de déplacement,character,,,,0
+s01aq11,1a.11 Quel est le niveau du revenu mensuel du ménage ?,labelled,tranche_revenu_menage,numeric,Tranche de revenu mensuel du ménage,1
+NOM_PRENOMS__0,PRENOMS ET NOMS:0,character,,,,0
+NOM_PRENOMS__0c,PRENOMS ET NOMS:0c,numeric,,,,0
+NOM_PRENOMS__1,PRENOMS ET NOMS:1,character,,,,0
+NOM_PRENOMS__1c,PRENOMS ET NOMS:1c,numeric,,,,0
+NOM_PRENOMS__2,PRENOMS ET NOMS:2,character,,,,0
+NOM_PRENOMS__2c,PRENOMS ET NOMS:2c,numeric,,,,0
+NOM_PRENOMS__3,PRENOMS ET NOMS:3,character,,,,0
+NOM_PRENOMS__3c,PRENOMS ET NOMS:3c,numeric,,,,0
+NOM_PRENOMS__4,PRENOMS ET NOMS:4,character,,,,0
+NOM_PRENOMS__4c,PRENOMS ET NOMS:4c,numeric,,,,0
+NOM_PRENOMS__5,PRENOMS ET NOMS:5,character,,,,0
+NOM_PRENOMS__5c,PRENOMS ET NOMS:5c,numeric,,,,0
+NOM_PRENOMS__6,PRENOMS ET NOMS:6,character,,,,0
+NOM_PRENOMS__6c,PRENOMS ET NOMS:6c,numeric,,,,0
+NOM_PRENOMS__7,PRENOMS ET NOMS:7,character,,,,0
+NOM_PRENOMS__7c,PRENOMS ET NOMS:7c,numeric,,,,0
+NOM_PRENOMS__8,PRENOMS ET NOMS:8,character,,,,0
+NOM_PRENOMS__8c,PRENOMS ET NOMS:8c,numeric,,,,0
+NOM_PRENOMS__9,PRENOMS ET NOMS:9,character,,,,0
+NOM_PRENOMS__9c,PRENOMS ET NOMS:9c,numeric,,,,0
+NOM_PRENOMS__10,PRENOMS ET NOMS:10,character,,,,0
+NOM_PRENOMS__10c,PRENOMS ET NOMS:10c,numeric,,,,0
+NOM_PRENOMS__11,PRENOMS ET NOMS:11,character,,,,0
+NOM_PRENOMS__11c,PRENOMS ET NOMS:11c,numeric,,,,0
+NOM_PRENOMS__12,PRENOMS ET NOMS:12,character,,,,0
+NOM_PRENOMS__12c,PRENOMS ET NOMS:12c,numeric,,,,0
+NOM_PRENOMS__13,PRENOMS ET NOMS:13,character,,,,0
+NOM_PRENOMS__13c,PRENOMS ET NOMS:13c,numeric,,,,0
+NOM_PRENOMS__14,PRENOMS ET NOMS:14,character,,,,0
+NOM_PRENOMS__14c,PRENOMS ET NOMS:14c,numeric,,,,0
+NOM_PRENOMS__15,PRENOMS ET NOMS:15,character,,,,0
+NOM_PRENOMS__15c,PRENOMS ET NOMS:15c,numeric,,,,0
+NOM_PRENOMS__16,PRENOMS ET NOMS:16,character,,,,0
+NOM_PRENOMS__16c,PRENOMS ET NOMS:16c,numeric,,,,0
+NOM_PRENOMS__17,PRENOMS ET NOMS:17,character,,,,0
+NOM_PRENOMS__17c,PRENOMS ET NOMS:17c,numeric,,,,0
+NOM_PRENOMS__18,PRENOMS ET NOMS:18,character,,,,0
+NOM_PRENOMS__18c,PRENOMS ET NOMS:18c,numeric,,,,0
+NOM_PRENOMS__19,PRENOMS ET NOMS:19,character,,,,0
+NOM_PRENOMS__19c,PRENOMS ET NOMS:19c,numeric,,,,0
+NOM_PRENOMS__20,PRENOMS ET NOMS:20,character,,,,0
+NOM_PRENOMS__20c,PRENOMS ET NOMS:20c,numeric,,,,0
+NOM_PRENOMS__21,PRENOMS ET NOMS:21,character,,,,0
+NOM_PRENOMS__21c,PRENOMS ET NOMS:21c,numeric,,,,0
+NOM_PRENOMS__22,PRENOMS ET NOMS:22,character,,,,0
+NOM_PRENOMS__22c,PRENOMS ET NOMS:22c,numeric,,,,0
+NOM_PRENOMS__23,PRENOMS ET NOMS:23,character,,,,0
+NOM_PRENOMS__23c,PRENOMS ET NOMS:23c,numeric,,,,0
+NOM_PRENOMS__24,PRENOMS ET NOMS:24,character,,,,0
+NOM_PRENOMS__24c,PRENOMS ET NOMS:24c,numeric,,,,0
+NOM_PRENOMS__25,PRENOMS ET NOMS:25,character,,,,0
+NOM_PRENOMS__25c,PRENOMS ET NOMS:25c,numeric,,,,0
+NOM_PRENOMS__26,PRENOMS ET NOMS:26,character,,,,0
+NOM_PRENOMS__26c,PRENOMS ET NOMS:26c,numeric,,,,0
+NOM_PRENOMS__27,PRENOMS ET NOMS:27,character,,,,0
+NOM_PRENOMS__27c,PRENOMS ET NOMS:27c,numeric,,,,0
+NOM_PRENOMS__28,PRENOMS ET NOMS:28,character,,,,0
+NOM_PRENOMS__28c,PRENOMS ET NOMS:28c,numeric,,,,0
+NOM_PRENOMS__29,PRENOMS ET NOMS:29,character,,,,0
+NOM_PRENOMS__29c,PRENOMS ET NOMS:29c,numeric,,,,0
+NOM_PRENOMS__30,PRENOMS ET NOMS:30,character,,,,0
+NOM_PRENOMS__30c,PRENOMS ET NOMS:30c,numeric,,,,0
+NOM_PRENOMS__31,PRENOMS ET NOMS:31,character,,,,0
+NOM_PRENOMS__31c,PRENOMS ET NOMS:31c,numeric,,,,0
+NOM_PRENOMS__32,PRENOMS ET NOMS:32,character,,,,0
+NOM_PRENOMS__32c,PRENOMS ET NOMS:32c,numeric,,,,0
+NOM_PRENOMS__33,PRENOMS ET NOMS:33,character,,,,0
+NOM_PRENOMS__33c,PRENOMS ET NOMS:33c,numeric,,,,0
+NOM_PRENOMS__34,PRENOMS ET NOMS:34,character,,,,0
+NOM_PRENOMS__34c,PRENOMS ET NOMS:34c,numeric,,,,0
+NOM_PRENOMS__35,PRENOMS ET NOMS:35,character,,,,0
+NOM_PRENOMS__35c,PRENOMS ET NOMS:35c,numeric,,,,0
+NOM_PRENOMS__36,PRENOMS ET NOMS:36,character,,,,0
+NOM_PRENOMS__36c,PRENOMS ET NOMS:36c,numeric,,,,0
+NOM_PRENOMS__37,PRENOMS ET NOMS:37,character,,,,0
+NOM_PRENOMS__37c,PRENOMS ET NOMS:37c,numeric,,,,0
+NOM_PRENOMS__38,PRENOMS ET NOMS:38,character,,,,0
+NOM_PRENOMS__38c,PRENOMS ET NOMS:38c,numeric,,,,0
+NOM_PRENOMS__39,PRENOMS ET NOMS:39,character,,,,0
+NOM_PRENOMS__39c,PRENOMS ET NOMS:39c,numeric,,,,0
+NOM_PRENOMS__40,PRENOMS ET NOMS:40,character,,,,0
+NOM_PRENOMS__40c,PRENOMS ET NOMS:40c,numeric,,,,0
+NOM_PRENOMS__41,PRENOMS ET NOMS:41,character,,,,0
+NOM_PRENOMS__41c,PRENOMS ET NOMS:41c,numeric,,,,0
+NOM_PRENOMS__42,PRENOMS ET NOMS:42,character,,,,0
+NOM_PRENOMS__42c,PRENOMS ET NOMS:42c,numeric,,,,0
+NOM_PRENOMS__43,PRENOMS ET NOMS:43,character,,,,0
+NOM_PRENOMS__43c,PRENOMS ET NOMS:43c,numeric,,,,0
+NOM_PRENOMS__44,PRENOMS ET NOMS:44,character,,,,0
+NOM_PRENOMS__44c,PRENOMS ET NOMS:44c,numeric,,,,0
+NOM_PRENOMS__45,PRENOMS ET NOMS:45,character,,,,0
+NOM_PRENOMS__45c,PRENOMS ET NOMS:45c,numeric,,,,0
+NOM_PRENOMS__46,PRENOMS ET NOMS:46,character,,,,0
+NOM_PRENOMS__46c,PRENOMS ET NOMS:46c,numeric,,,,0
+NOM_PRENOMS__47,PRENOMS ET NOMS:47,character,,,,0
+NOM_PRENOMS__47c,PRENOMS ET NOMS:47c,numeric,,,,0
+NOM_PRENOMS__48,PRENOMS ET NOMS:48,character,,,,0
+NOM_PRENOMS__48c,PRENOMS ET NOMS:48c,numeric,,,,0
+NOM_PRENOMS__49,PRENOMS ET NOMS:49,character,,,,0
+NOM_PRENOMS__49c,PRENOMS ET NOMS:49c,numeric,,,,0
+NOM_PRENOMS__50,PRENOMS ET NOMS:50,character,,,,0
+NOM_PRENOMS__50c,PRENOMS ET NOMS:50c,numeric,,,,0
+NOM_PRENOMS__51,PRENOMS ET NOMS:51,character,,,,0
+NOM_PRENOMS__51c,PRENOMS ET NOMS:51c,numeric,,,,0
+NOM_PRENOMS__52,PRENOMS ET NOMS:52,character,,,,0
+NOM_PRENOMS__52c,PRENOMS ET NOMS:52c,numeric,,,,0
+NOM_PRENOMS__53,PRENOMS ET NOMS:53,character,,,,0
+NOM_PRENOMS__53c,PRENOMS ET NOMS:53c,numeric,,,,0
+NOM_PRENOMS__54,PRENOMS ET NOMS:54,character,,,,0
+NOM_PRENOMS__54c,PRENOMS ET NOMS:54c,numeric,,,,0
+NOM_PRENOMS__55,PRENOMS ET NOMS:55,character,,,,0
+NOM_PRENOMS__55c,PRENOMS ET NOMS:55c,numeric,,,,0
+NOM_PRENOMS__56,PRENOMS ET NOMS:56,character,,,,0
+NOM_PRENOMS__56c,PRENOMS ET NOMS:56c,numeric,,,,0
+NOM_PRENOMS__57,PRENOMS ET NOMS:57,character,,,,0
+NOM_PRENOMS__57c,PRENOMS ET NOMS:57c,numeric,,,,0
+NOM_PRENOMS__58,PRENOMS ET NOMS:58,character,,,,0
+NOM_PRENOMS__58c,PRENOMS ET NOMS:58c,numeric,,,,0
+NOM_PRENOMS__59,PRENOMS ET NOMS:59,character,,,,0
+NOM_PRENOMS__59c,PRENOMS ET NOMS:59c,numeric,,,,0
+taille_menage,Taille du ménage,numeric,taille_menage,numeric,Taille du ménage (nb membres),1
+sssys_irnd,Random number in the range 0..1 associated with interview,numeric,,,,0
+has__errors,Errors count in the interview,numeric,,,,0
+interview__status,Status of the interview,labelled,,,,0
+assignment__id,Assignment id (identifier in numeric format),numeric,,,,0

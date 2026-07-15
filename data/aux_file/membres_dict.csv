@@ -1,0 +1,1453 @@
+var_orig,label_orig,type_orig,var_new,type_new,label_new,keep
+interview__key,Interview key (identifier in XX-XX-XX-XX format),character,interview__key,character,Clé entretien,1
+interview__id,Unique 32-character long identifier of the interview,character,interview__id,character,Identifiant entretien,1
+membres__id,Id in membres,numeric,membres__id,character,Identifiant membre,1
+NOM_PRENOMS,Roster list question,character,,,,0
+s01q02,1.01. Quel est le sexe de %rostertitle%,labelled,genre,numeric,"Genre (1=Masculin, 2=Féminin)",1
+sexe,Sexe,character,,,,0
+genre,genre,character,,,,0
+s01q03,1.03. Quel est le lien de parenté de  %rostertitle%  avec le chef de ménage?,labelled,lien_parente,factor,Lien de parenté avec le CM,1
+s01q03_autre,Autre lien de parenté avec le chef de ménage,character,,,,0
+s01q04a,"1.04a. Quelle est la date de naissance de  %rostertitle%  ?
+
+Jour de naissance",labelled,,,,0
+s01q04b,1.04b. Mois de naissance,labelled,,,,0
+s01q04c,"1.04c. Année de naissance
+
+Age de la présente personne: %AgeAnnee%",labelled,,,,0
+AgeAnnee,Calculated variable of type LongInteger,numeric,age,numeric,Âge en années révolues,1
+s01q04,1.04 Quel âge avait [NOM] à son dernier anniversaire?,numeric,,,,0
+s01q05,1.05 Quelle est votre situation matrimoniale ?,labelled,sit_matrimoniale,numeric,Situation matrimoniale,1
+s01q05_autre,Autre situation matrimoniale,character,,,,0
+s01q06,1.06.  %rostertitle%  est-il présent au moment de l'enquête?,labelled,present_enquete,numeric,Présent lors de l'enquête,1
+consentement_ind,Consentement,labelled,consentement_ind,numeric,A donné son consentement individuel,1
+s02q0a,2.0a Quel est votre âge ?,labelled,,,,0
+s02q0b,2.0b Quelle est votre situation matrimoniale?,labelled,,,,0
+s02q0b_autres,Préciser l'autre situation matrimoniale,character,,,,0
+s02q01,langues,labelled,,,,0
+s02q02__1,Langue:Francais,numeric,,,,0
+s02q02__2,Langue:Anglais,numeric,,,,0
+s02q02__3,Langue:Portugais,numeric,,,,0
+s02q02__4,Langue:Arabe,numeric,,,,0
+s02q02__5,Langue:Langues locales,numeric,,,,0
+s02q02__96,Langue:Autres (spécifier),numeric,,,,0
+s02q02_autre,Autres langues,character,,,,0
+s02q03,Niveau d'education,labelled,niv_etudes,numeric,Niveau d'études atteint,1
+s02q03_autre,Autres langues,character,,,,0
+s02q04__1,document d'identification:Passeport,numeric,,,,0
+s02q04__2,document d'identification:Carte d'identité nationale,numeric,,,,0
+s02q04__3,document d'identification:Permis de conduire,numeric,,,,0
+s02q04__4,document d'identification:Carte professionnelle,numeric,,,,0
+s02q04__5,document d'identification:Carte consulaire,numeric,,,,0
+s02q04__6,document d'identification:Aucun document,numeric,,,,0
+s02q04__96,document d'identification:Autres (Préciser),numeric,,,,0
+s02q04_autre,Autres document d'identification,character,,,,0
+s02q05__1,documents de preuve de résidence:Certificat de résidence,numeric,,,,0
+s02q05__2,"documents de preuve de résidence:Factures d’électricité, d’eau",numeric,,,,0
+s02q05__3,documents de preuve de résidence:Contrat de bail,numeric,,,,0
+s02q05__4,documents de preuve de résidence:Titre de propriété,numeric,,,,0
+s02q05__5,documents de preuve de résidence:Preuve de revenu (bulletin de salaire),numeric,,,,0
+s02q05__6,documents de preuve de résidence:Aucun document,numeric,,,,0
+s02q05__96,documents de preuve de résidence:Autres (Préciser),numeric,,,,0
+s02q05_autre,autres documents de preuve de résidence,character,,,,0
+s02q06,Activité excercée,labelled,actif_occupe,numeric,Exerce une activité principale (1=Oui),1
+s02q07,activité,labelled,secteur_isic_p,numeric,Secteur ISIC Rev.4 emploi principal,1
+s02q07_autres,Préciser l'activité,character,,,,0
+s02q07a,2.07a - Pouvez vous faire une description de cette activité,character,,,,0
+s02q08,cathégrie soci-professionnelle,labelled,statut_emploi_p,numeric,Statut / CSP emploi principal,1
+s02q09,Nombre d'employés,numeric,nb_employes,numeric,Nombre d'employés (si patron),1
+s02q10__1,autres sources de revenus:Autres revenus de l’activité secondaire,numeric,s02q10__1,numeric,Choix multiple : s02q10__1,1
+s02q10__2,autres sources de revenus:Revenus d’une activité salariée / fonctionnaire,numeric,s02q10__2,numeric,Choix multiple : s02q10__2,1
+s02q10__3,autres sources de revenus:Revenus d’une autre activité exercée par un autre(s) m,numeric,s02q10__3,numeric,Choix multiple : s02q10__3,1
+s02q10__4,autres sources de revenus:Pension retraite / subventions,numeric,s02q10__4,numeric,Choix multiple : s02q10__4,1
+s02q10__5,autres sources de revenus:Réception de transfert,numeric,s02q10__5,numeric,Choix multiple : s02q10__5,1
+s02q10__96,autres sources de revenus:Autre (à préciser),numeric,s02q10__96,numeric,Choix multiple : s02q10__96,1
+s02q10_autre,Préciser les autres sources de revenus,character,,,,0
+s02q11,identification fiscale,labelled,,,,0
+s02q12,comptabilité formelle,labelled,,,,0
+s02q13,Durée,numeric,,,,0
+s02q14,Par rapport à l'endroit où vous exercez votre activité principale est-ce:,labelled,,,,0
+s02q14_autre,autre,character,,,,0
+s02q15,"Par rapport à l'endroit où vous exercez votre activité principale, êtes-vous :",labelled,,,,0
+s02q16,Comment avez-vous acquis votre maison ?,labelled,,,,0
+s02q16_autre,Préciser l'autre forme d'acquisition,character,,,,0
+s02q17,2.17 - Avez-vous exercé d'autres  activités au cours des 12 derniers mois,labelled,a_activite_secondaire,numeric,A exercé une activité secondaire (12 mois),1
+s02q18__1,"2.18 - Parmi les activités suivantes, lesquelles avez vous eu à exercer en plus",numeric,s02q18__1,numeric,Choix multiple : s02q18__1,1
+s02q18__2,"2.18 - Parmi les activités suivantes, lesquelles avez vous eu à exercer en plus",numeric,s02q18__2,numeric,Choix multiple : s02q18__2,1
+s02q18__3,"2.18 - Parmi les activités suivantes, lesquelles avez vous eu à exercer en plus",numeric,s02q18__3,numeric,Choix multiple : s02q18__3,1
+s02q18__4,"2.18 - Parmi les activités suivantes, lesquelles avez vous eu à exercer en plus",numeric,s02q18__4,numeric,Choix multiple : s02q18__4,1
+s02q18__5,"2.18 - Parmi les activités suivantes, lesquelles avez vous eu à exercer en plus",numeric,s02q18__5,numeric,Choix multiple : s02q18__5,1
+s02q18__6,"2.18 - Parmi les activités suivantes, lesquelles avez vous eu à exercer en plus",numeric,s02q18__6,numeric,Choix multiple : s02q18__6,1
+s02q18__7,"2.18 - Parmi les activités suivantes, lesquelles avez vous eu à exercer en plus",numeric,s02q18__7,numeric,Choix multiple : s02q18__7,1
+s02q18__8,"2.18 - Parmi les activités suivantes, lesquelles avez vous eu à exercer en plus",numeric,s02q18__8,numeric,Choix multiple : s02q18__8,1
+s02q18__9,"2.18 - Parmi les activités suivantes, lesquelles avez vous eu à exercer en plus",numeric,s02q18__9,numeric,Choix multiple : s02q18__9,1
+s02q18__10,"2.18 - Parmi les activités suivantes, lesquelles avez vous eu à exercer en plus",numeric,s02q18__10,numeric,Choix multiple : s02q18__10,1
+s02q18__11,"2.18 - Parmi les activités suivantes, lesquelles avez vous eu à exercer en plus",numeric,s02q18__11,numeric,Choix multiple : s02q18__11,1
+s02q18__12,"2.18 - Parmi les activités suivantes, lesquelles avez vous eu à exercer en plus",numeric,s02q18__12,numeric,Choix multiple : s02q18__12,1
+s02q18__13,"2.18 - Parmi les activités suivantes, lesquelles avez vous eu à exercer en plus",numeric,s02q18__13,numeric,Choix multiple : s02q18__13,1
+s02q18__14,"2.18 - Parmi les activités suivantes, lesquelles avez vous eu à exercer en plus",numeric,s02q18__14,numeric,Choix multiple : s02q18__14,1
+s02q18__15,"2.18 - Parmi les activités suivantes, lesquelles avez vous eu à exercer en plus",numeric,s02q18__15,numeric,Choix multiple : s02q18__15,1
+s02q18__16,"2.18 - Parmi les activités suivantes, lesquelles avez vous eu à exercer en plus",numeric,s02q18__16,numeric,Choix multiple : s02q18__16,1
+s02q18__17,"2.18 - Parmi les activités suivantes, lesquelles avez vous eu à exercer en plus",numeric,s02q18__17,numeric,Choix multiple : s02q18__17,1
+s02q18__18,"2.18 - Parmi les activités suivantes, lesquelles avez vous eu à exercer en plus",numeric,s02q18__18,numeric,Choix multiple : s02q18__18,1
+s02q18__19,"2.18 - Parmi les activités suivantes, lesquelles avez vous eu à exercer en plus",numeric,s02q18__19,numeric,Choix multiple : s02q18__19,1
+s02q18__20,"2.18 - Parmi les activités suivantes, lesquelles avez vous eu à exercer en plus",numeric,s02q18__20,numeric,Choix multiple : s02q18__20,1
+s02q18__21,"2.18 - Parmi les activités suivantes, lesquelles avez vous eu à exercer en plus",numeric,s02q18__21,numeric,Choix multiple : s02q18__21,1
+s02q18b,2.18b - Pouvez vous faire une description de cette activité,character,,,,0
+s02q19,Avez-vous entendu parler d'energie solaires domestiques ?,labelled,,,,0
+s02q20,Intérêt,labelled,,,,0
+s02q21__1,Pourquoi n'êtes-vous PAS intéressé à posséder un  système solaire domestique?:Je,numeric,,,,0
+s02q21__2,Pourquoi n'êtes-vous PAS intéressé à posséder un  système solaire domestique?:Je,numeric,,,,0
+s02q21__3,Pourquoi n'êtes-vous PAS intéressé à posséder un  système solaire domestique?:Le,numeric,,,,0
+s02q21__4,Pourquoi n'êtes-vous PAS intéressé à posséder un  système solaire domestique?:Je,numeric,,,,0
+s02q21__5,Pourquoi n'êtes-vous PAS intéressé à posséder un  système solaire domestique?:Je,numeric,,,,0
+s02q21__96,Pourquoi n'êtes-vous PAS intéressé à posséder un  système solaire domestique?:Au,numeric,,,,0
+s02q21_autre,autres,character,,,,0
+s02q22,Pourquoi êtes-vous intéressé à posséder une source d’énergie solaire ?,labelled,,,,0
+s02q22_autre,Préciser l'autre source,character,,,,0
+s02q23,"Combien de personnes de votre ménage, en dehors de vous gagnent un revenu ?",labelled,,,,0
+s02q23_autre,Préciser l'autre fréquence,character,,,,0
+s02q24,Fréquence de paiement,labelled,tranche_revenu,numeric,Tranche de revenu mensuel,1
+s02q25__1,2.25 - Quelles ont été les sources de financement de vos moyens de subsistance s,numeric,,,,0
+s02q25__2,2.25 - Quelles ont été les sources de financement de vos moyens de subsistance s,numeric,,,,0
+s02q25__3,2.25 - Quelles ont été les sources de financement de vos moyens de subsistance s,numeric,,,,0
+s02q25__4,2.25 - Quelles ont été les sources de financement de vos moyens de subsistance s,numeric,,,,0
+s02q25__5,2.25 - Quelles ont été les sources de financement de vos moyens de subsistance s,numeric,,,,0
+s02q25__6,2.25 - Quelles ont été les sources de financement de vos moyens de subsistance s,numeric,,,,0
+s02q25__7,2.25 - Quelles ont été les sources de financement de vos moyens de subsistance s,numeric,,,,0
+s02q25__8,2.25 - Quelles ont été les sources de financement de vos moyens de subsistance s,numeric,,,,0
+s02q25__9,2.25 - Quelles ont été les sources de financement de vos moyens de subsistance s,numeric,,,,0
+s02q25__10,2.25 - Quelles ont été les sources de financement de vos moyens de subsistance s,numeric,,,,0
+s02q25__96,2.25 - Quelles ont été les sources de financement de vos moyens de subsistance s,numeric,,,,0
+s02q25_autre,Préciser l'autre source de financements,character,,,,0
+s03q01__1,le plus important pour vous&nbsp;?:Subvenir aux besoins alimentaires de sa famil,numeric,,,,0
+s03q01__2,le plus important pour vous&nbsp;?:Se former ou éduquer sa famille,numeric,,,,0
+s03q01__3,le plus important pour vous&nbsp;?:Lancer ou améliorer ses activités (entreprise,numeric,,,,0
+s03q01__4,le plus important pour vous&nbsp;?:Acquérir des biens ou équipements tels que le,numeric,,,,0
+s03q01__5,le plus important pour vous&nbsp;?:Acquérir un terrain/Construire une maison/Amé,numeric,,,,0
+s03q01__6,le plus important pour vous&nbsp;?:Se soigner et couvrir les besoins en santé de,numeric,,,,0
+s03q01__7,le plus important pour vous&nbsp;?:Obtenir un emploi/développer sa carrière,numeric,,,,0
+s03q01__8,le plus important pour vous&nbsp;?:Refus de répondre,numeric,,,,0
+s03q01__96,le plus important pour vous&nbsp;?:Autres (préciser),numeric,,,,0
+s03q01_autre,le plus important pour vous,character,,,,0
+s03q02__1,dépenses:Maladie,numeric,,,,0
+s03q02__2,dépenses:Accident,numeric,,,,0
+s03q02__3,dépenses:Vol,numeric,,,,0
+s03q02__4,dépenses:Incendie,numeric,,,,0
+s03q02__5,dépenses:Trouble politique,numeric,,,,0
+s03q02__6,dépenses:Décès,numeric,,,,0
+s03q02__7,dépenses:Mariage / fête,numeric,,,,0
+s03q02__8,dépenses:Frais de scolarité,numeric,,,,0
+s03q02__9,dépenses:Augmentation des prix,numeric,,,,0
+s03q02__10,dépenses:Intempéries / inondations,numeric,,,,0
+s03q02__11,dépenses:Sécheresse,numeric,,,,0
+s03q02__12,dépenses:Période de soudure,numeric,,,,0
+s03q02__13,dépenses:Perte de revenus (baisse d’activité /mauvaise récolte),numeric,,,,0
+s03q02__14,dépenses:Recherche d'emploi,numeric,,,,0
+s03q02__96,dépenses:Autres (spécifier),numeric,,,,0
+s03q02_autre,autres évènements,character,,,,0
+s03q03__1,précautions financières:Épargne sur un compte bancaire ou auprès d’un SFD,numeric,,,,0
+s03q03__2,précautions financières:Épargne sur un compte mobile,numeric,,,,0
+s03q03__3,"précautions financières:Épargne/prêts en tontine, coopératives/groupements",numeric,,,,0
+s03q03__4,précautions financières:Épargne à la maison (thésaurisation),numeric,,,,0
+s03q03__5,précautions financières:Épargne en nature (biens),numeric,,,,0
+s03q03__6,précautions financières:Compte sur l’aide de parents / amis (dont transferts ),numeric,,,,0
+s03q03__7,précautions financières:Assurances,numeric,,,,0
+s03q03__8,"précautions financières:Avances de fonds (clients, fournisseurs, employeurs, etc",numeric,,,,0
+s03q03__9,"précautions financières:Investissement en actif financier (actions, obligations)",numeric,,,,0
+s03q03__10,précautions financières:2e emploi,numeric,,,,0
+s03q03__11,précautions financières:Crédit auprès d’une institution financière,numeric,,,,0
+s03q03__12,précautions financières:Crédit auprès d’un boutiquier (marchandise à crédit),numeric,,,,0
+s03q03__96,précautions financières:Autres (Préciser),numeric,,,,0
+s03q03_autre,Autres précautions financières,character,,,,0
+s03q04,3.04 - Pendant combien de mois peuvent durer les revenus dont vous disposez en é,labelled,,,,0
+s03q05,3.05 - Avez-vous connu dans les 12 derniers mois des périodes où vos revenus ont,labelled,,,,0
+s03q06__1,3.06 - Comment avez-vous surmonté financièrement cette période ?:Épargne sur un,numeric,,,,0
+s03q06__2,3.06 - Comment avez-vous surmonté financièrement cette période ?:Épargne sur un,numeric,,,,0
+s03q06__3,3.06 - Comment avez-vous surmonté financièrement cette période ?:Épargne en tont,numeric,,,,0
+s03q06__4,3.06 - Comment avez-vous surmonté financièrement cette période ?:Épargne à la ma,numeric,,,,0
+s03q06__5,3.06 - Comment avez-vous surmonté financièrement cette période ?:Vente des biens,numeric,,,,0
+s03q06__6,3.06 - Comment avez-vous surmonté financièrement cette période ?:Vente d’actifs,numeric,,,,0
+s03q06__7,3.06 - Comment avez-vous surmonté financièrement cette période ?:Recours aux Par,numeric,,,,0
+s03q06__8,3.06 - Comment avez-vous surmonté financièrement cette période ?:En prenant un c,numeric,,,,0
+s03q06__9,3.06 - Comment avez-vous surmonté financièrement cette période ?:En prenant un c,numeric,,,,0
+s03q06__10,3.06 - Comment avez-vous surmonté financièrement cette période ?:En prenant créd,numeric,,,,0
+s03q06__11,3.06 - Comment avez-vous surmonté financièrement cette période ?:En prenant un c,numeric,,,,0
+s03q06__12,3.06 - Comment avez-vous surmonté financièrement cette période ?:En retardant ce,numeric,,,,0
+s03q06__13,3.06 - Comment avez-vous surmonté financièrement cette période ?:En réduisant le,numeric,,,,0
+s03q06__14,3.06 - Comment avez-vous surmonté financièrement cette période ?:En demandant un,numeric,,,,0
+s03q06__15,3.06 - Comment avez-vous surmonté financièrement cette période ?:En recourant à,numeric,,,,0
+s03q06__96,3.06 - Comment avez-vous surmonté financièrement cette période ?:Autres (spécifi,numeric,,,,0
+s03q06_autre,Autre moyens utilisés pour surmonter cette période,character,,,,0
+s03q07,3.07 - Établissez-vous un budget ou une prévision financière pour les dépenses m,labelled,,,,0
+s03q08__1,3.08 - Pour quelle raison ne disposez-vous pas d’un budget ou d’une prévision fi,numeric,,,,0
+s03q08__2,3.08 - Pour quelle raison ne disposez-vous pas d’un budget ou d’une prévision fi,numeric,,,,0
+s03q08__3,3.08 - Pour quelle raison ne disposez-vous pas d’un budget ou d’une prévision fi,numeric,,,,0
+s03q08__4,3.08 - Pour quelle raison ne disposez-vous pas d’un budget ou d’une prévision fi,numeric,,,,0
+s03q08__5,3.08 - Pour quelle raison ne disposez-vous pas d’un budget ou d’une prévision fi,numeric,,,,0
+s03q08__96,3.08 - Pour quelle raison ne disposez-vous pas d’un budget ou d’une prévision fi,numeric,,,,0
+s03q08_autre,Autres raisons pour laquelle vous ne disposez pas de budget,character,,,,0
+s03q09a,3.09A - Vous avez des personnes dans votre vie qui peuvent aider financièrement,labelled,,,,0
+s03q09b,3.09B - Vous épargnez pour les urgences et les imprévus,labelled,,,,0
+s03q09c,3.09C - Vous disposez d’un budget pour vos dépenses familiales d’un mois à l’aut,labelled,,,,0
+s03q09d,3.09D- Vous rencontrez souvent des difficultés à gérer vos revenus à chaque péri,labelled,,,,0
+s03q09e,3.09E - Vous pouvez surmonter la plupart de vos problèmes financiers,labelled,,,,0
+s03q09f,3.09F - Vous pouvez disposer des sommes d’argent en 3 jours pour les urgences,labelled,,,,0
+s03q09g,3.09G - Vous disposez d’un plan d’épargne retraite,labelled,,,,0
+s03q09h,3.09H - Vous disposez d’un plan d’épargne éducation,labelled,,,,0
+s03q09i,3.09I - Vous pensez que les produits et services financiers sont efficaces pour,labelled,,,,0
+s03q09j,3.09J  Vous considérez que les services et produits financiers disponibles sont,labelled,,,,0
+s03q10a,3.10A - Manquer de nourriture ou sauter de repas,labelled,,,,0
+s03q10b,3.10B - Manquer de médicaments ou de soins de santé,labelled,,,,0
+s03q10c,3.10C - Ne pas assister à un évènement familial important par manque d’argent,labelled,,,,0
+s03q10d,3.10D - Votre enfant ou toute autre personne à votre charge s’est fait renvoyer,labelled,,,,0
+s03q10e,3.10E - Perdre son emploi (ou manquer d’activité),labelled,,,,0
+s03q11,"3.11 - Comparé à l’année passée, votre situation financière s’est-elle améliorée",labelled,,,,0
+s03q12,3.12 - Avez-vous déjà reçu une formation en gestion de finance personnelle ?,labelled,,,,0
+s03q13a,3.13A - J’établis les objectifs financiers à long terme de mon ménage et m’effor,labelled,,,,0
+s03q13b,3.13B - J’ai confiance en moi lorsque je contacte une banque/IMF pour obtenir du,labelled,,,,0
+s03q13c,3.13C - Je préfère des projets à haut risque et haut rendement que des projets à,labelled,,,,0
+s03q13d,3.13D - Je préfère suivre mon instinct plutôt que de faire des planifications fi,labelled,,,,0
+s03q13e,3.13E - L’état des finances de mon ménage dans le futur dépend de mon comporteme,labelled,,,,0
+s03q14__1,3.14 - Quels sont les problèmes auxquels vous et votre famille faites face ces 1,numeric,,,,0
+s03q14__2,3.14 - Quels sont les problèmes auxquels vous et votre famille faites face ces 1,numeric,,,,0
+s03q14__3,3.14 - Quels sont les problèmes auxquels vous et votre famille faites face ces 1,numeric,,,,0
+s03q14__4,3.14 - Quels sont les problèmes auxquels vous et votre famille faites face ces 1,numeric,,,,0
+s03q14__5,3.14 - Quels sont les problèmes auxquels vous et votre famille faites face ces 1,numeric,,,,0
+s03q14__6,3.14 - Quels sont les problèmes auxquels vous et votre famille faites face ces 1,numeric,,,,0
+s03q14__7,3.14 - Quels sont les problèmes auxquels vous et votre famille faites face ces 1,numeric,,,,0
+s03q14__8,3.14 - Quels sont les problèmes auxquels vous et votre famille faites face ces 1,numeric,,,,0
+s03q14__9,3.14 - Quels sont les problèmes auxquels vous et votre famille faites face ces 1,numeric,,,,0
+s03q14__10,3.14 - Quels sont les problèmes auxquels vous et votre famille faites face ces 1,numeric,,,,0
+s03q14__90,3.14 - Quels sont les problèmes auxquels vous et votre famille faites face ces 1,numeric,,,,0
+s03q14_autre,Préciser l'autre problème,character,,,,0
+s03q15a__1,3.15A Lesquels des services ou produits financiers vous avez utilisé?:Mobile mon,numeric,,,,0
+s03q15a__2,3.15A Lesquels des services ou produits financiers vous avez utilisé?:Banque mob,numeric,,,,0
+s03q15a__3,3.15A Lesquels des services ou produits financiers vous avez utilisé?:Banque en,numeric,,,,0
+s03q15a__4,3.15A Lesquels des services ou produits financiers vous avez utilisé?:Crédit,numeric,,,,0
+s03q15a__5,3.15A Lesquels des services ou produits financiers vous avez utilisé?:Épargne,numeric,,,,0
+s03q15a__6,3.15A Lesquels des services ou produits financiers vous avez utilisé?:Police d’a,numeric,,,,0
+s03q15a__7,3.15A Lesquels des services ou produits financiers vous avez utilisé?:Transfert,numeric,,,,0
+s03q15b__1,3.15B Lesquels des services ou produits financiers vous avez arrèté d' utiliser:,numeric,,,,0
+s03q15b__2,3.15B Lesquels des services ou produits financiers vous avez arrèté d' utiliser:,numeric,,,,0
+s03q15b__3,3.15B Lesquels des services ou produits financiers vous avez arrèté d' utiliser:,numeric,,,,0
+s03q15b__4,3.15B Lesquels des services ou produits financiers vous avez arrèté d' utiliser:,numeric,,,,0
+s03q15b__5,3.15B Lesquels des services ou produits financiers vous avez arrèté d' utiliser:,numeric,,,,0
+s03q15b__6,3.15B Lesquels des services ou produits financiers vous avez arrèté d' utiliser:,numeric,,,,0
+s03q15b__7,3.15B Lesquels des services ou produits financiers vous avez arrèté d' utiliser:,numeric,,,,0
+s03q15c__1,3.15C Lesquels des services ou produits financiers vous continurai d'utiliser da,numeric,,,,0
+s03q15c__2,3.15C Lesquels des services ou produits financiers vous continurai d'utiliser da,numeric,,,,0
+s03q15c__3,3.15C Lesquels des services ou produits financiers vous continurai d'utiliser da,numeric,,,,0
+s03q15c__4,3.15C Lesquels des services ou produits financiers vous continurai d'utiliser da,numeric,,,,0
+s03q15c__5,3.15C Lesquels des services ou produits financiers vous continurai d'utiliser da,numeric,,,,0
+s03q15c__6,3.15C Lesquels des services ou produits financiers vous continurai d'utiliser da,numeric,,,,0
+s03q15c__7,3.15C Lesquels des services ou produits financiers vous continurai d'utiliser da,numeric,,,,0
+s04aq01,4a.01	Avez-vous un compte dans une institution bancaire dans le pays&nbsp;?,labelled,a_compte_banque,numeric,Possède un compte dans une banque,1
+s04aq02__0,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__1,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__2,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__3,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__4,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__5,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__6,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__7,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__8,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__9,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__10,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__11,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__12,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__13,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__14,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__15,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__16,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__17,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__18,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__19,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__20,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__21,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__22,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__23,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__24,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__25,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__26,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__27,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq02__28,4a.02 Pourriez-vous nous donner le nom de votre banque (ou de vos banques si vou,labelled,,,,0
+s04aq01b,4a.01b	Avez-vous un compte dans une institution bancaire dans un autre pays&nbsp,labelled,a_compte_banque_etro,numeric,Compte bancaire à l'étranger,1
+s04aq01c,4a.01c	A quoi sert ce compte dans ce pays&nbsp;?,character,,,,0
+s04aq04__1,4a.04  Pour ceux qui n’ont pas de compte dans une banque. Pour quelles raisons n,numeric,,,,0
+s04aq04__2,4a.04  Pour ceux qui n’ont pas de compte dans une banque. Pour quelles raisons n,numeric,,,,0
+s04aq04__3,4a.04  Pour ceux qui n’ont pas de compte dans une banque. Pour quelles raisons n,numeric,,,,0
+s04aq04__4,4a.04  Pour ceux qui n’ont pas de compte dans une banque. Pour quelles raisons n,numeric,,,,0
+s04aq04__5,4a.04  Pour ceux qui n’ont pas de compte dans une banque. Pour quelles raisons n,numeric,,,,0
+s04aq04__6,4a.04  Pour ceux qui n’ont pas de compte dans une banque. Pour quelles raisons n,numeric,,,,0
+s04aq04__7,4a.04  Pour ceux qui n’ont pas de compte dans une banque. Pour quelles raisons n,numeric,,,,0
+s04aq04__8,4a.04  Pour ceux qui n’ont pas de compte dans une banque. Pour quelles raisons n,numeric,,,,0
+s04aq04__9,4a.04  Pour ceux qui n’ont pas de compte dans une banque. Pour quelles raisons n,numeric,,,,0
+s04aq04__10,4a.04  Pour ceux qui n’ont pas de compte dans une banque. Pour quelles raisons n,numeric,,,,0
+s04aq04__11,4a.04  Pour ceux qui n’ont pas de compte dans une banque. Pour quelles raisons n,numeric,,,,0
+s04aq04__12,4a.04  Pour ceux qui n’ont pas de compte dans une banque. Pour quelles raisons n,numeric,,,,0
+s04aq04__13,4a.04  Pour ceux qui n’ont pas de compte dans une banque. Pour quelles raisons n,numeric,,,,0
+s04aq04__14,4a.04  Pour ceux qui n’ont pas de compte dans une banque. Pour quelles raisons n,numeric,,,,0
+s04aq04__15,4a.04  Pour ceux qui n’ont pas de compte dans une banque. Pour quelles raisons n,numeric,,,,0
+s04aq04__16,4a.04  Pour ceux qui n’ont pas de compte dans une banque. Pour quelles raisons n,numeric,,,,0
+s04aq04__17,4a.04  Pour ceux qui n’ont pas de compte dans une banque. Pour quelles raisons n,numeric,,,,0
+s04aq04__18,4a.04  Pour ceux qui n’ont pas de compte dans une banque. Pour quelles raisons n,numeric,,,,0
+s04aq04__96,4a.04  Pour ceux qui n’ont pas de compte dans une banque. Pour quelles raisons n,numeric,,,,0
+s04aq05,4a.05 Comptez-vous ouvrir un compte à l’avenir ?,labelled,intention_ouvrir_cte,numeric,Intention d'ouvrir un compte bancaire,1
+s04aq06__0,"4a.06 Si oui, Dans quel type établissement&nbsp;?:0",labelled,,,,0
+s04aq06__1,"4a.06 Si oui, Dans quel type établissement&nbsp;?:1",labelled,,,,0
+s04aq06__2,"4a.06 Si oui, Dans quel type établissement&nbsp;?:2",labelled,,,,0
+s04aq06__3,"4a.06 Si oui, Dans quel type établissement&nbsp;?:3",labelled,,,,0
+s04aq06__4,"4a.06 Si oui, Dans quel type établissement&nbsp;?:4",labelled,,,,0
+s04aq06__5,"4a.06 Si oui, Dans quel type établissement&nbsp;?:5",labelled,,,,0
+s04aq06__6,"4a.06 Si oui, Dans quel type établissement&nbsp;?:6",labelled,,,,0
+s04aq06__7,"4a.06 Si oui, Dans quel type établissement&nbsp;?:7",labelled,,,,0
+s04aq06__8,"4a.06 Si oui, Dans quel type établissement&nbsp;?:8",labelled,,,,0
+s04aq06__9,"4a.06 Si oui, Dans quel type établissement&nbsp;?:9",labelled,,,,0
+s04aq06__10,"4a.06 Si oui, Dans quel type établissement&nbsp;?:10",labelled,,,,0
+s04aq06__11,"4a.06 Si oui, Dans quel type établissement&nbsp;?:11",labelled,,,,0
+s04aq06__12,"4a.06 Si oui, Dans quel type établissement&nbsp;?:12",labelled,,,,0
+s04aq06__13,"4a.06 Si oui, Dans quel type établissement&nbsp;?:13",labelled,,,,0
+s04aq06__14,"4a.06 Si oui, Dans quel type établissement&nbsp;?:14",labelled,,,,0
+s04aq06__15,"4a.06 Si oui, Dans quel type établissement&nbsp;?:15",labelled,,,,0
+s04aq06__16,"4a.06 Si oui, Dans quel type établissement&nbsp;?:16",labelled,,,,0
+s04aq06__17,"4a.06 Si oui, Dans quel type établissement&nbsp;?:17",labelled,,,,0
+s04aq06__18,"4a.06 Si oui, Dans quel type établissement&nbsp;?:18",labelled,,,,0
+s04aq06__19,"4a.06 Si oui, Dans quel type établissement&nbsp;?:19",labelled,,,,0
+s04aq06__20,"4a.06 Si oui, Dans quel type établissement&nbsp;?:20",labelled,,,,0
+s04aq06__21,"4a.06 Si oui, Dans quel type établissement&nbsp;?:21",labelled,,,,0
+s04aq06__22,"4a.06 Si oui, Dans quel type établissement&nbsp;?:22",labelled,,,,0
+s04aq06__23,"4a.06 Si oui, Dans quel type établissement&nbsp;?:23",labelled,,,,0
+s04aq06__24,"4a.06 Si oui, Dans quel type établissement&nbsp;?:24",labelled,,,,0
+s04aq06__25,"4a.06 Si oui, Dans quel type établissement&nbsp;?:25",labelled,,,,0
+s04aq06__26,"4a.06 Si oui, Dans quel type établissement&nbsp;?:26",labelled,,,,0
+s04aq06__27,"4a.06 Si oui, Dans quel type établissement&nbsp;?:27",labelled,,,,0
+s04aq06__28,"4a.06 Si oui, Dans quel type établissement&nbsp;?:28",labelled,,,,0
+s04aq06__29,"4a.06 Si oui, Dans quel type établissement&nbsp;?:29",labelled,,,,0
+s04aq06__30,"4a.06 Si oui, Dans quel type établissement&nbsp;?:30",labelled,,,,0
+s04aq06__31,"4a.06 Si oui, Dans quel type établissement&nbsp;?:31",labelled,,,,0
+s04aq06__32,"4a.06 Si oui, Dans quel type établissement&nbsp;?:32",labelled,,,,0
+s04aq07__1,4a.07 Qu’est-ce qui vous inciterait à ouvrir un compte auprès d’une banque&nbsp;,numeric,,,,0
+s04aq07__2,4a.07 Qu’est-ce qui vous inciterait à ouvrir un compte auprès d’une banque&nbsp;,numeric,,,,0
+s04aq07__3,4a.07 Qu’est-ce qui vous inciterait à ouvrir un compte auprès d’une banque&nbsp;,numeric,,,,0
+s04aq07__4,4a.07 Qu’est-ce qui vous inciterait à ouvrir un compte auprès d’une banque&nbsp;,numeric,,,,0
+s04aq07__5,4a.07 Qu’est-ce qui vous inciterait à ouvrir un compte auprès d’une banque&nbsp;,numeric,,,,0
+s04aq07__96,4a.07 Qu’est-ce qui vous inciterait à ouvrir un compte auprès d’une banque&nbsp;,numeric,,,,0
+s04q08,4a.08 Utilisez-vous un ou plusieurs comptes ouverts à votre nom ou au nom d’une,labelled,,,,0
+s04aq09a,4a.09A		Quel est le temps moyen que vous mettez pour accéder à la banque la plus,labelled,,,,0
+s04aq09b,4a.09B		Quel est le temps moyen que vous mettez pour accéder à la banque la plus,labelled,,,,0
+s04aq09c,4a.09C		Quel est le temps moyen que vous mettez pour accéder à la banque la plus,labelled,,,,0
+s04aq09d,4a.09D		Quel est le temps moyen que vous mettez pour accéder à la banque la plus,labelled,,,,0
+s04q09e,4a09E		Quel est le temps moyen que vous mettez pour accéder à la banque la plus,labelled,,,,0
+s04q09f,4a.09F 		Quel est le temps moyen que vous mettez pour accéder à la banque la plu,labelled,,,,0
+S04aq10,4a.10 Quelle est la distance qui vous sépare de votre banque ou de la banque la,labelled,,,,0
+s05aq01,compte microfinance,labelled,a_compte_imf,numeric,Possède un compte dans une IMF/SFD,1
+s05aq02__0,le nom de votre SFD:0,labelled,,,,0
+s05aq02__1,le nom de votre SFD:1,labelled,,,,0
+s05aq02__2,le nom de votre SFD:2,labelled,,,,0
+s05aq02__3,le nom de votre SFD:3,labelled,,,,0
+s05aq02__4,le nom de votre SFD:4,labelled,,,,0
+s05aq02__5,le nom de votre SFD:5,labelled,,,,0
+s05aq02__6,le nom de votre SFD:6,labelled,,,,0
+s05aq02__7,le nom de votre SFD:7,labelled,,,,0
+s05aq02__8,le nom de votre SFD:8,labelled,,,,0
+s05aq02__9,le nom de votre SFD:9,labelled,,,,0
+s05aq02__10,le nom de votre SFD:10,labelled,,,,0
+s05aq02__11,le nom de votre SFD:11,labelled,,,,0
+s05aq02__12,le nom de votre SFD:12,labelled,,,,0
+s05aq02__13,le nom de votre SFD:13,labelled,,,,0
+s05aq02__14,le nom de votre SFD:14,labelled,,,,0
+s05aq02__15,le nom de votre SFD:15,labelled,,,,0
+s05aq02__16,le nom de votre SFD:16,labelled,,,,0
+s05aq02__17,le nom de votre SFD:17,labelled,,,,0
+s05aq02__18,le nom de votre SFD:18,labelled,,,,0
+s05aq02__19,le nom de votre SFD:19,labelled,,,,0
+s05aq02__20,le nom de votre SFD:20,labelled,,,,0
+s05aq02__21,le nom de votre SFD:21,labelled,,,,0
+s05aq02__22,le nom de votre SFD:22,labelled,,,,0
+s05aq02__23,le nom de votre SFD:23,labelled,,,,0
+s05aq02__24,le nom de votre SFD:24,labelled,,,,0
+s05aq02__25,le nom de votre SFD:25,labelled,,,,0
+s05aq02__26,le nom de votre SFD:26,labelled,,,,0
+s05aq02__27,le nom de votre SFD:27,labelled,,,,0
+s05aq02__28,le nom de votre SFD:28,labelled,,,,0
+s05aq02__29,le nom de votre SFD:29,labelled,,,,0
+s05aq02__30,le nom de votre SFD:30,labelled,,,,0
+s05aq02__31,le nom de votre SFD:31,labelled,,,,0
+s05aq02__32,le nom de votre SFD:32,labelled,,,,0
+s05aq02__33,le nom de votre SFD:33,labelled,,,,0
+s05aq02__34,le nom de votre SFD:34,labelled,,,,0
+s05aq02__35,le nom de votre SFD:35,labelled,,,,0
+s05aq02__36,le nom de votre SFD:36,labelled,,,,0
+s05aq02__37,le nom de votre SFD:37,labelled,,,,0
+s05aq02__38,le nom de votre SFD:38,labelled,,,,0
+s05aq02__39,le nom de votre SFD:39,labelled,,,,0
+s05aq02__40,le nom de votre SFD:40,labelled,,,,0
+s05aq02__41,le nom de votre SFD:41,labelled,,,,0
+s05aq02__42,le nom de votre SFD:42,labelled,,,,0
+s05aq02__43,le nom de votre SFD:43,labelled,,,,0
+s05aq02__44,le nom de votre SFD:44,labelled,,,,0
+s05aq02__45,le nom de votre SFD:45,labelled,,,,0
+s05aq02__46,le nom de votre SFD:46,labelled,,,,0
+s05aq02__47,le nom de votre SFD:47,labelled,,,,0
+s05aq02__48,le nom de votre SFD:48,labelled,,,,0
+s05aq02__49,le nom de votre SFD:49,labelled,,,,0
+s05aq02__50,le nom de votre SFD:50,labelled,,,,0
+s05aq02__51,le nom de votre SFD:51,labelled,,,,0
+s05aq02__52,le nom de votre SFD:52,labelled,,,,0
+s05aq02__53,le nom de votre SFD:53,labelled,,,,0
+s05aq02__54,le nom de votre SFD:54,labelled,,,,0
+s05aq02__55,le nom de votre SFD:55,labelled,,,,0
+s05aq02__56,le nom de votre SFD:56,labelled,,,,0
+s05aq02__57,le nom de votre SFD:57,labelled,,,,0
+s05aq02__58,le nom de votre SFD:58,labelled,,,,0
+s05aq02__59,le nom de votre SFD:59,labelled,,,,0
+s05aq02__60,le nom de votre SFD:60,labelled,,,,0
+s05aq02__61,le nom de votre SFD:61,labelled,,,,0
+s05aq02__62,le nom de votre SFD:62,labelled,,,,0
+s05aq02__63,le nom de votre SFD:63,labelled,,,,0
+s05aq02__64,le nom de votre SFD:64,labelled,,,,0
+s05aq02__65,le nom de votre SFD:65,labelled,,,,0
+s05aq02__66,le nom de votre SFD:66,labelled,,,,0
+s05aq02__67,le nom de votre SFD:67,labelled,,,,0
+s05aq02__68,le nom de votre SFD:68,labelled,,,,0
+s05aq02__69,le nom de votre SFD:69,labelled,,,,0
+s05aq02__70,le nom de votre SFD:70,labelled,,,,0
+s05aq02__71,le nom de votre SFD:71,labelled,,,,0
+s05aq02__72,le nom de votre SFD:72,labelled,,,,0
+s05aq02__73,le nom de votre SFD:73,labelled,,,,0
+s05aq02__74,le nom de votre SFD:74,labelled,,,,0
+s05aq02__75,le nom de votre SFD:75,labelled,,,,0
+s05aq02__76,le nom de votre SFD:76,labelled,,,,0
+s05aq02__77,le nom de votre SFD:77,labelled,,,,0
+s05aq02__78,le nom de votre SFD:78,labelled,,,,0
+s05aq02__79,le nom de votre SFD:79,labelled,,,,0
+s05aq02__80,le nom de votre SFD:80,labelled,,,,0
+s05aq04__1,Pour quelles raisons:Je n’ai pas confiance / J’ai eu ou je connais quelqu’un qui,numeric,,,,0
+s05aq04__2,Pour quelles raisons:Ce n’est pas pour moi / pas fait pour moi (catégorie social,numeric,,,,0
+s05aq04__3,Pour quelles raisons:Je n’ai pas les moyens pour mettre de l’argent sur un compt,numeric,,,,0
+s05aq04__4,"Pour quelles raisons:C’est trop cher (ouverture, gestion, transactions)",numeric,,,,0
+s05aq04__5,"Pour quelles raisons:C’est trop compliqué (papiers administratifs, manipulation)",numeric,,,,0
+s05aq04__6,Pour quelles raisons:Je n’ai pas besoin de leurs services,numeric,,,,0
+s05aq04__7,Pour quelles raisons:Je préfère le moyen que j’utilise actuellement,numeric,,,,0
+s05aq04__8,Pour quelles raisons:Je ne peux pas avoir accès au prêt,numeric,,,,0
+s05aq04__9,Pour quelles raisons:Difficultés à disposer des pièces d'Etat civil (carte d'ide,numeric,,,,0
+s05aq04__10,Pour quelles raisons:Pour des raisons religieuses,numeric,,,,0
+s05aq04__11,Pour quelles raisons:C’est trop loin de chez moi / pas de structures à proximité,numeric,,,,0
+s05aq04__12,Pour quelles raisons:Il y a des problèmes de liquidité lors de retrait d’argent,numeric,,,,0
+s05aq04__13,Pour quelles raisons:Trop d’attente au guichet / pas de bon service clientèle,numeric,,,,0
+s05aq04__14,Pour quelles raisons:Je n’ai pas de téléphone portable / pas de connexion,numeric,,,,0
+s05aq04__15,"Pour quelles raisons:Ce n’est pas fiable, pas sécurisé",numeric,,,,0
+s05aq04__16,Pour quelles raisons:Je ne connais pas l’existence de ce type de compte,numeric,,,,0
+s05aq04__17,"Pour quelles raisons:Je ne sais pas comment ça fonctionne, je ne connais pas bie",numeric,,,,0
+s05aq04__18,Pour quelles raisons:Pas de raison particulière / Ne sait pas,numeric,,,,0
+s05aq04__96,Pour quelles raisons:Autres (Préciser),numeric,,,,0
+s05aq04_autre,Autres raisons,character,,,,0
+s05aq05,5a.05 Comptez-vous ouvrir un compte à l’avenir ?,labelled,,,,0
+s05aq06,Type établissement,labelled,,,,0
+s05aq07__1,Incitation à ouvrir un compte:Sécurité,numeric,,,,0
+s05aq07__2,Incitation à ouvrir un compte:Proximité,numeric,,,,0
+s05aq07__3,Incitation à ouvrir un compte:Cout de service,numeric,,,,0
+s05aq07__4,Incitation à ouvrir un compte:Accès aux services bancaires,numeric,,,,0
+s05aq07__5,Incitation à ouvrir un compte:Utiliser les moyens de paiement,numeric,,,,0
+s05aq07__6,Incitation à ouvrir un compte:Salaire,numeric,,,,0
+s05aq07__96,Incitation à ouvrir un compte:Autres (Préciser),numeric,,,,0
+s05aq07_autre,autre incitation,character,,,,0
+s05aq08,5a.08 Utilisez-vous un ou plusieurs comptes ouverts à votre nom ou au nom d’une,labelled,,,,0
+s05aq09a,st le temps,labelled,,,,0
+s05aq09b,st le temps,labelled,,,,0
+s05aq09c,st le temps,labelled,,,,0
+s05aq09d,st le temps,labelled,,,,0
+s05aq09e,st le temps,labelled,,,,0
+s05aq09f,st le temps,labelled,,,,0
+s05aq10,5a.10 Quelle est la distance qui vous sépare de votre IMF ou du IMF le plus proc,labelled,,,,0
+s06aq01,compte  agence postale,labelled,a_compte_poste,numeric,Possède un compte à La Poste,1
+s06aq02,comptes,numeric,,,,0
+s06aq03__1,6a.03 Pour ceux qui n’ont pas de compte à la Poste .  Pour quelles raisons n’ave,numeric,,,,0
+s06aq03__2,6a.03 Pour ceux qui n’ont pas de compte à la Poste .  Pour quelles raisons n’ave,numeric,,,,0
+s06aq03__3,6a.03 Pour ceux qui n’ont pas de compte à la Poste .  Pour quelles raisons n’ave,numeric,,,,0
+s06aq03__4,6a.03 Pour ceux qui n’ont pas de compte à la Poste .  Pour quelles raisons n’ave,numeric,,,,0
+s06aq03__5,6a.03 Pour ceux qui n’ont pas de compte à la Poste .  Pour quelles raisons n’ave,numeric,,,,0
+s06aq03__6,6a.03 Pour ceux qui n’ont pas de compte à la Poste .  Pour quelles raisons n’ave,numeric,,,,0
+s06aq03__7,6a.03 Pour ceux qui n’ont pas de compte à la Poste .  Pour quelles raisons n’ave,numeric,,,,0
+s06aq03__8,6a.03 Pour ceux qui n’ont pas de compte à la Poste .  Pour quelles raisons n’ave,numeric,,,,0
+s06aq03__9,6a.03 Pour ceux qui n’ont pas de compte à la Poste .  Pour quelles raisons n’ave,numeric,,,,0
+s06aq03__10,6a.03 Pour ceux qui n’ont pas de compte à la Poste .  Pour quelles raisons n’ave,numeric,,,,0
+s06aq03__11,6a.03 Pour ceux qui n’ont pas de compte à la Poste .  Pour quelles raisons n’ave,numeric,,,,0
+s06aq03__12,6a.03 Pour ceux qui n’ont pas de compte à la Poste .  Pour quelles raisons n’ave,numeric,,,,0
+s06aq03__13,6a.03 Pour ceux qui n’ont pas de compte à la Poste .  Pour quelles raisons n’ave,numeric,,,,0
+s06aq03__14,6a.03 Pour ceux qui n’ont pas de compte à la Poste .  Pour quelles raisons n’ave,numeric,,,,0
+s06aq03__15,6a.03 Pour ceux qui n’ont pas de compte à la Poste .  Pour quelles raisons n’ave,numeric,,,,0
+s06aq03__16,6a.03 Pour ceux qui n’ont pas de compte à la Poste .  Pour quelles raisons n’ave,numeric,,,,0
+s06aq03__17,6a.03 Pour ceux qui n’ont pas de compte à la Poste .  Pour quelles raisons n’ave,numeric,,,,0
+s06aq03__18,6a.03 Pour ceux qui n’ont pas de compte à la Poste .  Pour quelles raisons n’ave,numeric,,,,0
+s06aq03__96,6a.03 Pour ceux qui n’ont pas de compte à la Poste .  Pour quelles raisons n’ave,numeric,,,,0
+s06aq03_autre,Autre raisons,character,,,,0
+s06aq04,6a.04 Comptez-vous ouvrir un compte à l’avenir ?,labelled,,,,0
+s06aq05,6a.05 Si oui dans quel type établissement&nbsp;?,labelled,,,,0
+s06aq05_autre,Préciser l'établissement,character,,,,0
+s06aq06__1,6a.06 Qu’est-ce qui vous inciterait à ouvrir un compte auprès d'une agence posta,numeric,,,,0
+s06aq06__2,6a.06 Qu’est-ce qui vous inciterait à ouvrir un compte auprès d'une agence posta,numeric,,,,0
+s06aq06__3,6a.06 Qu’est-ce qui vous inciterait à ouvrir un compte auprès d'une agence posta,numeric,,,,0
+s06aq06__4,6a.06 Qu’est-ce qui vous inciterait à ouvrir un compte auprès d'une agence posta,numeric,,,,0
+s06aq06__5,6a.06 Qu’est-ce qui vous inciterait à ouvrir un compte auprès d'une agence posta,numeric,,,,0
+s06aq06__96,6a.06 Qu’est-ce qui vous inciterait à ouvrir un compte auprès d'une agence posta,numeric,,,,0
+s06aq06_autre,Autre raison qui inciterait à ouvrir un compte,character,,,,0
+s06aq07,6a.07	Utilisez-vous un ou plusieurs comptes ouverts à votre nom ou au nom d’une,labelled,,,,0
+s06aq08a,6a.08A		Quel est le temps moyen que vous mettez pour accéder à l'agence postale,labelled,,,,0
+s06aq08b,6a.08B		Quel est le temps moyen que vous mettez pour accéder à l'agene postale l,labelled,,,,0
+s06aq08c,6a.08C		Quel est le temps moyen que vous mettez pour accéder à l'agence postale,labelled,,,,0
+s06aq08d,6a.08D		Quel est le temps moyen que vous mettez pour accéder à l' gence postale,labelled,,,,0
+s06aq08e,6a.08E		Quel est le temps moyen que vous mettez pour accéder à l'agence postale,labelled,,,,0
+s06aq08f,6a.08F		Quel est le temps moyen que vous mettez pour accéder à l'agence postale,labelled,,,,0
+s06aq09,6a09 Quelle est la distance qui vous sépare de votre agence postale  ?,labelled,,,,0
+s06bq12,"6b.12 Au cours des 12 derniers mois,  Avez vous rencontré des difficultés ou pro",labelled,,,,0
+s06bq13__1,"6b.13 Au cours 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s06bq13__2,"6b.13 Au cours 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s06bq13__3,"6b.13 Au cours 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s06bq13__4,"6b.13 Au cours 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s06bq13__5,"6b.13 Au cours 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s06bq13__6,"6b.13 Au cours 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s06bq13__7,"6b.13 Au cours 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s06bq13__96,"6b.13 Au cours 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s06bq13_autre,Préciser l'autre type de difficultés,character,,,,0
+s06bq14,6b.14 Plaintes&nbsp;:  Avez-vous déposé ou formulé une plainte formelle auprès d,labelled,,,,0
+s06bq15,6b.15 Résolution&nbsp;: Votre plainte a-t-elle été résolue ?,labelled,,,,0
+s06bq16,6b.16 Si Oui à la question précédente: Dans quels délais ?,labelled,,,,0
+s06bq17,6b.17 Avez-vous saisie une autorité de médiation/défense de consommateurs au cou,labelled,,,,0
+s06bq18,6b.18 Résolution&nbsp;: Votre plainte a-t-elle été résolue ?,labelled,,,,0
+s06bq19,6b.19 Si Oui à la question précédente: Dans quels délais ?,labelled,,,,0
+s06bq20,6b.20 Qu’est-ce qui vous inciterait à utiliser votre compte dans chacun de ces t,labelled,,,,0
+s06bq20_autres,Autres raisons qui vous incite à utiliser votre compte,character,,,,0
+s06cq01,compte  agence postale,labelled,,,,0
+s06cq01a__1,le nom de votre SFD:Agence Trésor1,numeric,,,,0
+s06cq01a__2,le nom de votre SFD:Agence Trésor2,numeric,,,,0
+s06cq01a__3,le nom de votre SFD:Agence Trésor3,numeric,,,,0
+s06cq01a__4,le nom de votre SFD:Agence Trésor4,numeric,,,,0
+s06cq03__1,6c.03 Pour ceux qui n’ont pas de compte à la poste. Pour quelles raisons n’avez-,numeric,,,,0
+s06cq03__2,6c.03 Pour ceux qui n’ont pas de compte à la poste. Pour quelles raisons n’avez-,numeric,,,,0
+s06cq03__3,6c.03 Pour ceux qui n’ont pas de compte à la poste. Pour quelles raisons n’avez-,numeric,,,,0
+s06cq03__4,6c.03 Pour ceux qui n’ont pas de compte à la poste. Pour quelles raisons n’avez-,numeric,,,,0
+s06cq03__5,6c.03 Pour ceux qui n’ont pas de compte à la poste. Pour quelles raisons n’avez-,numeric,,,,0
+s06cq03__6,6c.03 Pour ceux qui n’ont pas de compte à la poste. Pour quelles raisons n’avez-,numeric,,,,0
+s06cq03__7,6c.03 Pour ceux qui n’ont pas de compte à la poste. Pour quelles raisons n’avez-,numeric,,,,0
+s06cq03__8,6c.03 Pour ceux qui n’ont pas de compte à la poste. Pour quelles raisons n’avez-,numeric,,,,0
+s06cq03__9,6c.03 Pour ceux qui n’ont pas de compte à la poste. Pour quelles raisons n’avez-,numeric,,,,0
+s06cq03__10,6c.03 Pour ceux qui n’ont pas de compte à la poste. Pour quelles raisons n’avez-,numeric,,,,0
+s06cq03__11,6c.03 Pour ceux qui n’ont pas de compte à la poste. Pour quelles raisons n’avez-,numeric,,,,0
+s06cq03__12,6c.03 Pour ceux qui n’ont pas de compte à la poste. Pour quelles raisons n’avez-,numeric,,,,0
+s06cq03__13,6c.03 Pour ceux qui n’ont pas de compte à la poste. Pour quelles raisons n’avez-,numeric,,,,0
+s06cq03__14,6c.03 Pour ceux qui n’ont pas de compte à la poste. Pour quelles raisons n’avez-,numeric,,,,0
+s06cq03__15,6c.03 Pour ceux qui n’ont pas de compte à la poste. Pour quelles raisons n’avez-,numeric,,,,0
+s06cq03__16,6c.03 Pour ceux qui n’ont pas de compte à la poste. Pour quelles raisons n’avez-,numeric,,,,0
+s06cq03__17,6c.03 Pour ceux qui n’ont pas de compte à la poste. Pour quelles raisons n’avez-,numeric,,,,0
+s06cq03__18,6c.03 Pour ceux qui n’ont pas de compte à la poste. Pour quelles raisons n’avez-,numeric,,,,0
+s06cq03__96,6c.03 Pour ceux qui n’ont pas de compte à la poste. Pour quelles raisons n’avez-,numeric,,,,0
+s06cq03_autre,Préciser l'autre raison,character,,,,0
+s06cq04,6c.04 Comptez-vous ouvrir un compte à l’avenir ?,labelled,,,,0
+s06cq05,6c.05 Si oui dans quel type établissement&nbsp;?,character,,,,0
+s06cq06__1,6c.06 Qu’est-ce qui vous inciterait à ouvrir un compte auprès d'une agence banca,numeric,,,,0
+s06cq06__2,6c.06 Qu’est-ce qui vous inciterait à ouvrir un compte auprès d'une agence banca,numeric,,,,0
+s06cq06__3,6c.06 Qu’est-ce qui vous inciterait à ouvrir un compte auprès d'une agence banca,numeric,,,,0
+s06cq06__4,6c.06 Qu’est-ce qui vous inciterait à ouvrir un compte auprès d'une agence banca,numeric,,,,0
+s06cq06__5,6c.06 Qu’est-ce qui vous inciterait à ouvrir un compte auprès d'une agence banca,numeric,,,,0
+s06cq06__96,6c.06 Qu’est-ce qui vous inciterait à ouvrir un compte auprès d'une agence banca,numeric,,,,0
+s06cq06_autre,Préciser l'autre incitation,character,,,,0
+s06cq07,6c.07	Utilisez-vous un ou plusieurs comptes ouverts à votre nom ou au nom d’une,labelled,,,,0
+s06cq08a,6c.08A		Quel est le temps moyen que vous mettez pour accéder à l'agence bancaire,labelled,,,,0
+s06cq08b,6c.08B		Quel est le temps moyen que vous mettez pour accéder à l'agene bancaire,labelled,,,,0
+s06cq08c,6c.08C		Quel est le temps moyen que vous mettez pour accéder à l'agence bancaire,labelled,,,,0
+s06cq08d,6c.08D		Quel est le temps moyen que vous mettez pour accéder à l'agence bancaire,labelled,,,,0
+s06cq08e,6c.08E		Quel est le temps moyen que vous mettez pour accéder à l'agence bancaire,labelled,,,,0
+s06cq08f,6c.08F		Quel est le temps moyen que vous mettez pour accéder à l'agence bancaire,labelled,,,,0
+s06cq09,6c.09 Quelle est la distance qui vous sépare de votre agence bancaire du trésor,labelled,,,,0
+s06dq12,"6d.12 Au cours des 12 derniers mois,  Avez vous rencontré des difficultés ou pro",labelled,,,,0
+s06dq13__1,"6d.13 Au cours 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s06dq13__2,"6d.13 Au cours 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s06dq13__3,"6d.13 Au cours 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s06dq13__4,"6d.13 Au cours 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s06dq13__5,"6d.13 Au cours 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s06dq13__6,"6d.13 Au cours 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s06dq13__7,"6d.13 Au cours 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s06dq13__96,"6d.13 Au cours 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s06dq13_autre,autres difficultés ou problèmes avez-vous rencontré lors de vos transactions,character,,,,0
+s06dq14,6d.14 Plaintes&nbsp;:  Avez-vous déposé ou formulé une plainte formelle auprès d,labelled,,,,0
+s06dq15,6d.15 Résolution&nbsp;: Votre plainte a-t-elle été résolue ?,labelled,,,,0
+s06dq16,6d.16 Si Oui à la question précédente: Dans quels délais ?,labelled,,,,0
+s06dq17,6d.17 Avez-vous saisie une autorité de médiation/défense de consommateurs au cou,labelled,,,,0
+s06dq18,6d.18 Résolution&nbsp;: Votre plainte a-t-elle été résolue ?,labelled,,,,0
+s06dq19,6d.19 Si Oui à la question précédente: Dans quels délais ?,labelled,,,,0
+s06dq20__1,6d.20 Qu’est-ce qui vous inciterait à utiliser votre compte dans une agence post,numeric,,,,0
+s06dq20__2,6d.20 Qu’est-ce qui vous inciterait à utiliser votre compte dans une agence post,numeric,,,,0
+s06dq20__3,6d.20 Qu’est-ce qui vous inciterait à utiliser votre compte dans une agence post,numeric,,,,0
+s06dq20__4,6d.20 Qu’est-ce qui vous inciterait à utiliser votre compte dans une agence post,numeric,,,,0
+s06dq20__5,6d.20 Qu’est-ce qui vous inciterait à utiliser votre compte dans une agence post,numeric,,,,0
+s06dq20__96,6d.20 Qu’est-ce qui vous inciterait à utiliser votre compte dans une agence post,numeric,,,,0
+s06dq20_autres,Autres raisons qui vous incite à utiliser votre compte,character,,,,0
+s07q01,7.01 Avez-vous déposé une demande de crédit ces deux dernières années ?,labelled,a_demande_credit,numeric,A déposé une demande de crédit (2 ans),1
+s07q02__1,7.02 pourquoi n’avez-vous pas postulé / demandé un crédit ?:Peur d’être rejetée,numeric,,,,0
+s07q02__2,7.02 pourquoi n’avez-vous pas postulé / demandé un crédit ?:Peur de perdre la ga,numeric,,,,0
+s07q02__3,7.02 pourquoi n’avez-vous pas postulé / demandé un crédit ?:Démarches administra,numeric,,,,0
+s07q02__4,7.02 pourquoi n’avez-vous pas postulé / demandé un crédit ?:Pas de besoins en cr,numeric,,,,0
+s07q02__5,7.02 pourquoi n’avez-vous pas postulé / demandé un crédit ?:N’est pas intéressé,numeric,,,,0
+s07q02__6,7.02 pourquoi n’avez-vous pas postulé / demandé un crédit ?:Ne fait pas confianc,numeric,,,,0
+s07q02__7,7.02 pourquoi n’avez-vous pas postulé / demandé un crédit ?:Je ne verse pas / re,numeric,,,,0
+s07q02__8,7.02 pourquoi n’avez-vous pas postulé / demandé un crédit ?:Taux d’intérêts trop,numeric,,,,0
+s07q02__9,7.02 pourquoi n’avez-vous pas postulé / demandé un crédit ?:Conditions de prêts,numeric,,,,0
+s07q02__10,7.02 pourquoi n’avez-vous pas postulé / demandé un crédit ?:Montants de prêts no,numeric,,,,0
+s07q02__11,7.02 pourquoi n’avez-vous pas postulé / demandé un crédit ?:Peur de ne pas être,numeric,,,,0
+s07q02__12,7.02 pourquoi n’avez-vous pas postulé / demandé un crédit ?:Ne connaît pas,numeric,,,,0
+s07q02__13,7.02 pourquoi n’avez-vous pas postulé / demandé un crédit ?:Pas ou manque de gar,numeric,,,,0
+s07q02__14,7.02 pourquoi n’avez-vous pas postulé / demandé un crédit ?:Pas d’institutions p,numeric,,,,0
+s07q02__15,7.02 pourquoi n’avez-vous pas postulé / demandé un crédit ?:Convictions religieu,numeric,,,,0
+s07q02__16,7.02 pourquoi n’avez-vous pas postulé / demandé un crédit ?:Ne sait pas,numeric,,,,0
+s07q02__96,7.02 pourquoi n’avez-vous pas postulé / demandé un crédit ?:Autres (Préciser),numeric,,,,0
+s07q02_autre,Préciser l'autre raison,character,,,,0
+s07q03__1,"7.03 Si oui, auprès de qui ?:Amis/parents",numeric,s07q03__1,numeric,Choix multiple : s07q03__1,1
+s07q03__2,"7.03 Si oui, auprès de qui ?:IMF",numeric,s07q03__2,numeric,Choix multiple : s07q03__2,1
+s07q03__3,"7.03 Si oui, auprès de qui ?:Banque",numeric,s07q03__3,numeric,Choix multiple : s07q03__3,1
+s07q03__4,"7.03 Si oui, auprès de qui ?:Poste",numeric,s07q03__4,numeric,Choix multiple : s07q03__4,1
+s07q03__5,"7.03 Si oui, auprès de qui ?:Usuriers",numeric,s07q03__5,numeric,Choix multiple : s07q03__5,1
+s07q03__6,"7.03 Si oui, auprès de qui ?:Tontine",numeric,s07q03__6,numeric,Choix multiple : s07q03__6,1
+s07q03__7,"7.03 Si oui, auprès de qui ?:Boutiquier",numeric,s07q03__7,numeric,Choix multiple : s07q03__7,1
+s07q03__96,"7.03 Si oui, auprès de qui ?:Autres (préciser)",numeric,s07q03__96,numeric,Choix multiple : s07q03__96,1
+s07q03_autre,Autre emprunteur,character,,,,0
+s07q04,"7.04 Si banque, poste , IMF ou autres institutions formelles (Trésors, fonds nat",labelled,,,,0
+s07q05__1,7.05  Pourquoi votre demande a été refusée la dernière fois ?:Manque de garantie,numeric,,,,0
+s07q05__2,7.05  Pourquoi votre demande a été refusée la dernière fois ?:Dossier incomplet,numeric,,,,0
+s07q05__3,7.05  Pourquoi votre demande a été refusée la dernière fois ?:Pas de garant,numeric,,,,0
+s07q05__4,7.05  Pourquoi votre demande a été refusée la dernière fois ?:Problèmes de rembo,numeric,,,,0
+s07q05__5,7.05  Pourquoi votre demande a été refusée la dernière fois ?:Apport individuel,numeric,,,,0
+s07q05__6,7.05  Pourquoi votre demande a été refusée la dernière fois ?:Ne sait pas,numeric,,,,0
+s07q05__96,7.05  Pourquoi votre demande a été refusée la dernière fois ?:Autres (Préciser),numeric,,,,0
+s07q05_autre,Autre raison,character,,,,0
+s07q06__1,"7.06 Si banque, poste, IMF, ou autres institutions formelles (Trésors, fonds nat",numeric,,,,0
+s07q06__2,"7.06 Si banque, poste, IMF, ou autres institutions formelles (Trésors, fonds nat",numeric,,,,0
+s07q06__3,"7.06 Si banque, poste, IMF, ou autres institutions formelles (Trésors, fonds nat",numeric,,,,0
+s07q06__4,"7.06 Si banque, poste, IMF, ou autres institutions formelles (Trésors, fonds nat",numeric,,,,0
+s07q07,7.07 Quel était le montant du crédit ?,labelled,montant_credit,numeric,Montant du dernier crédit obtenu (FCFA),1
+s07q08__1,7.08 A quoi a servi le crédit obtenu&nbsp;?:Acheter une maison / terrain / const,numeric,s07q08__1,numeric,Choix multiple : s07q08__1,1
+s07q08__2,7.08 A quoi a servi le crédit obtenu&nbsp;?:Acheter un véhicule (moto / voiture),numeric,s07q08__2,numeric,Choix multiple : s07q08__2,1
+s07q08__3,7.08 A quoi a servi le crédit obtenu&nbsp;?:Améliorer la maison et achat matérie,numeric,s07q08__3,numeric,Choix multiple : s07q08__3,1
+s07q08__4,7.08 A quoi a servi le crédit obtenu&nbsp;?:Frais de scolarité / Envoyer des enf,numeric,s07q08__4,numeric,Choix multiple : s07q08__4,1
+s07q08__5,"7.08 A quoi a servi le crédit obtenu&nbsp;?:Cérémonies (mariages, funérailles)",numeric,s07q08__5,numeric,Choix multiple : s07q08__5,1
+s07q08__6,7.08 A quoi a servi le crédit obtenu&nbsp;?:Partir à l'étranger / envoyer un pro,numeric,s07q08__6,numeric,Choix multiple : s07q08__6,1
+s07q08__7,7.08 A quoi a servi le crédit obtenu&nbsp;?:Partir en pèlerinage / envoyer un pr,numeric,s07q08__7,numeric,Choix multiple : s07q08__7,1
+s07q08__8,7.08 A quoi a servi le crédit obtenu&nbsp;?:Démarrer une activité,numeric,s07q08__8,numeric,Choix multiple : s07q08__8,1
+s07q08__9,7.08 A quoi a servi le crédit obtenu&nbsp;?:Acheter des marchandises / stock /in,numeric,s07q08__9,numeric,Choix multiple : s07q08__9,1
+s07q08__10,7.08 A quoi a servi le crédit obtenu&nbsp;?:Acheter des équipements/matériel pou,numeric,s07q08__10,numeric,Choix multiple : s07q08__10,1
+s07q08__11,7.08 A quoi a servi le crédit obtenu&nbsp;?:Acheter un local / améliorer le loca,numeric,s07q08__11,numeric,Choix multiple : s07q08__11,1
+s07q08__12,7.08 A quoi a servi le crédit obtenu&nbsp;?:Couvrir des dépenses de santé (perso,numeric,s07q08__12,numeric,Choix multiple : s07q08__12,1
+s07q08__13,7.08 A quoi a servi le crédit obtenu&nbsp;?:Célébrer un baptême,numeric,s07q08__13,numeric,Choix multiple : s07q08__13,1
+s07q08__14,7.08 A quoi a servi le crédit obtenu&nbsp;?:Faire des funérailles,numeric,s07q08__14,numeric,Choix multiple : s07q08__14,1
+s07q08__15,7.08 A quoi a servi le crédit obtenu&nbsp;?:Célébrer un mariage,numeric,s07q08__15,numeric,Choix multiple : s07q08__15,1
+s07q08__96,7.08 A quoi a servi le crédit obtenu&nbsp;?:Autres( à préciser),numeric,s07q08__96,numeric,Choix multiple : s07q08__96,1
+s07q08_autre,Préciser l'autre,character,,,,0
+s07q09,"7.09 Pour ce crédit, avez-vous reçu de l’information complète et transparente su",labelled,,,,0
+s07q10__1,7.10	Quelles difficultés avez-vous rencontrées lors de ce crédit&nbsp;?:Le monta,numeric,,,,0
+s07q10__2,7.10	Quelles difficultés avez-vous rencontrées lors de ce crédit&nbsp;?:Le délai,numeric,,,,0
+s07q10__3,7.10	Quelles difficultés avez-vous rencontrées lors de ce crédit&nbsp;?:La pério,numeric,,,,0
+s07q10__4,7.10	Quelles difficultés avez-vous rencontrées lors de ce crédit&nbsp;?:Le monta,numeric,,,,0
+s07q10__5,7.10	Quelles difficultés avez-vous rencontrées lors de ce crédit&nbsp;?:Les gara,numeric,,,,0
+s07q10__6,7.10	Quelles difficultés avez-vous rencontrées lors de ce crédit&nbsp;?:Le temps,numeric,,,,0
+s07q10__7,7.10	Quelles difficultés avez-vous rencontrées lors de ce crédit&nbsp;?:Le taux,numeric,,,,0
+s07q10__8,7.10	Quelles difficultés avez-vous rencontrées lors de ce crédit&nbsp;?:Le servi,numeric,,,,0
+s07q10__9,7.10	Quelles difficultés avez-vous rencontrées lors de ce crédit&nbsp;?:La commi,numeric,,,,0
+s07q10__10,7.10	Quelles difficultés avez-vous rencontrées lors de ce crédit&nbsp;?:Le délai,numeric,,,,0
+s07q10__11,7.10	Quelles difficultés avez-vous rencontrées lors de ce crédit&nbsp;?:Accès di,numeric,,,,0
+s07q10__96,7.10	Quelles difficultés avez-vous rencontrées lors de ce crédit&nbsp;?:Autres (,numeric,,,,0
+s07q10_autre,Autre difficulté,character,,,,0
+s07q11__1,"7.11	En lien avec vos difficultés, pourriez-vous nous dire si dans les 12 dernie",numeric,,,,0
+s07q11__2,"7.11	En lien avec vos difficultés, pourriez-vous nous dire si dans les 12 dernie",numeric,,,,0
+s07q11__3,"7.11	En lien avec vos difficultés, pourriez-vous nous dire si dans les 12 dernie",numeric,,,,0
+s07q11__4,"7.11	En lien avec vos difficultés, pourriez-vous nous dire si dans les 12 dernie",numeric,,,,0
+s07q11__5,"7.11	En lien avec vos difficultés, pourriez-vous nous dire si dans les 12 dernie",numeric,,,,0
+s07q11__90,"7.11	En lien avec vos difficultés, pourriez-vous nous dire si dans les 12 dernie",numeric,,,,0
+s07q12__1,7.12 Quelles sont les conséquences de vos difficultés de remboursement&nbsp;?:Pa,numeric,,,,0
+s07q12__2,7.12 Quelles sont les conséquences de vos difficultés de remboursement&nbsp;?:Ba,numeric,,,,0
+s07q12__3,7.12 Quelles sont les conséquences de vos difficultés de remboursement&nbsp;?:Re,numeric,,,,0
+s07q12__4,7.12 Quelles sont les conséquences de vos difficultés de remboursement&nbsp;?:Sa,numeric,,,,0
+s07q12__5,7.12 Quelles sont les conséquences de vos difficultés de remboursement&nbsp;?:Di,numeric,,,,0
+s07q12__6,7.12 Quelles sont les conséquences de vos difficultés de remboursement&nbsp;?:Ré,numeric,,,,0
+s07q12__96,7.12 Quelles sont les conséquences de vos difficultés de remboursement&nbsp;?:Au,numeric,,,,0
+s07q12_autre,Autre conséquence,character,,,,0
+s07q13,7.13 Retourneriez-vous auprès de cette institution en cas de besoin de crédit ?,labelled,,,,0
+s07q14__1,"7.14	Quels sont vos futurs projets pour vous-même, votre famille ou votre activi",numeric,,,,0
+s07q14__2,"7.14	Quels sont vos futurs projets pour vous-même, votre famille ou votre activi",numeric,,,,0
+s07q14__3,"7.14	Quels sont vos futurs projets pour vous-même, votre famille ou votre activi",numeric,,,,0
+s07q14__4,"7.14	Quels sont vos futurs projets pour vous-même, votre famille ou votre activi",numeric,,,,0
+s07q14__5,"7.14	Quels sont vos futurs projets pour vous-même, votre famille ou votre activi",numeric,,,,0
+s07q14__6,"7.14	Quels sont vos futurs projets pour vous-même, votre famille ou votre activi",numeric,,,,0
+s07q14__7,"7.14	Quels sont vos futurs projets pour vous-même, votre famille ou votre activi",numeric,,,,0
+s07q14__8,"7.14	Quels sont vos futurs projets pour vous-même, votre famille ou votre activi",numeric,,,,0
+s07q14__9,"7.14	Quels sont vos futurs projets pour vous-même, votre famille ou votre activi",numeric,,,,0
+s07q14__10,"7.14	Quels sont vos futurs projets pour vous-même, votre famille ou votre activi",numeric,,,,0
+s07q14__11,"7.14	Quels sont vos futurs projets pour vous-même, votre famille ou votre activi",numeric,,,,0
+s07q14__12,"7.14	Quels sont vos futurs projets pour vous-même, votre famille ou votre activi",numeric,,,,0
+s07q14__13,"7.14	Quels sont vos futurs projets pour vous-même, votre famille ou votre activi",numeric,,,,0
+s07q14__96,"7.14	Quels sont vos futurs projets pour vous-même, votre famille ou votre activi",numeric,,,,0
+s07q14_autre,Autre projet,character,,,,0
+s07q15__1,7.15	Comment allez-vous financer ce/ces projet(s)&nbsp;?:Épargne,numeric,,,,0
+s07q15__2,7.15	Comment allez-vous financer ce/ces projet(s)&nbsp;?:Revenus courants,numeric,,,,0
+s07q15__3,7.15	Comment allez-vous financer ce/ces projet(s)&nbsp;?:Crédit auprès d’un IMF,numeric,,,,0
+s07q15__4,7.15	Comment allez-vous financer ce/ces projet(s)&nbsp;?:Crédit auprès d’une ban,numeric,,,,0
+s07q15__5,7.15	Comment allez-vous financer ce/ces projet(s)&nbsp;?:Crédit auprès d’un usur,numeric,,,,0
+s07q15__6,7.15	Comment allez-vous financer ce/ces projet(s)&nbsp;?:Crédit ou subvention d’,numeric,,,,0
+s07q15__7,7.15	Comment allez-vous financer ce/ces projet(s)&nbsp;?:Tontines,numeric,,,,0
+s07q15__8,7.15	Comment allez-vous financer ce/ces projet(s)&nbsp;?:Ventes de biens,numeric,,,,0
+s07q15__9,7.15	Comment allez-vous financer ce/ces projet(s)&nbsp;?:Crédit par amis/famille,numeric,,,,0
+s07q15__96,7.15	Comment allez-vous financer ce/ces projet(s)&nbsp;?:Autres Préciser),numeric,,,,0
+s07q15_autre,Autre mode de financement,character,,,,0
+s07q16,"7.16 Si crédit formel dans un IMF, poste ou banque,Quel type de crédit préfériez",labelled,,,,0
+s07q17,7.17 A combien s’élèverait le montant de cet investissement  ?,numeric,,,,0
+s07q18,7.18 A combien s’élèverait le montant du crédit demandé ?,numeric,,,,0
+s07q19,7.19	Pour quelle durée ?,labelled,,,,0
+s07q19_autre,Autre durée,character,,,,0
+s07q20,7.20	Pour quelle périodicité de remboursement&nbsp;?,labelled,,,,0
+s07q20_autre,Autre périodicité,character,,,,0
+s07q21,7.21	Combien pouvez-vous rembourser chaque mois (capital et intérêt) ?,numeric,,,,0
+s07q22__1,7.22	Quel type de garantie préféreriez-vous donner&nbsp;?:Caution solidaire,numeric,,,,0
+s07q22__2,7.22	Quel type de garantie préféreriez-vous donner&nbsp;?:Biens physiques,numeric,,,,0
+s07q22__3,7.22	Quel type de garantie préféreriez-vous donner&nbsp;?:Caution d’une autre pe,numeric,,,,0
+s07q22__4,7.22	Quel type de garantie préféreriez-vous donner&nbsp;?:Epargne (fiduciaire),numeric,,,,0
+s07q22__5,7.22	Quel type de garantie préféreriez-vous donner&nbsp;?:Attestation de possess,numeric,,,,0
+s07q22__96,7.22	Quel type de garantie préféreriez-vous donner&nbsp;?:Autres (préciser),numeric,,,,0
+s07q22_autre,Autre type de garantie,character,,,,0
+s07q23__1,7.23 Pour vous quels sont les 3 éléments les plus importants si vous aviez à dem,numeric,,,,0
+s07q23__2,7.23 Pour vous quels sont les 3 éléments les plus importants si vous aviez à dem,numeric,,,,0
+s07q23__3,7.23 Pour vous quels sont les 3 éléments les plus importants si vous aviez à dem,numeric,,,,0
+s07q23__4,7.23 Pour vous quels sont les 3 éléments les plus importants si vous aviez à dem,numeric,,,,0
+s07q23__5,7.23 Pour vous quels sont les 3 éléments les plus importants si vous aviez à dem,numeric,,,,0
+s07q23__6,7.23 Pour vous quels sont les 3 éléments les plus importants si vous aviez à dem,numeric,,,,0
+s07q23__7,7.23 Pour vous quels sont les 3 éléments les plus importants si vous aviez à dem,numeric,,,,0
+s07q23__8,7.23 Pour vous quels sont les 3 éléments les plus importants si vous aviez à dem,numeric,,,,0
+s07q23__9,7.23 Pour vous quels sont les 3 éléments les plus importants si vous aviez à dem,numeric,,,,0
+s07q23__96,7.23 Pour vous quels sont les 3 éléments les plus importants si vous aviez à dem,numeric,,,,0
+s07q23_autre__0,Autres éléments plus importants:0,character,,,,0
+s07q23_autre__0c,Autres éléments plus importants:0c,numeric,,,,0
+s07q23_autre__1,Autres éléments plus importants:1,character,,,,0
+s07q23_autre__1c,Autres éléments plus importants:1c,numeric,,,,0
+s07q23_autre__2,Autres éléments plus importants:2,character,,,,0
+s07q23_autre__2c,Autres éléments plus importants:2c,numeric,,,,0
+s07q24,7.24	Connaissez-vous les produits islamiques ?,labelled,,,,0
+s07q25,7.25	Avez-vous déjà bénéficié d’un produit prêt islamique,labelled,,,,0
+s07q26,7.26 Si Oui Lequel (Le dernier)?,labelled,,,,0
+s07q26_autre,Préciser l'autre produit,character,,,,0
+s07q27,7.27 Si oui  Dans quelle institution ?,character,,,,0
+s07q28,7.28 Si non souhaitez-vous en bénéficier&nbsp;?,labelled,,,,0
+s07q29,7.29	Par lequel seriez-vous le plus intéressé ?,labelled,,,,0
+s07q29_autre,Préciser l'autre qui vous intéresse,character,,,,0
+s07q30,7.30	Connaissez-vous les produits crédits/pret via mobile (Pret mobile; Exemple,labelled,,,,0
+s07q31,7.31	Avez-vous déjà bénéficié d’un produit prêt mobile ces 12 derniers mois?,labelled,,,,0
+s07q32,"7.32 Si oui, dans quelle institution ?",character,,,,0
+s07q33a,7.33A	Combien s’élèvait le montant de cet credit (votre dernier credit)  ?,numeric,,,,0
+s07q33b,7.33B Que fut le temps moyen pour le traitement de votre dossier de crédit (Temp,labelled,,,,0
+s07q34,7.34 Si  non souhaitez-vous en bénéficier&nbsp;?,labelled,,,,0
+s08q01,8.01 Épargnez-vous?,labelled,epargne_oui,numeric,Épargne régulièrement,1
+s08q02__1,8.02 Où mettez-vous votre épargne ?:A la maison,numeric,s08q02__1,numeric,Choix multiple : s08q02__1,1
+s08q02__2,"8.02 Où mettez-vous votre épargne ?:Achats de bijoux, animaux, marchandises",numeric,s08q02__2,numeric,Choix multiple : s08q02__2,1
+s08q02__3,8.02 Où mettez-vous votre épargne ?:Dans un IMF,numeric,s08q02__3,numeric,Choix multiple : s08q02__3,1
+s08q02__4,8.02 Où mettez-vous votre épargne ?:A la banque,numeric,s08q02__4,numeric,Choix multiple : s08q02__4,1
+s08q02__5,8.02 Où mettez-vous votre épargne ?:Poste,numeric,s08q02__5,numeric,Choix multiple : s08q02__5,1
+s08q02__6,8.02 Où mettez-vous votre épargne ?:Association de tontine,numeric,s08q02__6,numeric,Choix multiple : s08q02__6,1
+s08q02__7,8.02 Où mettez-vous votre épargne ?:Portefeuille électronique,numeric,s08q02__7,numeric,Choix multiple : s08q02__7,1
+s08q02__8,8.02 Où mettez-vous votre épargne ?:chez des Parents/amis,numeric,s08q02__8,numeric,Choix multiple : s08q02__8,1
+s08q02__96,8.02 Où mettez-vous votre épargne ?:Autres(à préciser),numeric,s08q02__96,numeric,Choix multiple : s08q02__96,1
+s08q02_autre,Autre lieu d'épargne,character,,,,0
+s08q03__0,"8.03 Si vous avez un compte d’épargne formel , dans quelle(s) structure(s) se tr",labelled,,,,0
+s08q03__1,"8.03 Si vous avez un compte d’épargne formel , dans quelle(s) structure(s) se tr",labelled,,,,0
+s08q03__2,"8.03 Si vous avez un compte d’épargne formel , dans quelle(s) structure(s) se tr",labelled,,,,0
+s08q03__3,"8.03 Si vous avez un compte d’épargne formel , dans quelle(s) structure(s) se tr",labelled,,,,0
+s08q04__1,8.04 Quel(s) types de comptes avez-vous ?:Compte courant,numeric,s08q04__1,numeric,Choix multiple : s08q04__1,1
+s08q04__2,8.04 Quel(s) types de comptes avez-vous ?:Compte épargne à vue,numeric,s08q04__2,numeric,Choix multiple : s08q04__2,1
+s08q04__3,8.04 Quel(s) types de comptes avez-vous ?:Compte épargne bloquée,numeric,s08q04__3,numeric,Choix multiple : s08q04__3,1
+s08q04__4,8.04 Quel(s) types de comptes avez-vous ?:Compte épargne spécialisée (épargne éd,numeric,s08q04__4,numeric,Choix multiple : s08q04__4,1
+s08q04__96,8.04 Quel(s) types de comptes avez-vous ?:Autre (préciser),numeric,s08q04__96,numeric,Choix multiple : s08q04__96,1
+s08q06__1,"8.06
+Pourquoi mettez-vous de l’argent de côté ?:Pour les investissements futurs",numeric,,,,0
+s08q06__2,"8.06
+Pourquoi mettez-vous de l’argent de côté ?:Pour ne pas dépenser inutilement",numeric,,,,0
+s08q06__3,"8.06
+Pourquoi mettez-vous de l’argent de côté ?:Pour avoir des intérêts",numeric,,,,0
+s08q06__4,"8.06
+Pourquoi mettez-vous de l’argent de côté ?:Pour la retraite",numeric,,,,0
+s08q06__5,"8.06
+Pourquoi mettez-vous de l’argent de côté ?:Pour la scolarité des enfants",numeric,,,,0
+s08q06__6,"8.06
+Pourquoi mettez-vous de l’argent de côté ?:Pour des célébrations diverses",numeric,,,,0
+s08q06__7,"8.06
+Pourquoi mettez-vous de l’argent de côté ?:Pour faire face à une possible b",numeric,,,,0
+s08q06__8,"8.06
+Pourquoi mettez-vous de l’argent de côté ?:Parce qu’on ne sait jamais",numeric,,,,0
+s08q06__9,"8.06
+Pourquoi mettez-vous de l’argent de côté ?:Pour les soins de santé",numeric,,,,0
+s08q06__10,"8.06
+Pourquoi mettez-vous de l’argent de côté ?:Pour obtenir un crédit",numeric,,,,0
+s08q06__11,"8.06
+Pourquoi mettez-vous de l’argent de côté ?:A des fins de consommation",numeric,,,,0
+s08q06__12,"8.06
+Pourquoi mettez-vous de l’argent de côté ?:Par sécurité, pour ne pas garder",numeric,,,,0
+s08q06__13,"8.06
+Pourquoi mettez-vous de l’argent de côté ?:Partir en pèlerinage / envoyer u",numeric,,,,0
+s08q06__96,"8.06
+Pourquoi mettez-vous de l’argent de côté ?:Autres (préciser________________",numeric,,,,0
+s08q06_autre,Autre raison de mettre de l'argent à coté,character,,,,0
+s08q07__1,"8.07 Sur les 12 derniers mois, via quel canal avez vous eu accès à votre épargne",numeric,,,,0
+s08q07__2,"8.07 Sur les 12 derniers mois, via quel canal avez vous eu accès à votre épargne",numeric,,,,0
+s08q07__3,"8.07 Sur les 12 derniers mois, via quel canal avez vous eu accès à votre épargne",numeric,,,,0
+s08q07__4,"8.07 Sur les 12 derniers mois, via quel canal avez vous eu accès à votre épargne",numeric,,,,0
+s08q07__5,"8.07 Sur les 12 derniers mois, via quel canal avez vous eu accès à votre épargne",numeric,,,,0
+s08q07__96,"8.07 Sur les 12 derniers mois, via quel canal avez vous eu accès à votre épargne",numeric,,,,0
+s08q07__6,"8.07 Sur les 12 derniers mois, via quel canal avez vous eu accès à votre épargne",numeric,,,,0
+s08q07__90,"8.07 Sur les 12 derniers mois, via quel canal avez vous eu accès à votre épargne",numeric,,,,0
+s08q07_autre,Autre canal d'investissement,character,,,,0
+s08q08,8.08 Investissement de l’épargne:Avez-vous investi votre épargne lors des 12 der,labelled,a_investi_epargne,numeric,A investi son épargne (12 derniers mois),1
+s08q09__1,8.09 Dans quel type d’investissement placez-vous votre épargne ou celle de votre,numeric,,,,0
+s08q09__2,8.09 Dans quel type d’investissement placez-vous votre épargne ou celle de votre,numeric,,,,0
+s08q09__3,8.09 Dans quel type d’investissement placez-vous votre épargne ou celle de votre,numeric,,,,0
+s08q09__4,8.09 Dans quel type d’investissement placez-vous votre épargne ou celle de votre,numeric,,,,0
+s08q09__5,8.09 Dans quel type d’investissement placez-vous votre épargne ou celle de votre,numeric,,,,0
+s08q09__6,8.09 Dans quel type d’investissement placez-vous votre épargne ou celle de votre,numeric,,,,0
+s08q09__7,8.09 Dans quel type d’investissement placez-vous votre épargne ou celle de votre,numeric,,,,0
+s08q09__96,8.09 Dans quel type d’investissement placez-vous votre épargne ou celle de votre,numeric,,,,0
+s08q09_autre,Autre type d'investissement,character,,,,0
+s08q10__1,8.10 Pourquoi n’investissez-vous pas votre épargne se trouvant auprès des PSF&nb,numeric,,,,0
+s08q10__2,8.10 Pourquoi n’investissez-vous pas votre épargne se trouvant auprès des PSF&nb,numeric,,,,0
+s08q10__3,8.10 Pourquoi n’investissez-vous pas votre épargne se trouvant auprès des PSF&nb,numeric,,,,0
+s08q10__96,8.10 Pourquoi n’investissez-vous pas votre épargne se trouvant auprès des PSF&nb,numeric,,,,0
+s08q10_autre,Autre raison de ne pas investir,character,,,,0
+s09aq01,9a.01 Au cours des 12 derniers mois avez-vous recu de l’argent que ce soit de l’,labelled,,,,0
+s09aq02,9a.02 A quelle fréquence  recevez-vous de l’argent ?,labelled,,,,0
+s09aq03,9a.03 Par quelle voie recevez-vous  le plus souvent cet argent ?,labelled,,,,0
+s09aq03_autre,Autre voie de reception,character,,,,0
+s09aq04__1,9a.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour recevoir l'argent?:S,numeric,,,,0
+s09aq04__2,9a.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour recevoir l'argent?:R,numeric,,,,0
+s09aq04__3,9a.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour recevoir l'argent?:M,numeric,,,,0
+s09aq04__4,9a.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour recevoir l'argent?:P,numeric,,,,0
+s09aq04__5,9a.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour recevoir l'argent?:P,numeric,,,,0
+s09aq04__6,9a.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour recevoir l'argent?:J,numeric,,,,0
+s09aq04__7,9a.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour recevoir l'argent?:J,numeric,,,,0
+s09aq04__8,9a.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour recevoir l'argent?:L,numeric,,,,0
+s09aq04__9,9a.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour recevoir l'argent?:F,numeric,,,,0
+s09aq04__10,9a.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour recevoir l'argent?:F,numeric,,,,0
+s09aq04__96,9a.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour recevoir l'argent?:A,numeric,,,,0
+s09q04_autre,Autre raison,character,,,,0
+s09aq05__1,9a.05 Motifs du transfert&nbsp;: à quoi a servi le transfert reçu&nbsp;?:Soins d,numeric,,,,0
+s09aq05__2,9a.05 Motifs du transfert&nbsp;: à quoi a servi le transfert reçu&nbsp;?:Scolari,numeric,,,,0
+s09aq05__3,9a.05 Motifs du transfert&nbsp;: à quoi a servi le transfert reçu&nbsp;?:Aliment,numeric,,,,0
+s09aq05__4,9a.05 Motifs du transfert&nbsp;: à quoi a servi le transfert reçu&nbsp;?:Funérai,numeric,,,,0
+s09aq05__5,9a.05 Motifs du transfert&nbsp;: à quoi a servi le transfert reçu&nbsp;?:Achat t,numeric,,,,0
+s09aq05__6,9a.05 Motifs du transfert&nbsp;: à quoi a servi le transfert reçu&nbsp;?:Pèlerin,numeric,,,,0
+s09aq05__7,9a.05 Motifs du transfert&nbsp;: à quoi a servi le transfert reçu&nbsp;?:paiemen,numeric,,,,0
+s09aq05__8,9a.05 Motifs du transfert&nbsp;: à quoi a servi le transfert reçu&nbsp;?:règleme,numeric,,,,0
+s09aq05__9,9a.05 Motifs du transfert&nbsp;: à quoi a servi le transfert reçu&nbsp;?:Créatio,numeric,,,,0
+s09aq05__96,9a.05 Motifs du transfert&nbsp;: à quoi a servi le transfert reçu&nbsp;?:Autres,numeric,,,,0
+s09q05_autre,Autre motif,character,,,,0
+s09aq06,9a.06 Quelle est la provenance (pays de provenance) du transfert?,labelled,,,,0
+s09aq06a,Région,character,,,,0
+s09aq07,9a.07 Délai de traitement de la transaction&nbsp;: Combien de temps avez-vous mi,labelled,,,,0
+s09aq08,9a.08 Réception de transfert du dernier transfert&nbsp;: Quel est le montant de,labelled,,,,0
+s09aq09,9a.09 Coût réception de transfert du dernier transfert&nbsp;: Quel est le coût m,labelled,,,,0
+s09aq10__1,9a.10 Liens Relationnels&nbsp;: De qui provient le transfert ?:Ami,numeric,,,,0
+s09aq10__2,9a.10 Liens Relationnels&nbsp;: De qui provient le transfert ?:Famille,numeric,,,,0
+s09aq10__3,9a.10 Liens Relationnels&nbsp;: De qui provient le transfert ?:Œuvre de charité/,numeric,,,,0
+s09aq10__96,9a.10 Liens Relationnels&nbsp;: De qui provient le transfert ?:Autres raisons (p,numeric,,,,0
+s09aq10_autre,Autre lien relationnel,character,,,,0
+s09bq01,"9b.01 Au cours des 12 derniers mois, avez-vous envoyé de l’argent que ce soit à",labelled,,,,0
+s09bq02,9b.02 A quelle fréquence envoyez-vous de l’argent ? (Ne pas citer - plusieurs ré,labelled,,,,0
+s09bq03,9b.03 Par quelle voie envoyez-vous  le plus cet argent ?,labelled,,,,0
+s09bq03_autres,Autres voie d'envoie,character,,,,0
+s09bq04__1,9b.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour envoyer l'argent?:Sé,numeric,,,,0
+s09bq04__2,9b.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour envoyer l'argent?:Ra,numeric,,,,0
+s09bq04__3,9b.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour envoyer l'argent?:Mo,numeric,,,,0
+s09bq04__4,9b.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour envoyer l'argent?:Pr,numeric,,,,0
+s09bq04__5,9b.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour envoyer l'argent?:Pr,numeric,,,,0
+s09bq04__6,9b.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour envoyer l'argent?:J’,numeric,,,,0
+s09bq04__7,9b.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour envoyer l'argent?:Je,numeric,,,,0
+s09bq04__8,9b.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour envoyer l'argent?:Le,numeric,,,,0
+s09bq04__9,9b.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour envoyer l'argent?:Fa,numeric,,,,0
+s09bq04__10,9b.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour envoyer l'argent?:Fa,numeric,,,,0
+s09bq04__96,9b.04 Pour quelles raisons utilisez-vous ce moyen&nbsp;pour envoyer l'argent?:Au,numeric,,,,0
+s09bq04_autres,Autres raisons,character,,,,0
+s09bq05__1,9b.05 Motifs du transfert&nbsp;: à quoi servi le transfert envoyé&nbsp;?:Soins d,numeric,,,,0
+s09bq05__2,9b.05 Motifs du transfert&nbsp;: à quoi servi le transfert envoyé&nbsp;?:Scolari,numeric,,,,0
+s09bq05__3,9b.05 Motifs du transfert&nbsp;: à quoi servi le transfert envoyé&nbsp;?:Aliment,numeric,,,,0
+s09bq05__4,9b.05 Motifs du transfert&nbsp;: à quoi servi le transfert envoyé&nbsp;?:Achat é,numeric,,,,0
+s09bq05__5,9b.05 Motifs du transfert&nbsp;: à quoi servi le transfert envoyé&nbsp;?:Achat t,numeric,,,,0
+s09bq05__6,9b.05 Motifs du transfert&nbsp;: à quoi servi le transfert envoyé&nbsp;?:Funérai,numeric,,,,0
+s09bq05__7,9b.05 Motifs du transfert&nbsp;: à quoi servi le transfert envoyé&nbsp;?:Créatio,numeric,,,,0
+s09bq05__96,9b.05 Motifs du transfert&nbsp;: à quoi servi le transfert envoyé&nbsp;?:Autres,numeric,,,,0
+s09bq05_autres,Autres raisons,character,,,,0
+s09bq06,9b.06 Quelle est la destination (pays de réception) du transfert?,labelled,,,,0
+s09bq06a,Région,character,,,,0
+s09bq07,9b.07 Délai de traitement de la transaction&nbsp;: Combien de temps avez-vous mi,labelled,,,,0
+s09bq08,9b.08 Envoi de transfert&nbsp;: Quel est le montant de la dernière transaction q,labelled,,,,0
+s09bq09,9b.09 Quel est le montant des frais payés sur le dernier transfert ?,labelled,,,,0
+s09bq10a,9b.10A Quel est le temps moyen que vous mettez à pied pour accéder à la société,labelled,,,,0
+s09bq10b,9b.10B Quel est le temps moyen que vous mettez en transport public pour accéder,labelled,,,,0
+s09bq10c,9b.10C Quel est le temps moyen que vous mettez en voiture pour accéder à la soci,labelled,,,,0
+s09bq10d,9b.10D Quel est le temps moyen que vous mettez à moto pour accéder à la société,labelled,,,,0
+s09bq10e,9b.10E Quel est le temps moyen que vous mettez à vélo pour accéder à la société,labelled,,,,0
+s09bq10f,9b.10F Quel est le temps moyen que vous mettez avec d'autres moyens de transport,labelled,,,,0
+s09bq10f_autre,Autre moyen de transport utilisé,character,,,,0
+s09bq11,9b.11 Quelle est la distance qui vous sépare de votre agence de transfert d'arge,labelled,,,,0
+s09bq12,9b.12 Liens Relationnels&nbsp;: à qui le transfert a-t-il été envoyé&nbsp;?,labelled,,,,0
+s09bq12_autres,Autres raisons,character,,,,0
+s10q01a,services financiers,labelled,,,,0
+s10q01b,10.01b Le numéro est-il associé à un compte de Monnaie électronique ?,labelled,a_compte_mobile,numeric,Numéro associé à un compte monnaie électronique,1
+s10q01c,10.01c Ce compte est-il actif ( A-t-il enregistré au moins une transactions au c,labelled,mobile_actif,numeric,Compte mobile money actif,1
+s10q02a,10.02a Utilisez-vous un ou plusieurs  Entreprises de Monnaie Electronique (EME),labelled,multi_eme,numeric,Utilise plusieurs EME,1
+s10q02b__1,"10.02b Si vous utilisez plusieurs comptes, dites nous pourquoi ?:Limite transact",numeric,,,,0
+s10q02b__2,"10.02b Si vous utilisez plusieurs comptes, dites nous pourquoi ?:Plafond maximal",numeric,,,,0
+s10q02b__3,"10.02b Si vous utilisez plusieurs comptes, dites nous pourquoi ?:Question de pru",numeric,,,,0
+s10q02b__4,"10.02b Si vous utilisez plusieurs comptes, dites nous pourquoi ?:Diversification",numeric,,,,0
+s10q02b__5,"10.02b Si vous utilisez plusieurs comptes, dites nous pourquoi ?:Risque lié à la",numeric,,,,0
+s10q02b__6,"10.02b Si vous utilisez plusieurs comptes, dites nous pourquoi ?:Couverture rése",numeric,,,,0
+s10q02b__96,"10.02b Si vous utilisez plusieurs comptes, dites nous pourquoi ?:Autres (Précise",numeric,,,,0
+s10q02b_autres,Autre raison d'avoir plusieurs comptes,character,,,,0
+s10q03__1,Nombres de compte:Orange Senegal,numeric,s10q03__1,numeric,Choix multiple : s10q03__1,1
+s10q03__2,Nombres de compte:Free Senegal,numeric,s10q03__2,numeric,Choix multiple : s10q03__2,1
+s10q03__3,Nombres de compte:Expresso Senegal,numeric,s10q03__3,numeric,Choix multiple : s10q03__3,1
+s10q03__4,Nombres de compte:Promobile,numeric,s10q03__4,numeric,Choix multiple : s10q03__4,1
+s10q03__5,Nombres de compte:Kirene avec Orange,numeric,s10q03__5,numeric,Choix multiple : s10q03__5,1
+s10q03__96,Nombres de compte:Autres fournisseurs de téléphonie (Préciser________________),numeric,s10q03__96,numeric,Choix multiple : s10q03__96,1
+s10q03_autres,Autre fournisseur de téléphonie mobile,character,,,,0
+s10q04,10.04 Avez-vous fait une opération (retrait ou dépôt) auprès de votre agence mob,labelled,,,,0
+s10q05,10.05 Combien de temps avez-vous passé dans l’institution lors de la dernière op,labelled,,,,0
+s10q06,10.06 Faites-vous des transactions de monnaie électronique?,labelled,mobile_fait_transactions,numeric,Fait des transactions de monnaie électronique,1
+s10q07__1,10.07 Quels fournisseurs de téléphonie mobile connaissez-vous ?:Orange Money,numeric,,,,0
+s10q07__2,10.07 Quels fournisseurs de téléphonie mobile connaissez-vous ?:Wave,numeric,,,,0
+s10q07__3,10.07 Quels fournisseurs de téléphonie mobile connaissez-vous ?:Free Money,numeric,,,,0
+s10q07__4,10.07 Quels fournisseurs de téléphonie mobile connaissez-vous ?:Wizall Money,numeric,,,,0
+s10q07__5,10.07 Quels fournisseurs de téléphonie mobile connaissez-vous ?:E-Money (Express,numeric,,,,0
+s10q07__6,10.07 Quels fournisseurs de téléphonie mobile connaissez-vous ?:Yoban’tel,numeric,,,,0
+s10q07__7,10.07 Quels fournisseurs de téléphonie mobile connaissez-vous ?:Coris Money,numeric,,,,0
+s10q07__8,10.07 Quels fournisseurs de téléphonie mobile connaissez-vous ?:Kash Kash,numeric,,,,0
+s10q07__96,10.07 Quels fournisseurs de téléphonie mobile connaissez-vous ?:Autres fournisse,numeric,,,,0
+s10q07__10,"10.07 Quels fournisseurs de téléphonie mobile connaissez-vous ?:Non, n’est pas i",numeric,,,,0
+s10q07__11,"10.07 Quels fournisseurs de téléphonie mobile connaissez-vous ?:Non, ne sait pas",numeric,,,,0
+s10q07_autres,Autre fourniseur de téléphonie mobile,character,,,,0
+s10q07b__0,10.07b Quel fournisseur de téléphonie mobile utilisez-vous ?:0,labelled,,,,0
+s10q07b__1,10.07b Quel fournisseur de téléphonie mobile utilisez-vous ?:1,labelled,,,,0
+s10q08,10.08 Depuis combien d’année avez-vous ouvert votre compte qui est encore actif?,numeric,,,,0
+s10q09,10.09 Quel est le montant envoyé lors de votre dernière transaction ?,numeric,,,,0
+s10q10,10.10 Quel est le montant des frais payés sur la dernière transaction effectuée,labelled,,,,0
+s10q11,10.11 Quel est le montant reçu lors de votre dernière transaction ?,numeric,,,,0
+s10q12,10.12 Quel est le montant des frais payés lors de la dernière reception,labelled,,,,0
+s10q13a__1,"10.13a Parmi les services que proposent les opérateurs de monnaie électronique ,",numeric,,,,0
+s10q13a__2,"10.13a Parmi les services que proposent les opérateurs de monnaie électronique ,",numeric,,,,0
+s10q13a__3,"10.13a Parmi les services que proposent les opérateurs de monnaie électronique ,",numeric,,,,0
+s10q13a__4,"10.13a Parmi les services que proposent les opérateurs de monnaie électronique ,",numeric,,,,0
+s10q13a__5,"10.13a Parmi les services que proposent les opérateurs de monnaie électronique ,",numeric,,,,0
+s10q13a__6,"10.13a Parmi les services que proposent les opérateurs de monnaie électronique ,",numeric,,,,0
+s10q13a__7,"10.13a Parmi les services que proposent les opérateurs de monnaie électronique ,",numeric,,,,0
+s10q13a__8,"10.13a Parmi les services que proposent les opérateurs de monnaie électronique ,",numeric,,,,0
+s10q13a__9,"10.13a Parmi les services que proposent les opérateurs de monnaie électronique ,",numeric,,,,0
+s10q13a__96,"10.13a Parmi les services que proposent les opérateurs de monnaie électronique ,",numeric,,,,0
+s10q13a_autre,Préciser l'autre monnais electronique,character,,,,0
+s10q13b__1,"10.13b Parmi les services que proposent les opérateurs de monnaie électronique,l",numeric,,,,0
+s10q13b__2,"10.13b Parmi les services que proposent les opérateurs de monnaie électronique,l",numeric,,,,0
+s10q13b__3,"10.13b Parmi les services que proposent les opérateurs de monnaie électronique,l",numeric,,,,0
+s10q13b__4,"10.13b Parmi les services que proposent les opérateurs de monnaie électronique,l",numeric,,,,0
+s10q13b__5,"10.13b Parmi les services que proposent les opérateurs de monnaie électronique,l",numeric,,,,0
+s10q13b__6,"10.13b Parmi les services que proposent les opérateurs de monnaie électronique,l",numeric,,,,0
+s10q13b__7,"10.13b Parmi les services que proposent les opérateurs de monnaie électronique,l",numeric,,,,0
+s10q13b__8,"10.13b Parmi les services que proposent les opérateurs de monnaie électronique,l",numeric,,,,0
+s10q13b__9,"10.13b Parmi les services que proposent les opérateurs de monnaie électronique,l",numeric,,,,0
+s10q13b__96,"10.13b Parmi les services que proposent les opérateurs de monnaie électronique,l",numeric,,,,0
+s10q13b_autre,Préciser l'autre service,character,,,,0
+s10q14__1,10.14 Pour quelle raison n’utilisez-vous pas la monnaie électronique&nbsp;? (Cit,numeric,,,,0
+s10q14__2,10.14 Pour quelle raison n’utilisez-vous pas la monnaie électronique&nbsp;? (Cit,numeric,,,,0
+s10q14__3,10.14 Pour quelle raison n’utilisez-vous pas la monnaie électronique&nbsp;? (Cit,numeric,,,,0
+s10q14__4,10.14 Pour quelle raison n’utilisez-vous pas la monnaie électronique&nbsp;? (Cit,numeric,,,,0
+s10q14__5,10.14 Pour quelle raison n’utilisez-vous pas la monnaie électronique&nbsp;? (Cit,numeric,,,,0
+s10q14__6,10.14 Pour quelle raison n’utilisez-vous pas la monnaie électronique&nbsp;? (Cit,numeric,,,,0
+s10q14__7,10.14 Pour quelle raison n’utilisez-vous pas la monnaie électronique&nbsp;? (Cit,numeric,,,,0
+s10q14__96,10.14 Pour quelle raison n’utilisez-vous pas la monnaie électronique&nbsp;? (Cit,numeric,,,,0
+s10q14_autres,Autre raison de la non utilisation de la monaie electronique,character,,,,0
+s10q15__1,"10.15 Et si demain les problèmes ci dessus évoqués étaient résolus, par lesquels",numeric,,,,0
+s10q15__2,"10.15 Et si demain les problèmes ci dessus évoqués étaient résolus, par lesquels",numeric,,,,0
+s10q15__3,"10.15 Et si demain les problèmes ci dessus évoqués étaient résolus, par lesquels",numeric,,,,0
+s10q15__4,"10.15 Et si demain les problèmes ci dessus évoqués étaient résolus, par lesquels",numeric,,,,0
+s10q15__5,"10.15 Et si demain les problèmes ci dessus évoqués étaient résolus, par lesquels",numeric,,,,0
+s10q15__6,"10.15 Et si demain les problèmes ci dessus évoqués étaient résolus, par lesquels",numeric,,,,0
+s10q15__7,"10.15 Et si demain les problèmes ci dessus évoqués étaient résolus, par lesquels",numeric,,,,0
+s10q15__96,"10.15 Et si demain les problèmes ci dessus évoqués étaient résolus, par lesquels",numeric,,,,0
+s10q15_a__0,Préciser lesquelles:0,character,,,,0
+s10q15_a__0c,Préciser lesquelles:0c,numeric,,,,0
+s10q15_a__1,Préciser lesquelles:1,character,,,,0
+s10q15_a__1c,Préciser lesquelles:1c,numeric,,,,0
+s10q15_a__2,Préciser lesquelles:2,character,,,,0
+s10q15_a__2c,Préciser lesquelles:2c,numeric,,,,0
+s10q15_a__3,Préciser lesquelles:3,character,,,,0
+s10q15_a__3c,Préciser lesquelles:3c,numeric,,,,0
+s10q15_a__4,Préciser lesquelles:4,character,,,,0
+s10q15_a__4c,Préciser lesquelles:4c,numeric,,,,0
+s10q15_autre,Préciser l'autre service,character,,,,0
+s10q16__1,Appréciation Qualité du service&nbsp;::Défaillance dans le fonctionnement du sys,numeric,,,,0
+s10q16__2,Appréciation Qualité du service&nbsp;::Pas assez de détaillants à proximité du d,numeric,,,,0
+s10q16__3,Appréciation Qualité du service&nbsp;::Commissions trop élevées / Service cher,numeric,,,,0
+s10q16__4,Appréciation Qualité du service&nbsp;::Problèmes de couverture réseau,numeric,,,,0
+s10q16__5,Appréciation Qualité du service&nbsp;::Problèmes logistiques (batteries déchargé,numeric,,,,0
+s10q16__6,Appréciation Qualité du service&nbsp;::Difficultés de manipulation,numeric,,,,0
+s10q16__7,Appréciation Qualité du service&nbsp;::Manque d’argent disponible au niveau des,numeric,,,,0
+s10q16__8,Appréciation Qualité du service&nbsp;::Aucune contrainte,numeric,,,,0
+s10q16__96,Appréciation Qualité du service&nbsp;::Autres(à préciser),numeric,,,,0
+s10q16_autres,Autre contrainte,character,,,,0
+s10q17,10.17 Plaintes :  Avez-vous déposé ou formulé une plainte formelle auprès de vot,labelled,,,,0
+s10q18,10.18 Résolution : Votre plainte a-t-elle été résolue ?,labelled,,,,0
+s10q19,10.19 Si Oui à la question précédente: Dans quel délai ?,labelled,,,,0
+s10q20,10.20 Avez-vous saisie une autorité de médiation/défense de consommateurs au cou,labelled,,,,0
+s10q21,10.21 Résolution : Votre plainte a-t-elle été résolue ?,labelled,,,,0
+s10q22__1,10.22 Si Oui à la question précédente: Dans quel délai ?:0 à 2 mois ;,numeric,,,,0
+s10q22__2,10.22 Si Oui à la question précédente: Dans quel délai ?:2 à 6 mois,numeric,,,,0
+s10q22__3,10.22 Si Oui à la question précédente: Dans quel délai ?:6 à 12 mois,numeric,,,,0
+s10q22__4,10.22 Si Oui à la question précédente: Dans quel délai ?:Plus de 12 mois,numeric,,,,0
+s10q23a,10.23A Quel est le temps moyen que vous mettez à pied pour accéder au point de v,labelled,,,,0
+s10q23b,10.23B Quel est le temps moyen que vous mettez en Transport public pour accéder,labelled,,,,0
+s10bq23c,10.23C Quel est le temps moyen que vous mettez en voiture pour accéder au point,labelled,,,,0
+s10q23d,10.23D Quel est le temps moyen que vous mettez à moto pour accéder au point de v,labelled,,,,0
+s10q23e,10.23E Quel est le temps moyen que vous mettez à vélo pour accéder au point de v,labelled,,,,0
+s10q23f,10.23F Quel est le temps moyen que vous mettez avec d'autre moyen de transport p,labelled,,,,0
+s10q23f_autre,Autre moyen de transport utilisé,character,,,,0
+s10q24,10.24 Quelle est la distance qui vous sépare de votre prestataire EME ou de l'EM,labelled,,,,0
+s10q25,10.25 Quelle est la limite de transaction maximale ( montant en FCFA° que vous s,numeric,,,,0
+s10q26,10.26 Quelle est le  nombre de transactions maximales par jour que vous souhaite,numeric,,,,0
+s11q01,services financiers,labelled,,,,0
+s11q02__1,11.02  Dans quelle(s) structure(s) avez-vous une assurance ?:Générale des Assura,numeric,,,,0
+s11q02__2,11.02  Dans quelle(s) structure(s) avez-vous une assurance ?:SUNU Assurance,numeric,,,,0
+s11q02__96,11.02  Dans quelle(s) structure(s) avez-vous une assurance ?:Autres (Préciser___,numeric,,,,0
+s11q02_autres,Autre structure d'assurance,character,,,,0
+s11q03__1,11.03 Quel type d’assurance disposez-vous pour vous et votre ménage&nbsp;?:Assur,numeric,s11q03__1,numeric,Choix multiple : s11q03__1,1
+s11q03__2,11.03 Quel type d’assurance disposez-vous pour vous et votre ménage&nbsp;?:Assur,numeric,s11q03__2,numeric,Choix multiple : s11q03__2,1
+s11q03__3,11.03 Quel type d’assurance disposez-vous pour vous et votre ménage&nbsp;?:Assur,numeric,s11q03__3,numeric,Choix multiple : s11q03__3,1
+s11q03__4,11.03 Quel type d’assurance disposez-vous pour vous et votre ménage&nbsp;?:Assur,numeric,s11q03__4,numeric,Choix multiple : s11q03__4,1
+s11q03__5,11.03 Quel type d’assurance disposez-vous pour vous et votre ménage&nbsp;?:Assur,numeric,s11q03__5,numeric,Choix multiple : s11q03__5,1
+s11q03__6,11.03 Quel type d’assurance disposez-vous pour vous et votre ménage&nbsp;?:Assur,numeric,s11q03__6,numeric,Choix multiple : s11q03__6,1
+s11q03__7,11.03 Quel type d’assurance disposez-vous pour vous et votre ménage&nbsp;?:Assur,numeric,s11q03__7,numeric,Choix multiple : s11q03__7,1
+s11q03__8,11.03 Quel type d’assurance disposez-vous pour vous et votre ménage&nbsp;?:Assur,numeric,s11q03__8,numeric,Choix multiple : s11q03__8,1
+s11q03__96,11.03 Quel type d’assurance disposez-vous pour vous et votre ménage&nbsp;?:Autre,numeric,s11q03__96,numeric,Choix multiple : s11q03__96,1
+s11q03_autres,Autre structure d'assurance,character,,,,0
+s11q04,11.04 Quel est le montant couvert par l’assurance en cas d’accident ou de sinist,labelled,,,,0
+s11q05a,11.05a  Quel est le montant des frais payés sur votre police d’assurance (Coût d,labelled,prime_assurance,numeric,Montant prime d'assurance annuelle (FCFA),1
+s11q05b,11.05b Montant payé (au moment de la souscription)&nbsp;:,numeric,,,,0
+s11q05c,11.05c Montant déduit sur la transaction couverte (cas des crédits),numeric,,,,0
+s11q06__1,"11.06 Sur les 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s11q06__2,"11.06 Sur les 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s11q06__3,"11.06 Sur les 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s11q06__4,"11.06 Sur les 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s11q06__5,"11.06 Sur les 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s11q06__6,"11.06 Sur les 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s11q06__7,"11.06 Sur les 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s11q06__96,"11.06 Sur les 12 derniers mois, quel type de difficultés ou problèmes avez-vous",numeric,,,,0
+s11q06_autres,Autre type de difficultés,character,,,,0
+s11q07,11.07 Plaintes :  Avez-vous déposé ou formulé une plainte formelle auprès de vot,labelled,,,,0
+s11q08,11.08 Avez-vous saisie une autorité de médiation/défense de consommateurs au cou,labelled,,,,0
+s11q09,11.09 Résolution : Votre plainte a-t-elle été résolue ?,labelled,,,,0
+s11q10__1,11.10 Si Oui à la question précédente: Dans quel délais ?:0 à 2 mois ;,numeric,,,,0
+s11q10__2,11.10 Si Oui à la question précédente: Dans quel délais ?:2 à 6 mois,numeric,,,,0
+s11q10__3,11.10 Si Oui à la question précédente: Dans quel délais ?:6 à 12 mois,numeric,,,,0
+s11q10__4,11.10 Si Oui à la question précédente: Dans quel délais ?:Plus de 12 mois,numeric,,,,0
+s11q11__1,11.11 Pour quelles raisons&nbsp;n'avez-vous pas souscrit à  une assurance? (Ne p,numeric,,,,0
+s11q11__2,11.11 Pour quelles raisons&nbsp;n'avez-vous pas souscrit à  une assurance? (Ne p,numeric,,,,0
+s11q11__3,11.11 Pour quelles raisons&nbsp;n'avez-vous pas souscrit à  une assurance? (Ne p,numeric,,,,0
+s11q11__4,11.11 Pour quelles raisons&nbsp;n'avez-vous pas souscrit à  une assurance? (Ne p,numeric,,,,0
+s11q11__5,11.11 Pour quelles raisons&nbsp;n'avez-vous pas souscrit à  une assurance? (Ne p,numeric,,,,0
+s11q11__6,11.11 Pour quelles raisons&nbsp;n'avez-vous pas souscrit à  une assurance? (Ne p,numeric,,,,0
+s11q11__7,11.11 Pour quelles raisons&nbsp;n'avez-vous pas souscrit à  une assurance? (Ne p,numeric,,,,0
+s11q12,11.12 Seriez-vous intéressé par souscrire à une assurance&nbsp;?,labelled,,,,0
+s11q13__1,"11.13 Si intéressé, quel type d’assurance&nbsp;?:Assurance vie",numeric,,,,0
+s11q13__2,"11.13 Si intéressé, quel type d’assurance&nbsp;?:Assurance Décès / Invalidité",numeric,,,,0
+s11q13__3,"11.13 Si intéressé, quel type d’assurance&nbsp;?:Assurance santé",numeric,,,,0
+s11q13__4,"11.13 Si intéressé, quel type d’assurance&nbsp;?:Assurance véhicule",numeric,,,,0
+s11q13__5,"11.13 Si intéressé, quel type d’assurance&nbsp;?:Assurance habitation / logement",numeric,,,,0
+s11q13__6,"11.13 Si intéressé, quel type d’assurance&nbsp;?:Assurance risque climatique",numeric,,,,0
+s11q13__7,"11.13 Si intéressé, quel type d’assurance&nbsp;?:Assurance risque agricole",numeric,,,,0
+s11q13__8,"11.13 Si intéressé, quel type d’assurance&nbsp;?:Assurance risque crédit",numeric,,,,0
+s11q13__96,"11.13 Si intéressé, quel type d’assurance&nbsp;?:Autres (préciser)______________",numeric,,,,0
+s11q14__1,11.14   			Qu’est-ce qui vous inciterait à souscrire une police d’assurance?:Cou,numeric,,,,0
+s11q14__2,11.14   			Qu’est-ce qui vous inciterait à souscrire une police d’assurance?:Pro,numeric,,,,0
+s11q14__3,11.14   			Qu’est-ce qui vous inciterait à souscrire une police d’assurance?:Rap,numeric,,,,0
+s11q14__4,11.14   			Qu’est-ce qui vous inciterait à souscrire une police d’assurance?:Cou,numeric,,,,0
+s11q14__5,11.14   			Qu’est-ce qui vous inciterait à souscrire une police d’assurance?:Bén,numeric,,,,0
+s11q14__6,11.14   			Qu’est-ce qui vous inciterait à souscrire une police d’assurance?:Uti,numeric,,,,0
+s11q14__96,11.14   			Qu’est-ce qui vous inciterait à souscrire une police d’assurance?:Aut,numeric,,,,0
+s11q14_autre,Autre type de difficultés d'incitation,character,,,,0
+s11q16,11.16 Quelle est la distance qui vous sépare de votre agence d'assurance ou de l,labelled,,,,0
+s12q01,FONDS DE PENSION ET SÉCURITE SOCIALE,labelled,,,,0
+s12q02,12.02  Percevez-vous une pension ou un fonds de la sécurité sociale&nbsp;?,labelled,recoit_pension,numeric,Reçoit une pension de retraite,1
+s12q03__1,"12.03 Si oui, auprès de quel type d’institution ?:Caisse Nationale de Prévoyance",numeric,,,,0
+s12q03__2,"12.03 Si oui, auprès de quel type d’institution ?:Fonds de pension privé nationa",numeric,,,,0
+s12q03__3,"12.03 Si oui, auprès de quel type d’institution ?:Fonds de pension étranger",numeric,,,,0
+s12q03__96,"12.03 Si oui, auprès de quel type d’institution ?:Autres (Préciser______________",numeric,,,,0
+s12q03_autre,Autre type d'institution,character,,,,0
+s12q04__1,"12.04 Si fonds de pension privé, veuillez préciser auprès de quelle institution",numeric,,,,0
+s12q04__2,"12.04 Si fonds de pension privé, veuillez préciser auprès de quelle institution",numeric,,,,0
+s12q04__3,"12.04 Si fonds de pension privé, veuillez préciser auprès de quelle institution",numeric,,,,0
+s12q04__4,"12.04 Si fonds de pension privé, veuillez préciser auprès de quelle institution",numeric,,,,0
+s12q04__5,"12.04 Si fonds de pension privé, veuillez préciser auprès de quelle institution",numeric,,,,0
+s12q04__96,"12.04 Si fonds de pension privé, veuillez préciser auprès de quelle institution",numeric,,,,0
+s12q04_autre,Autre type d'institution,character,,,,0
+s12q05,12.05 Depuis quand cotisez-vous à cette pension ?,numeric,,,,0
+s12q06__1,12.06 A quel type de produits ou services de pension cotisez-vous&nbsp;?:Pension,numeric,,,,0
+s12q06__2,12.06 A quel type de produits ou services de pension cotisez-vous&nbsp;?:Pension,numeric,,,,0
+s12q06__3,12.06 A quel type de produits ou services de pension cotisez-vous&nbsp;?:Pension,numeric,,,,0
+s12q06__4,12.06 A quel type de produits ou services de pension cotisez-vous&nbsp;?:Pension,numeric,,,,0
+s12q06__96,12.06 A quel type de produits ou services de pension cotisez-vous&nbsp;?:Autres,numeric,,,,0
+s12q06_autre,Autre type de produit,character,,,,0
+s12q07,12.07 Pensez-vous retirer votre fonds de pension avant votre retraite ?,labelled,,,,0
+s12q08__1,"12.08 Si non, pour quelles raisons&nbsp;?:N’en a jamais entendu parler / ne conn",numeric,,,,0
+s12q08__2,"12.08 Si non, pour quelles raisons&nbsp;?:Ne dispose pas d’un revenu régulier/st",numeric,,,,0
+s12q08__3,"12.08 Si non, pour quelles raisons&nbsp;?:Trop compliqué",numeric,,,,0
+s12q08__4,"12.08 Si non, pour quelles raisons&nbsp;?:Agence trop éloigné",numeric,,,,0
+s12q08__5,"12.08 Si non, pour quelles raisons&nbsp;?:Ne voit pas l’intérêt / pas besoin",numeric,,,,0
+s12q08__6,"12.08 Si non, pour quelles raisons&nbsp;?:Pas confiance / cotisations à fond per",numeric,,,,0
+s12q08__7,"12.08 Si non, pour quelles raisons&nbsp;?:Cotise déjà dans un système informel",numeric,,,,0
+s12q08__8,"12.08 Si non, pour quelles raisons&nbsp;?:A la retraite",numeric,,,,0
+s12q08__96,"12.08 Si non, pour quelles raisons&nbsp;?:Autres (Préciser___________________)",numeric,,,,0
+s12q08_autre,Préciser l'autre raison,character,,,,0
+s12q09,"12.09 Si non, seriez-vous intéressé à cotiser à un fonds de pension&nbsp;?",labelled,,,,0
+s12q10__1,"12.10 Si intéressé, quel type de produits ou services de pension&nbsp;? (Citer -",numeric,,,,0
+s12q10__2,"12.10 Si intéressé, quel type de produits ou services de pension&nbsp;? (Citer -",numeric,,,,0
+s12q10__3,"12.10 Si intéressé, quel type de produits ou services de pension&nbsp;? (Citer -",numeric,,,,0
+s12q10__4,"12.10 Si intéressé, quel type de produits ou services de pension&nbsp;? (Citer -",numeric,,,,0
+s12q10__96,"12.10 Si intéressé, quel type de produits ou services de pension&nbsp;? (Citer -",numeric,,,,0
+s12q10_autre,Autre type de produit,character,,,,0
+s13q01,"INFORMEL&nbsp;: GROUPES DE TONTINES, GROUPEMENTS, COOPÉRATIVES, AVEC (Associatio",labelled,,,,0
+s13q02__1,"13.02 Si oui à la question 1, A quelle(s) organisation (informelle), appartenez-",numeric,,,,0
+s13q02__2,"13.02 Si oui à la question 1, A quelle(s) organisation (informelle), appartenez-",numeric,,,,0
+s13q02__3,"13.02 Si oui à la question 1, A quelle(s) organisation (informelle), appartenez-",numeric,,,,0
+s13q02__96,"13.02 Si oui à la question 1, A quelle(s) organisation (informelle), appartenez-",numeric,,,,0
+s13q02_autre,Autre organisation,character,,,,0
+s13q03,13.03 Votre groupement est-elle appuyée par une ONG ou un IMF ?,labelled,,,,0
+s13q04__1,13.04 Quels sont les services offerts par votre groupement ?:Prêter de l’argent,numeric,,,,0
+s13q04__2,13.04 Quels sont les services offerts par votre groupement ?:Prêter de l’argent,numeric,,,,0
+s13q04__3,13.04 Quels sont les services offerts par votre groupement ?:Collecter l’épargne,numeric,,,,0
+s13q04__4,13.04 Quels sont les services offerts par votre groupement ?:Garder la cotisatio,numeric,,,,0
+s13q04__5,13.04 Quels sont les services offerts par votre groupement ?:Mettre l’épargne co,numeric,,,,0
+s13q04__6,13.04 Quels sont les services offerts par votre groupement ?:Acheter des biens/a,numeric,,,,0
+s13q04__7,13.04 Quels sont les services offerts par votre groupement ?:Contribuer au finan,numeric,,,,0
+s13q04__96,13.04 Quels sont les services offerts par votre groupement ?:Autres (préciser)__,numeric,,,,0
+s13q04_autre,Autre service,character,,,,0
+s13q05,13.05 Quelle est la principale raison de votre adhésion à ce groupement&nbsp;?,labelled,,,,0
+s13q05_autre,Autre principale raison,character,,,,0
+s13q06,"13.06 Pensez-vous que le groupe vous aide plus à épargner qu’un IMF,poste ou une",labelled,,,,0
+s13q07__1,13.07 Mécanismes de paiement&nbsp;: de quelle manière effectuez-vous les cotisat,numeric,,,,0
+s13q07__2,13.07 Mécanismes de paiement&nbsp;: de quelle manière effectuez-vous les cotisat,numeric,,,,0
+s13q07__3,13.07 Mécanismes de paiement&nbsp;: de quelle manière effectuez-vous les cotisat,numeric,,,,0
+s13q07__4,13.07 Mécanismes de paiement&nbsp;: de quelle manière effectuez-vous les cotisat,numeric,,,,0
+s13q07__96,13.07 Mécanismes de paiement&nbsp;: de quelle manière effectuez-vous les cotisat,numeric,,,,0
+s13q07_autre,Autre mecanisme de payement,character,,,,0
+s13q08,13.08 Fréquence d’utilisation des services&nbsp;:  quelle est la fréquence avec,labelled,,,,0
+s13q08_autre,Autre mecanisme de payement,character,,,,0
+s13q09,13.09 Durée des crédits&nbsp;:  quelle est la durée de votre dernier crédit au n,labelled,,,,0
+s13q10__1,"13.10 Si non, pour quelles raisons&nbsp;n’êtes-vous pas membre du groupement? (N",numeric,,,,0
+s13q10__2,"13.10 Si non, pour quelles raisons&nbsp;n’êtes-vous pas membre du groupement? (N",numeric,,,,0
+s13q10__3,"13.10 Si non, pour quelles raisons&nbsp;n’êtes-vous pas membre du groupement? (N",numeric,,,,0
+s13q10__4,"13.10 Si non, pour quelles raisons&nbsp;n’êtes-vous pas membre du groupement? (N",numeric,,,,0
+s13q10__5,"13.10 Si non, pour quelles raisons&nbsp;n’êtes-vous pas membre du groupement? (N",numeric,,,,0
+s13q10__6,"13.10 Si non, pour quelles raisons&nbsp;n’êtes-vous pas membre du groupement? (N",numeric,,,,0
+s13q10__96,"13.10 Si non, pour quelles raisons&nbsp;n’êtes-vous pas membre du groupement? (N",numeric,,,,0
+s13q10_autre,Autre raison,character,,,,0
+s14q01__1,UTILISATION DE LA TECHNOLOGIE/SERVICES DIGITAUX:Je possède un appareil mobile qu,numeric,,,,0
+s14q01__2,UTILISATION DE LA TECHNOLOGIE/SERVICES DIGITAUX:Je possède un ordinateur,numeric,,,,0
+s14q01__3,UTILISATION DE LA TECHNOLOGIE/SERVICES DIGITAUX:Je possède un appareil mobile qu,numeric,,,,0
+s14q01__4,UTILISATION DE LA TECHNOLOGIE/SERVICES DIGITAUX:Je n’ai pas de téléphone mobile,numeric,,,,0
+s14q01__5,UTILISATION DE LA TECHNOLOGIE/SERVICES DIGITAUX:Je n’ai pas et n’utilise pas de,numeric,,,,0
+s14q01__6,UTILISATION DE LA TECHNOLOGIE/SERVICES DIGITAUX:Refus de répondre=&gt;allez à la,numeric,,,,0
+s14q01__96,UTILISATION DE LA TECHNOLOGIE/SERVICES DIGITAUX:Autres (Préciser),numeric,,,,0
+s14q01_autre,Autre énoncé qui décrit le mieux,character,,,,0
+s14q02,14.02 Lequel des énoncés suivants s’appliquerait aux supports suivants :telephon,labelled,,,,0
+s14q02_autre,Autre énoncé qui s'applique,character,,,,0
+s14q03a,14.03a Utilisez-vous Internet ?,labelled,,,,0
+s14q03,14.03 A quelle fréquence utilisez-vous Internet ?,labelled,,,,0
+s14q04__1,"14.04 Si oui à la question 14.03a, pour quelles raisons avez-vous utilisé Intern",numeric,,,,0
+s14q04__2,"14.04 Si oui à la question 14.03a, pour quelles raisons avez-vous utilisé Intern",numeric,,,,0
+s14q04__3,"14.04 Si oui à la question 14.03a, pour quelles raisons avez-vous utilisé Intern",numeric,,,,0
+s14q04__4,"14.04 Si oui à la question 14.03a, pour quelles raisons avez-vous utilisé Intern",numeric,,,,0
+s14q04__5,"14.04 Si oui à la question 14.03a, pour quelles raisons avez-vous utilisé Intern",numeric,,,,0
+s14q04__6,"14.04 Si oui à la question 14.03a, pour quelles raisons avez-vous utilisé Intern",numeric,,,,0
+s14q04__7,"14.04 Si oui à la question 14.03a, pour quelles raisons avez-vous utilisé Intern",numeric,,,,0
+s14q04__8,"14.04 Si oui à la question 14.03a, pour quelles raisons avez-vous utilisé Intern",numeric,,,,0
+s14q04__9,"14.04 Si oui à la question 14.03a, pour quelles raisons avez-vous utilisé Intern",numeric,,,,0
+s14q04__10,"14.04 Si oui à la question 14.03a, pour quelles raisons avez-vous utilisé Intern",numeric,,,,0
+s14q04__11,"14.04 Si oui à la question 14.03a, pour quelles raisons avez-vous utilisé Intern",numeric,,,,0
+s14q04__96,"14.04 Si oui à la question 14.03a, pour quelles raisons avez-vous utilisé Intern",numeric,,,,0
+s14q04_autre,Autres raison d'avoir utilisé internet,character,,,,0
+s14q05,14.05 Pensez-vous que les services financiers en ligne sont-elles sécurisés ?,labelled,,,,0
+s14q06__1,"14.06 Si non, pour quels motifs ?:Problème récurrent de connexion internet (four",numeric,,,,0
+s14q06__2,"14.06 Si non, pour quels motifs ?:Lenteur du réseau (au niveau des prestataires",numeric,,,,0
+s14q06__3,"14.06 Si non, pour quels motifs ?:Problème de fraude/piratage d’informations con",numeric,,,,0
+s14q06__4,"14.06 Si non, pour quels motifs ?:Absence de soutien technique en cas problème",numeric,,,,0
+s14q06__5,"14.06 Si non, pour quels motifs ?:Difficulté à naviguer dans le menu/Oubli de mo",numeric,,,,0
+s14q06__6,"14.06 Si non, pour quels motifs ?:Paiement débité mais argent non reçu par le de",numeric,,,,0
+s14q06__90,"14.06 Si non, pour quels motifs ?:Refus de répondre",numeric,,,,0
+s15q01__1,15.01	Parmi les méthodes de paiements suivantes lesquelles avez vous utilisées s,numeric,,,,0
+s15q01__2,15.01	Parmi les méthodes de paiements suivantes lesquelles avez vous utilisées s,numeric,,,,0
+s15q01__3,15.01	Parmi les méthodes de paiements suivantes lesquelles avez vous utilisées s,numeric,,,,0
+s15q01__4,15.01	Parmi les méthodes de paiements suivantes lesquelles avez vous utilisées s,numeric,,,,0
+s15q01__5,15.01	Parmi les méthodes de paiements suivantes lesquelles avez vous utilisées s,numeric,,,,0
+s15q01__6,15.01	Parmi les méthodes de paiements suivantes lesquelles avez vous utilisées s,numeric,,,,0
+s15q01__7,15.01	Parmi les méthodes de paiements suivantes lesquelles avez vous utilisées s,numeric,,,,0
+s15q01__8,15.01	Parmi les méthodes de paiements suivantes lesquelles avez vous utilisées s,numeric,,,,0
+s15q01__9,15.01	Parmi les méthodes de paiements suivantes lesquelles avez vous utilisées s,numeric,,,,0
+s15q01__10,15.01	Parmi les méthodes de paiements suivantes lesquelles avez vous utilisées s,numeric,,,,0
+s15q01__11,15.01	Parmi les méthodes de paiements suivantes lesquelles avez vous utilisées s,numeric,,,,0
+s15q01__96,15.01	Parmi les méthodes de paiements suivantes lesquelles avez vous utilisées s,numeric,,,,0
+s15q01_autre,Autre méthode de paiementt,character,,,,0
+s15q02a,15.02a Au cours des 12 derniers mois avez reçu des paiements pour salaire/rémuné,labelled,,,,0
+s15q02__1,15.02 Si Oui Lesquels:Salaire/rémunération,numeric,,,,0
+s15q02__2,15.02 Si Oui Lesquels:Vente de produits ou prestation de service,numeric,,,,0
+s15q02__3,15.02 Si Oui Lesquels:Aide financière du gouvernement,numeric,,,,0
+s15q02__4,15.02 Si Oui Lesquels:Aide financière d’ONG,numeric,,,,0
+s15q02__5,15.02 Si Oui Lesquels:Pension,numeric,,,,0
+s15q02__96,15.02 Si Oui Lesquels:Autres (préciser),numeric,,,,0
+s15q02__90,15.02 Si Oui Lesquels:Refus de répondre,numeric,,,,0
+s16q01__1,16.01 Quelle(s) activité (s) Pratiquez-vous en tant que producteurs ?:Agricultur,numeric,,,,0
+s16q01__2,16.01 Quelle(s) activité (s) Pratiquez-vous en tant que producteurs ?:Elevage se,numeric,,,,0
+s16q01__3,16.01 Quelle(s) activité (s) Pratiquez-vous en tant que producteurs ?:Pêche seul,numeric,,,,0
+s16q01__4,16.01 Quelle(s) activité (s) Pratiquez-vous en tant que producteurs ?:Agricultur,numeric,,,,0
+s16q01__5,16.01 Quelle(s) activité (s) Pratiquez-vous en tant que producteurs ?:Agricultur,numeric,,,,0
+s16q01__6,16.01 Quelle(s) activité (s) Pratiquez-vous en tant que producteurs ?:Elevage et,numeric,,,,0
+s16q01__7,16.01 Quelle(s) activité (s) Pratiquez-vous en tant que producteurs ?:Agricultur,numeric,,,,0
+s16q01__8,16.01 Quelle(s) activité (s) Pratiquez-vous en tant que producteurs ?:Aucun,numeric,,,,0
+s16q02__1,16.02	Quelles sont vos sources de revenus par ordre d'importance  ?:Vente des pr,numeric,,,,0
+s16q02__2,16.02	Quelles sont vos sources de revenus par ordre d'importance  ?:Ventes des p,numeric,,,,0
+s16q02__3,16.02	Quelles sont vos sources de revenus par ordre d'importance  ?:Vente des pr,numeric,,,,0
+s16q02__4,16.02	Quelles sont vos sources de revenus par ordre d'importance  ?:Vente du bét,numeric,,,,0
+s16q02__5,16.02	Quelles sont vos sources de revenus par ordre d'importance  ?:Vente des pr,numeric,,,,0
+s16q02__96,16.02	Quelles sont vos sources de revenus par ordre d'importance  ?:Autres (Préc,numeric,,,,0
+s16q02_autre,Autre source de revenu,character,,,,0
+s16q03a__1,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__2,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__3,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__4,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__5,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__6,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__7,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__8,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__9,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__10,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__11,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__12,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__13,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__14,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__15,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__16,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__17,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__18,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__19,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__20,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__21,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__90,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03a__96,16.03a	Quelles sont les principales difficultés auxquelles vous faites face actu,numeric,,,,0
+s16q03_autre,Autres principales difficultés,character,,,,0
+s16q03b,16.03b	Quelle est  la principale difficulté parmi les difficultés cité à laquell,labelled,,,,0
+s16q03b_autre,Préciser l'autre difficulté,character,,,,0
+s16q04,16.04	Quelle est la forme de propriété de votre exploitation ?,labelled,,,,0
+s16q04_autre,Autre forme de propriété,character,,,,0
+s16q05a,16.05a Quelle est la taille de votre exploitation  (en hectare) ?,numeric,,,,0
+s16q05b,16.05b	Votre exploitation est-elle organisée sous forme d’entreprise ?,labelled,,,,0
+culture__1,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Riz,numeric,,,,0
+culture__2,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Mais,numeric,,,,0
+culture__3,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Mil,numeric,,,,0
+culture__4,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Cacao,numeric,,,,0
+culture__5,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Patate douce,numeric,,,,0
+culture__6,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Manioc,numeric,,,,0
+culture__7,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Noix de cajou,numeric,,,,0
+culture__8,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Café,numeric,,,,0
+culture__9,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Banane Plantain,numeric,,,,0
+culture__10,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Arachide,numeric,,,,0
+culture__11,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Huile de palme / Graine,numeric,,,,0
+culture__12,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Hévéa,numeric,,,,0
+culture__13,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Gombo,numeric,,,,0
+culture__14,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Piments,numeric,,,,0
+culture__15,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Oignons,numeric,,,,0
+culture__16,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Aubergine,numeric,,,,0
+culture__17,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Tomate,numeric,,,,0
+culture__18,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Chou,numeric,,,,0
+culture__19,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Citrouille,numeric,,,,0
+culture__20,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Concombre,numeric,,,,0
+culture__21,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Salade (laitue),numeric,,,,0
+culture__22,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Sésame,numeric,,,,0
+culture__23,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Canne à sucre,numeric,,,,0
+culture__24,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Mangue,numeric,,,,0
+culture__25,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Papaye,numeric,,,,0
+culture__26,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Orange,numeric,,,,0
+culture__27,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Noix de coco,numeric,,,,0
+culture__28,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Banane,numeric,,,,0
+culture__29,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Ananas,numeric,,,,0
+culture__30,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Goyave,numeric,,,,0
+culture__31,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Coton,numeric,,,,0
+culture__32,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Igname,numeric,,,,0
+culture__96,16.06 - Lesquelles des cultures suivantes cultivez-vous?:Autre (Préciser),numeric,,,,0
+culture_autre__0,Autres principales difficultés:0,character,,,,0
+culture_autre__0c,Autres principales difficultés:0c,numeric,,,,0
+culture_autre__1,Autres principales difficultés:1,character,,,,0
+culture_autre__1c,Autres principales difficultés:1c,numeric,,,,0
+culture_autre__2,Autres principales difficultés:2,character,,,,0
+culture_autre__2c,Autres principales difficultés:2c,numeric,,,,0
+s16q07,16.07 Quelle a été la principale source de financement de vos activités agricole,labelled,,,,0
+s16q07_autres,Autre principale source de revenu,character,,,,0
+s16q08__1,16.08	Pour quelles raisons avez-vous choisi cette source comme principal moyen d,numeric,,,,0
+s16q08__2,16.08	Pour quelles raisons avez-vous choisi cette source comme principal moyen d,numeric,,,,0
+s16q08__3,16.08	Pour quelles raisons avez-vous choisi cette source comme principal moyen d,numeric,,,,0
+s16q08__4,16.08	Pour quelles raisons avez-vous choisi cette source comme principal moyen d,numeric,,,,0
+s16q08__5,16.08	Pour quelles raisons avez-vous choisi cette source comme principal moyen d,numeric,,,,0
+s16q08__6,16.08	Pour quelles raisons avez-vous choisi cette source comme principal moyen d,numeric,,,,0
+s16q08__7,16.08	Pour quelles raisons avez-vous choisi cette source comme principal moyen d,numeric,,,,0
+s16q08__8,16.08	Pour quelles raisons avez-vous choisi cette source comme principal moyen d,numeric,,,,0
+s16q08__9,16.08	Pour quelles raisons avez-vous choisi cette source comme principal moyen d,numeric,,,,0
+s16q08__96,16.08	Pour quelles raisons avez-vous choisi cette source comme principal moyen d,numeric,,,,0
+s16q08__90,16.08	Pour quelles raisons avez-vous choisi cette source comme principal moyen d,numeric,,,,0
+s16q08_autres,Autre raison,character,,,,0
+s16q09__1,16.09	Quelles sont les activités pour lesquelles vous avez utilisé le financemen,numeric,,,,0
+s16q09__2,16.09	Quelles sont les activités pour lesquelles vous avez utilisé le financemen,numeric,,,,0
+s16q09__3,16.09	Quelles sont les activités pour lesquelles vous avez utilisé le financemen,numeric,,,,0
+s16q09__4,16.09	Quelles sont les activités pour lesquelles vous avez utilisé le financemen,numeric,,,,0
+s16q09__5,16.09	Quelles sont les activités pour lesquelles vous avez utilisé le financemen,numeric,,,,0
+s16q09__6,16.09	Quelles sont les activités pour lesquelles vous avez utilisé le financemen,numeric,,,,0
+s16q09__96,16.09	Quelles sont les activités pour lesquelles vous avez utilisé le financemen,numeric,,,,0
+s16q09__90,16.09	Quelles sont les activités pour lesquelles vous avez utilisé le financemen,numeric,,,,0
+s16q09__8,16.09	Quelles sont les activités pour lesquelles vous avez utilisé le financemen,numeric,,,,0
+s16q09_autres,Autre principale activité,character,,,,0
+s16q10,"16.10	A quelle clientèle, vendez-vous principalement vos produits agricoles ?",labelled,,,,0
+s16q10_autres,Autres clientèles,character,,,,0
+s16q11__1,"16.11	Au cours des 12 derniers mois, quels ont été les moyens de paiement que vo",numeric,,,,0
+s16q11__2,"16.11	Au cours des 12 derniers mois, quels ont été les moyens de paiement que vo",numeric,,,,0
+s16q11__3,"16.11	Au cours des 12 derniers mois, quels ont été les moyens de paiement que vo",numeric,,,,0
+s16q11__4,"16.11	Au cours des 12 derniers mois, quels ont été les moyens de paiement que vo",numeric,,,,0
+s16q11__5,"16.11	Au cours des 12 derniers mois, quels ont été les moyens de paiement que vo",numeric,,,,0
+s16q11__6,"16.11	Au cours des 12 derniers mois, quels ont été les moyens de paiement que vo",numeric,,,,0
+s16q11__7,"16.11	Au cours des 12 derniers mois, quels ont été les moyens de paiement que vo",numeric,,,,0
+s16q11__8,"16.11	Au cours des 12 derniers mois, quels ont été les moyens de paiement que vo",numeric,,,,0
+s16q11__9,"16.11	Au cours des 12 derniers mois, quels ont été les moyens de paiement que vo",numeric,,,,0
+s16q11__11,"16.11	Au cours des 12 derniers mois, quels ont été les moyens de paiement que vo",numeric,,,,0
+s16q11__96,"16.11	Au cours des 12 derniers mois, quels ont été les moyens de paiement que vo",numeric,,,,0
+s16q11__90,"16.11	Au cours des 12 derniers mois, quels ont été les moyens de paiement que vo",numeric,,,,0
+s16q12,"16.12	Avez-vous investi dans des équipements d’irrigation, de rétention d’eau, o",labelled,,,,0
+s16q13,"16.13	Si oui à la question précédente, quelle a été la principale source de fina",labelled,,,,0
+s16q13_autres,Autre principale source de financement,character,,,,0
+s17q00__1,17.01 Possedez vous les animaux d'élévage suivants ?:Bovins,numeric,,,,0
+s17q00__2,17.01 Possedez vous les animaux d'élévage suivants ?:Caprins (chèvres),numeric,,,,0
+s17q00__3,17.01 Possedez vous les animaux d'élévage suivants ?:Ovins (moutons),numeric,,,,0
+s17q00__4,"17.01 Possedez vous les animaux d'élévage suivants ?:Camelins (chameaux, dromada",numeric,,,,0
+s17q00__5,17.01 Possedez vous les animaux d'élévage suivants ?:Porcins,numeric,,,,0
+s17q00__6,17.01 Possedez vous les animaux d'élévage suivants ?:Volaille (poulets ),numeric,,,,0
+s17q00__7,17.01 Possedez vous les animaux d'élévage suivants ?:Volaille (canards),numeric,,,,0
+s17q00__8,17.01 Possedez vous les animaux d'élévage suivants ?:Volaille (pintades),numeric,,,,0
+s17q00__9,17.01 Possedez vous les animaux d'élévage suivants ?:Volaille (pigeons),numeric,,,,0
+s17q00__10,17.01 Possedez vous les animaux d'élévage suivants ?:Lapins,numeric,,,,0
+s17q00__11,17.01 Possedez vous les animaux d'élévage suivants ?:Azins,numeric,,,,0
+s17q00__12,17.01 Possedez vous les animaux d'élévage suivants ?:Equins,numeric,,,,0
+s17q00_autre,Autre type d'animaux,character,,,,0
+s17q00a,17.00a Quel espèce d'animal procure le plus de revenu ?,labelled,,,,0
+s17q01a,17.01a Combien d’étangs disposez-vous pour la pisciculture?,labelled,,,,0
+s17q01b,17.01b Combien de ruche disposer vous pour l'apiculture,labelled,,,,0
+s17q02a__1,"17.02a Pratiquez-vous la pêche de manière artisanale (filets traditionnels, nass",numeric,,,,0
+s17q02a__2,"17.02a Pratiquez-vous la pêche de manière artisanale (filets traditionnels, nass",numeric,,,,0
+s17q02b,17.02b quelle est la quantité annuelle pêchée en artisanale?,numeric,,,,0
+s17q02c,17.02c Quelle est la quantité annuelle pêchée en pratique moderne?,numeric,,,,0
+s17q03__1,"17.03 Auprès de qui achetez-vous généralement vos principaux intrants (semences,",numeric,,,,0
+s17q03__2,"17.03 Auprès de qui achetez-vous généralement vos principaux intrants (semences,",numeric,,,,0
+s17q03__3,"17.03 Auprès de qui achetez-vous généralement vos principaux intrants (semences,",numeric,,,,0
+s17q03__4,"17.03 Auprès de qui achetez-vous généralement vos principaux intrants (semences,",numeric,,,,0
+s17q03__5,"17.03 Auprès de qui achetez-vous généralement vos principaux intrants (semences,",numeric,,,,0
+s17q03__6,"17.03 Auprès de qui achetez-vous généralement vos principaux intrants (semences,",numeric,,,,0
+s17q03__7,"17.03 Auprès de qui achetez-vous généralement vos principaux intrants (semences,",numeric,,,,0
+s17q03__8,"17.03 Auprès de qui achetez-vous généralement vos principaux intrants (semences,",numeric,,,,0
+s17q04__1,17.04	Quels types de produits ou services financiers seraient le plus utile pour,numeric,,,,0
+s17q04__2,17.04	Quels types de produits ou services financiers seraient le plus utile pour,numeric,,,,0
+s17q04__3,17.04	Quels types de produits ou services financiers seraient le plus utile pour,numeric,,,,0
+s17q04__4,17.04	Quels types de produits ou services financiers seraient le plus utile pour,numeric,,,,0
+s17q04__5,17.04	Quels types de produits ou services financiers seraient le plus utile pour,numeric,,,,0
+s17q04__6,17.04	Quels types de produits ou services financiers seraient le plus utile pour,numeric,,,,0
+s17q04__96,17.04	Quels types de produits ou services financiers seraient le plus utile pour,numeric,,,,0
+s17q04__8,17.04	Quels types de produits ou services financiers seraient le plus utile pour,numeric,,,,0
+s17q04_autre__0,Préciser les autres produits ou services financiers:0,character,,,,0
+s17q04_autre__0c,Préciser les autres produits ou services financiers:0c,numeric,,,,0
+s17q04_autre__1,Préciser les autres produits ou services financiers:1,character,,,,0
+s17q04_autre__1c,Préciser les autres produits ou services financiers:1c,numeric,,,,0
+s17q04_autre__2,Préciser les autres produits ou services financiers:2,character,,,,0
+s17q04_autre__2c,Préciser les autres produits ou services financiers:2c,numeric,,,,0
+sk11q03,connaissances financières,labelled,cotise_retraite,numeric,Cotise à un régime de retraite,1
+sk11q04,K.04 Vous prêtez 1000 F CFA à un ami/proche un soir et il vous rend 1000 F CFA l,labelled,,,,0
+sk11q05,K.05 Imaginez que quelqu'un dépose 1000 F CFA sur un compte d'épargne  offrant u,labelled,,,,0
+sk11q06,intérêts composés,labelled,,,,0
+sk11q071,k 07.1 Un investissement avec un rendement élevé est susceptible d'être à haut r,labelled,,,,0
+sk11q072,"k 07.2 Si quelqu'un vous offre la possibilité de gagner beaucoup d'argent, il es",labelled,,,,0
+sk11q073,k 07.3 Une inflation élevée signifie que le coût de la vie augmente rapidement,labelled,,,,0
+sk11q074,k 07.4 Il est généralement possible de réduire le risque des investissements en,labelled,,,,0
+sk11q075,k 07.5 Il est moins probable de perdre tout son argent si on le place é plusieur,labelled,,,,0
+sf12q01a,comportements financiers,labelled,,,,0
+sf12q01,"F.01 Au sein de votre ménage, qui est responsable des décisions financières quot",labelled,,,,0
+sf12q02a,F. 02A Elaborer un plan prévisionnel pour gérer vos revenus et vos dépenses,labelled,,,,0
+sf12q02b,F 02B Garder une trace de toutes vos dépenses,labelled,,,,0
+sf12q02c,F 02C Conserver séparément l'argent consacré au règlement des factures de celui,labelled,,,,0
+sf12q02d,F 02D Prendre note des factures à venir pour être sûr(e) de ne pas les oublier,labelled,,,,0
+sf12q02e,F 02E Utiliser une application bancaire ou un outil de gestion financière pour s,labelled,,,,0
+sf12q02f,F 02F Mettre en place des versements automatiques pour vos dépenses régulières,labelled,,,,0
+sf12q02h,Autre(A préciser),labelled,,,,0
+sf12q02h_autre,Precision de autres,character,,,,0
+sf12q03a,F 03A Conserver de l'argent liquide à votre domicile ou dans votre portefeuille,labelled,,,,0
+sf12q03b,F 03B Verser de l'argent sur un compte d'épargne/de dépôt,labelled,,,,0
+sf12q03c,F 03C Confier de l'argent à des membres de votre famille pour qu'ils épargnent e,labelled,,,,0
+sf12q03d,F 03D Epargner dans le cadre d'un club d'épargnants informeI (par exemple tontin,labelled,,,,0
+sf12q03e,F 03E Investir dans des obligations ou des dépôts à terme,labelled,,,,0
+sf12q03f,F 03E Investir dans des cryploaclifs,labelled,,,,0
+sf12q03g,F 03G Investir dans des actions ou des parts de sociétés,labelled,,,,0
+sf12q03h,F 03H Epargner ou investir d'une autre manière (hors retraite) - exemples comme,labelled,,,,0
+sf12q02i,F 03I Assurance Vie,labelled,,,,0
+sf12q02j,F 03J Retraite complémentaire,labelled,,,,0
+sf12q11,"F.11 ""Parfois, certaines personnes n'arrivant pas à couvrir totalement leurs dép",labelled,,,,0
+s12pq04__1,P.04 Quel est le dernier produit que vous avez choisi ?:Un produit de retraite (,numeric,,,,0
+s12pq04__2,P.04 Quel est le dernier produit que vous avez choisi ?:Un compte d'investisseme,numeric,,,,0
+s12pq04__3,P.04 Quel est le dernier produit que vous avez choisi ?:Une hypothèque ou un prê,numeric,,,,0
+s12pq04__4,P.04 Quel est le dernier produit que vous avez choisi ?:Un prêt garanti par des,numeric,,,,0
+s12pq04__5,P.04 Quel est le dernier produit que vous avez choisi ?:Un prêt bancaire sans ga,numeric,,,,0
+s12pq04__6,P.04 Quel est le dernier produit que vous avez choisi ?:Un prêt-auto,numeric,,,,0
+s12pq04__7,P.04 Quel est le dernier produit que vous avez choisi ?:Une carte de crédit,numeric,,,,0
+s12pq04__8,P.04 Quel est le dernier produit que vous avez choisi ?:Un compte courant/de pai,numeric,,,,0
+s12pq04__9,P.04 Quel est le dernier produit que vous avez choisi ?:Un compte d'épargne,numeric,,,,0
+s12pq04__10,P.04 Quel est le dernier produit que vous avez choisi ?:Un microcrédit,numeric,,,,0
+s12pq04__11,P.04 Quel est le dernier produit que vous avez choisi ?:Une assurance,numeric,,,,0
+s12pq04__12,P.04 Quel est le dernier produit que vous avez choisi ?:Des actions et parts de,numeric,,,,0
+s12pq04__13,P.04 Quel est le dernier produit que vous avez choisi ?:Des obligations,numeric,,,,0
+s12pq04__14,P.04 Quel est le dernier produit que vous avez choisi ?:Un compte de paiement,numeric,,,,0
+s12pq04__15,P.04 Quel est le dernier produit que vous avez choisi ?:Sur téléphone portable (,numeric,,,,0
+s12pq04__16,P.04 Quel est le dernier produit que vous avez choisi ?:Une carte de paiement/de,numeric,,,,0
+s12pq04__17,P.04 Quel est le dernier produit que vous avez choisi ?:Des crypto actifs,numeric,,,,0
+s12pq04__18,P.04 Quel est le dernier produit que vous avez choisi ?:Des produits financiers,numeric,,,,0
+s12pq04__19,P.04 Quel est le dernier produit que vous avez choisi ?:Dépot à terme,numeric,,,,0
+s12pq04__97,P.04 Quel est le dernier produit que vous avez choisi ?:Ne sait pas,numeric,,,,0
+s12pq04__98,P.04 Quel est le dernier produit que vous avez choisi ?:Sans objet,numeric,,,,0
+s12pq04__99,P.04 Quel est le dernier produit que vous avez choisi ?:Refuse de répondre,numeric,,,,0
+s12pq05,"P.05 Et parmi les affirmations suivantes, laquelle décrit la mieux la manière do",labelled,,,,0
+s12pq06__1,"P.06 Parmi les affirmations suivantes, quelles sont celles qui correspondent au",numeric,,,,0
+s12pq06__2,"P.06 Parmi les affirmations suivantes, quelles sont celles qui correspondent au",numeric,,,,0
+s12pq06__3,"P.06 Parmi les affirmations suivantes, quelles sont celles qui correspondent au",numeric,,,,0
+s12pq06__4,"P.06 Parmi les affirmations suivantes, quelles sont celles qui correspondent au",numeric,,,,0
+s12pq06__97,"P.06 Parmi les affirmations suivantes, quelles sont celles qui correspondent au",numeric,,,,0
+s12pq07__1,"P.07 Selon vous, parmi les sources d’informations suivantes, lesquelles ont le p",numeric,,,,0
+s12pq07__2,"P.07 Selon vous, parmi les sources d’informations suivantes, lesquelles ont le p",numeric,,,,0
+s12pq07__3,"P.07 Selon vous, parmi les sources d’informations suivantes, lesquelles ont le p",numeric,,,,0
+s12pq07__4,"P.07 Selon vous, parmi les sources d’informations suivantes, lesquelles ont le p",numeric,,,,0
+s12pq07__5,"P.07 Selon vous, parmi les sources d’informations suivantes, lesquelles ont le p",numeric,,,,0
+s12pq07__6,"P.07 Selon vous, parmi les sources d’informations suivantes, lesquelles ont le p",numeric,,,,0
+s12pq07__7,"P.07 Selon vous, parmi les sources d’informations suivantes, lesquelles ont le p",numeric,,,,0
+s12pq07__8,"P.07 Selon vous, parmi les sources d’informations suivantes, lesquelles ont le p",numeric,,,,0
+s12pq07__99,"P.07 Selon vous, parmi les sources d’informations suivantes, lesquelles ont le p",numeric,,,,0
+s12pq08__1,P.08 Avez-vous déjà effectué l'une des activités suivantes ? [Reponses multiples,numeric,,,,0
+s12pq08__2,P.08 Avez-vous déjà effectué l'une des activités suivantes ? [Reponses multiples,numeric,,,,0
+s12pq08__3,P.08 Avez-vous déjà effectué l'une des activités suivantes ? [Reponses multiples,numeric,,,,0
+s12pq08__4,P.08 Avez-vous déjà effectué l'une des activités suivantes ? [Reponses multiples,numeric,,,,0
+s12pq08__5,P.08 Avez-vous déjà effectué l'une des activités suivantes ? [Reponses multiples,numeric,,,,0
+s2kq07a,Connaissances,labelled,,,,0
+s2kq07b,K.07b Les données personnelles que je partage publiquement en ligne peuvent être,labelled,,,,0
+s2kq07c,K.07c Les cryptomonnaies ont le même cours légal que les pièces et les billets d,labelled,,,,0
+s23sq14,D.14 Avez-vous accès à Internet ?,labelled,,,,0
+s18q01,Refus du suivi de l’entretien,labelled,,,,0
+s18q02,A	Numéro de téléphone&nbsp;:,numeric,,,,0
+s18q03,B Numéro de téléphone d’un proche&nbsp;:,numeric,,,,0
+s18q04,C EMAIL&nbsp;:,character,,,,0
+s18q05,B 2eme Email ou celui d'un proche&nbsp;:,character,,,,0

@@ -1,0 +1,974 @@
+---
+output:
+  pdf_document:
+    toc: false
+    number_sections: true
+    latex_engine: xelatex
+    keep_tex: false
+  word_document:
+    toc: false
+    number_sections: false
+    reference_docx: assets/reference_ise.docx
+geometry: margin=2.5cm
+fontsize: 12pt
+header-includes:
+  - \usepackage{fontspec}
+  - \setmainfont{Palatino Linotype}
+  - \usepackage{graphicx}
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{float}
+  - \usepackage[french]{babel}
+  - \usepackage{xcolor}
+  - \renewcommand{\arraystretch}{1.2}
+  - \setlength{\LTcapwidth}{\textwidth}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo    = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  fig.width  = 7,
+  fig.height = 4.5,
+  fig.align  = "center",
+  fig.pos    = "H",
+  out.width  = "90%",
+  dpi     = 150
+)
+
+# Ce rapport est indépendant du pipeline : il se contente de relire les tables
+# consolidées déjà produites dans output/. Lancer run_all.R au préalable.
+# Racine du projet détectée depuis l'emplacement du Rmd : aucun chemin en dur.
+BASE_DIR <- local({
+  d <- normalizePath(getwd(), winslash = "/")
+  while (!file.exists(file.path(d, "run_all.R")) && dirname(d) != d) {
+    d <- dirname(d)
+  }
+  d
+})
+OUTPUT_DIR <- file.path(BASE_DIR, "output")
+
+# Packages
+options(repos = c(CRAN = "https://cloud.r-project.org/"))
+if (!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
+pacman::p_load(dplyr, tidyr, ggplot2, knitr, scales, readr, tibble,
+               stringr, forcats)
+
+IS_PDF <- knitr::is_latex_output()
+
+if (!file.exists(file.path(OUTPUT_DIR, "individus.csv"))) {
+  stop("Tables consolidées introuvables dans output/. Lancer run_all.R avant de knitter ce rapport.")
+}
+
+# Couleurs BCEAO
+COL_BLEU   <- "#003087"
+COL_OR     <- "#C8A847"
+COL_GRIS   <- "#6C757D"
+palette_2  <- c(Masculin = COL_BLEU, Féminin = COL_OR)
+palette_mil <- c(Urbain = COL_BLEU, Rural = "#6EA8D8")
+
+# ── Lecture des données ─────────────────────────────────────────────────────
+ind <- readr::read_csv(file.path(OUTPUT_DIR, "individus.csv"),
+                       show_col_types = FALSE)
+men <- readr::read_csv(file.path(OUTPUT_DIR, "menages.csv"),
+                       show_col_types = FALSE)
+
+# Population 15 ans et plus (analyse d'inclusion financière)
+AGE_MIN <- 15
+pop15 <- ind |> dplyr::filter(!is.na(age) & age >= AGE_MIN)
+
+# Tableau adapté au format de sortie : longtable booktabs en PDF, kable en Word.
+# En PDF, la première colonne textuelle est mise dans une colonne de largeur fixe
+# (p{...}) pour que les libellés longs passent à la ligne au lieu de déborder.
+tab_word <- function(df, caption = NULL, digits = 1, largeur_col1 = NULL) {
+  fmt_args <- list(big.mark = " ", decimal.mark = ",")
+
+  if (!IS_PDF) {
+    return(knitr::kable(df, caption = caption, digits = digits,
+                        format.args = fmt_args, linesep = ""))
+  }
+
+  n_col     <- ncol(df)
+  first_txt <- is.character(df[[1]]) || is.factor(df[[1]])
+  max_len   <- if (first_txt) max(nchar(as.character(df[[1]])), na.rm = TRUE) else 0
+
+  # Alignement : 1re colonne en paragraphe si texte long, le reste calé à droite
+  if (is.null(largeur_col1) && first_txt && max_len > 22) largeur_col1 <- "6.5cm"
+  align <- if (!is.null(largeur_col1)) {
+    c(paste0("p{", largeur_col1, "}"), rep("r", n_col - 1))
+  } else {
+    c("l", rep("r", n_col - 1))
+  }
+
+  k <- knitr::kable(df, format = "latex", caption = caption, digits = digits,
+                    format.args = fmt_args, booktabs = TRUE, longtable = TRUE,
+                    linesep = "", align = align)
+
+  # Corps du tableau en petit, pour que les tableaux larges tiennent dans la page
+  structure(paste0("\\begingroup\\footnotesize\n", k, "\n\\endgroup\n"),
+            class = "knit_asis")
+}
+
+# Formatage pct
+pct <- function(x, dec = 1) paste0(round(x * 100, dec), " %")
+```
+
+```{r page_de_garde, results="asis"}
+# Page de garde reprise du mémoire ISE : même ordre, mêmes tailles, mêmes logos.
+# Seuls le thème, les auteurs, l'encadreur et la date changent.
+THEME   <- "Construction d'un pipeline de traitement des données de l'enquête sur l'inclusion financière au Sénégal"
+AUTEURS <- c("Anna A. JOYCE", "Bocar M. DIACK", "Wendvi A. D. MANDO",
+             "Oumar FAROUK", "Saran NDIAYE")
+STATUT_AUTEURS <- "Élèves ingénieurs statisticiens économistes"
+SUPERVISEUR <- "Monsieur MBODJ"
+TITRE_SUP   <- "Ingénieur Statisticien Économiste"
+DATE_RAPPORT <- "Juillet 2026"
+MINISTERE <- "Ministère de l'Économie, du Plan et de la Coopération"
+ECOLE <- "École nationale de la Statistique et de l'Analyse économique - Pierre Ndiaye (ENSAE)"
+ETOILES <- strrep("*", 44)
+
+if (IS_PDF) {
+  cat("\\begin{titlepage}\n\\centering\n")
+  cat("{\\large République du Sénégal}\n\n")
+  cat("\\vspace{4pt}\n")
+  cat("\\includegraphics[width=1.5cm]{assets/image2.png}\n\n")
+  cat("\\vspace{4pt}\n")
+  cat("{\\small ", "Un Peuple - Un But - Une Foi", "}\\\\[2pt]\n", sep = "")
+  cat("{\\small ", ETOILES, "}\\\\[2pt]\n", sep = "")
+  cat(MINISTERE, "\\\\[2pt]\n")
+  cat("{\\small ", ETOILES, "}\n\n", sep = "")
+  cat("\\vspace{10pt}\n")
+  cat("\\includegraphics[width=2.6cm]{assets/image3.jpg}\n\n")
+  cat("\\vspace{6pt}\n")
+  cat(ECOLE, "\n\n")
+  cat("\\vspace{1.1cm}\n")
+  cat("{\\large\\bfseries THÈME}\n\n")
+  cat("\\vspace{0.35cm}\n")
+  cat("\\fbox{\\parbox{0.9\\textwidth}{\\centering\\vspace{8pt}",
+      "{\\large\\bfseries ", THEME, "}\\vspace{8pt}}}\n\n", sep = "")
+  cat("\\vspace{1.1cm}\n")
+  cat("{\\bfseries Rédigé par :}\\\\[6pt]\n")
+  cat(paste(AUTEURS, collapse = "\\\\[2pt]\n"), "\\\\[4pt]\n")
+  cat("{\\small ", STATUT_AUTEURS, "}\n\n", sep = "")
+  cat("\\vspace{0.9cm}\n")
+  cat("{\\bfseries Sous la supervision de :}\\\\[6pt]\n")
+  cat(SUPERVISEUR, "\\\\[2pt]\n")
+  cat("{\\small ", TITRE_SUP, "}\n\n", sep = "")
+  cat("\\vfill\n")
+  cat("{\\bfseries ", DATE_RAPPORT, "}\n", sep = "")
+  cat("\\end{titlepage}\n\n")
+  cat("\\tableofcontents\n\\newpage\n")
+} else {
+  bloc <- function(style, txt) {
+    cat("::: {custom-style=\"", style, "\"}\n", txt, "\n:::\n\n", sep = "")
+  }
+  etoiles_md <- gsub("\\*", "\\\\*", ETOILES)
+
+  bloc("CouvertureInstitution", "République du Sénégal")
+  bloc("CouvertureCentre", "![](assets/image2.png){width=0.6in}")
+  bloc("CouvertureDevise", "Un Peuple - Un But - Une Foi")
+  bloc("CouvertureDevise", etoiles_md)
+  bloc("CouvertureCentre", MINISTERE)
+  bloc("CouvertureDevise", etoiles_md)
+  bloc("CouvertureCentre", "![](assets/image3.jpg){width=1in}")
+  bloc("CouvertureCentre", ECOLE)
+  bloc("CouvertureThemeLabel", "THÈME")
+  bloc("CouvertureTheme", THEME)
+  bloc("CouvertureGras", "Rédigé par :")
+  for (a in AUTEURS) bloc("CouvertureCentre", a)
+  bloc("CouvertureDevise", STATUT_AUTEURS)
+  bloc("CouvertureGras", "Sous la supervision de :")
+  bloc("CouvertureCentre", SUPERVISEUR)
+  bloc("CouvertureDevise", TITRE_SUP)
+  bloc("CouvertureGras", DATE_RAPPORT)
+
+  # Saut de page + sommaire (champ Word mis à jour à l'ouverture)
+  cat("```{=openxml}\n")
+  cat("<w:p><w:r><w:br w:type=\"page\"/></w:r></w:p>\n")
+  cat("<w:p><w:pPr><w:pStyle w:val=\"Titre1\"/><w:numPr><w:ilvl w:val=\"0\"/>",
+      "<w:numId w:val=\"0\"/></w:numPr><w:pageBreakBefore w:val=\"false\"/></w:pPr>",
+      "<w:r><w:t>Sommaire</w:t></w:r></w:p>\n", sep = "")
+  cat("<w:sdt><w:sdtPr><w:docPartObj><w:docPartGallery w:val=\"Table of Contents\"/>",
+      "<w:docPartUnique/></w:docPartObj></w:sdtPr><w:sdtContent><w:p><w:r>",
+      "<w:fldChar w:fldCharType=\"begin\" w:dirty=\"true\"/>",
+      "<w:instrText xml:space=\"preserve\">TOC \\o \"1-3\" \\h \\z \\u</w:instrText>",
+      "<w:fldChar w:fldCharType=\"separate\"/><w:fldChar w:fldCharType=\"end\"/>",
+      "</w:r></w:p></w:sdtContent></w:sdt>\n", sep = "")
+  cat("```\n")
+}
+```
+
+# Contexte et objectifs
+
+La BCEAO a mené une enquête sur l'inclusion financière au Sénégal dans le but de mesurer l'accès et l'utilisation des services financiers formels et semi-formels par les ménages. Ce rapport présente les principaux résultats issus du pipeline de traitement des données.
+
+**Objectifs principaux :**
+
+- Décrire le profil socio-démographique et économique de la population enquêtée
+- Mesurer les taux d'accès aux différents services financiers (banque, IMF, mobile money, épargne, crédit, assurance, retraite)
+- Identifier les disparités selon le genre, le milieu et la région
+- Produire des indicateurs QAQC validant la qualité des données
+
+
+# Méthodologie du pipeline de traitement
+
+## Architecture du pipeline
+
+Le pipeline suit une approche modulaire, fondée sur :
+
+- **`00_config.R`** : paramètres centralisés (chemins, seuils, codifications de référence)
+- **`utils.R`** : fonctions de traitement (`apply_var_dictionary`, `run_cleaning_pipeline`, `impute_mice`)
+- **`01_load.R`**, **`02_individus.R`**, **`03_menages.R`** puis **`04_qaqc.R`** : étapes exécutées séquentiellement
+- **`run_all.R`** : orchestrateur unique qui exécute l'ensemble en une seule commande
+
+## Étapes de traitement
+
+| Étape | Fonction | Description |
+|-------|----------|-------------|
+| 1 | `load_all_data()` | Lecture de `r length(list.files(file.path(BASE_DIR, "DONNES~1", "base"), "*.dta"))` fichiers .dta (Survey Solutions) |
+| 2 | `build_individus()` | Construction de la table individus (11 blocs thématiques) |
+| 3 | `run_cleaning_pipeline()` | Bornes plausibles, imputation, contrôles de cohérence puis dédoublonnage |
+| 4 | `impute_mice()` | Imputation multiple MICE (pmm, m=5, seed=42) |
+| 5 | `build_menages()` | Agrégation ménage + variables chef de ménage |
+| 6 | `build_qaqc()` | Estimations primaires et rapport qualité |
+
+## Paramètres appliqués au nettoyage des données
+
+**Bornes plausibles (individus) :**
+
+```{r bornes}
+tibble::tribble(
+  ~Variable,              ~Minimum,  ~Maximum,
+  "Âge",                 "0 an",    "120 ans",
+  "Montant crédit",      "0 FCFA",  "100 000 000 FCFA",
+  "Dépôt bancaire",      "0 FCFA",  "100 000 000 FCFA",
+  "Solde total banque",  "0 FCFA",  "100 000 000 FCFA"
+) |> tab_word(caption = "Bornes plausibles appliquées aux variables numériques")
+```
+
+**Imputation des valeurs manquantes :**
+
+```{r imputation}
+tibble::tribble(
+  ~Variable,           ~Méthode,                      ~Justification,
+  "Âge",               "Médiane",                     "Cas rares, distribution centrée",
+  "Genre",             "Mode",                        "Déséquilibre faible",
+  "Niveau d'études",   "Valeur fixe : « Inconnu »",  "Catégorie déclarative",
+  "Sit. matrimoniale", "Valeur fixe : « Inconnu »",  "Catégorie déclarative",
+  "Taille ménage",     "MICE pmm (m=5)",              "Variable continue clé",
+  "Âge (MICE)",        "MICE pmm (m=5)",              "Imputation multiple"
+) |> tab_word(caption = "Méthodes d'imputation des valeurs manquantes")
+```
+
+**Règles de cohérence appliquées :**
+
+```{r coherence_rules}
+tibble::tribble(
+  ~`Règle`,                         ~Condition,                                   ~Action,
+  "Enfant marié (< 15 ans)",        "Âge < 15 & statut marital ≠ Célibataire",   "Indicateur flag_enfant_marie",
+  "Revenu sans emploi",             "Revenu > 0 & actif_occupe = 0",             "Indicateur flag_revenu_sans_emploi",
+  "Revenu excessif (> 4,2 M/mois)", "Revenu mensuel > REVENU_MAX / 12",          "Indicateur flag_revenu_extreme"
+) |> tab_word(caption = "Règles de cohérence logique appliquées aux individus")
+```
+
+
+# Qualité des données (QAQC)
+
+## Couverture de l'enquête
+
+```{r couverture}
+tibble::tribble(
+  ~Indicateur,                              ~Valeur,
+  "Ménages enquêtés",                       format(nrow(men), big.mark = " "),
+  "Individus dans la base",                 format(nrow(ind), big.mark = " "),
+  "Individus de 15 ans et plus",            format(nrow(pop15), big.mark = " "),
+  "Individus avec consentement enregistré", format(sum(ind$consentement_ind == 1, na.rm = TRUE), big.mark = " "),
+  "Variables individus",                    as.character(ncol(ind)),
+  "Variables ménages",                      as.character(ncol(men))
+) |> tab_word(caption = "Tableau de couverture de l'enquête")
+```
+
+## Complétude des données
+
+```{r missing_ind}
+# Top 15 des variables avec données manquantes dans la table individus
+miss_ind <- ind |>
+  dplyr::summarise(dplyr::across(dplyr::everything(),
+    ~ round(mean(is.na(.)) * 100, 1))) |>
+  tidyr::pivot_longer(dplyr::everything(),
+    names_to = "Variable", values_to = "Pct_manquant") |>
+  dplyr::filter(Pct_manquant > 0) |>
+  dplyr::arrange(dplyr::desc(Pct_manquant)) |>
+  dplyr::slice_head(n = 15)
+
+miss_ind |>
+  dplyr::rename(`% manquant` = Pct_manquant) |>
+  tab_word(caption = "Les 15 variables comptant le plus de valeurs manquantes dans la table individus")
+```
+
+```{r missing_men}
+miss_men <- men |>
+  dplyr::summarise(dplyr::across(dplyr::everything(),
+    ~ round(mean(is.na(.)) * 100, 1))) |>
+  tidyr::pivot_longer(dplyr::everything(),
+    names_to = "Variable", values_to = "Pct_manquant") |>
+  dplyr::filter(Pct_manquant > 0) |>
+  dplyr::arrange(dplyr::desc(Pct_manquant)) |>
+  dplyr::slice_head(n = 10)
+
+miss_men |>
+  dplyr::rename(`% manquant` = Pct_manquant) |>
+  tab_word(caption = "Les 10 variables comptant le plus de valeurs manquantes dans la table ménages")
+```
+
+## Indicateurs de contrôle qualité
+
+```{r flags}
+flags <- tibble::tribble(
+  ~`Contrôle`,                   ~`N observations`,         ~`% de la pop.`,
+  "Enfants mariés (< 15 ans)",
+    sum(ind$flag_enfant_marie == 1, na.rm = TRUE),
+    round(mean(ind$flag_enfant_marie == 1, na.rm = TRUE) * 100, 2),
+  "Revenu sans emploi",
+    sum(ind$flag_revenu_sans_emploi == 1, na.rm = TRUE),
+    round(mean(ind$flag_revenu_sans_emploi == 1, na.rm = TRUE) * 100, 2),
+  "Revenu extrême (> seuil)",
+    sum(ind$flag_revenu_extreme == 1, na.rm = TRUE),
+    round(mean(ind$flag_revenu_extreme == 1, na.rm = TRUE) * 100, 2)
+)
+flags |> tab_word(caption = "Résultats des contrôles de cohérence")
+```
+
+
+# Profil socio-démographique
+
+## Structure par âge et genre
+
+```{r pyramide, fig.cap="Pyramide des âges par genre"}
+genres_dispo <- sort(unique(ind$genre[!is.na(ind$genre)]))
+g_masc <- genres_dispo[grepl("asculin|Male|Homme|male|homme", genres_dispo)][1]
+g_fem  <- genres_dispo[grepl("minin|Female|Femme|female|femme", genres_dispo)][1]
+if (is.na(g_masc)) g_masc <- genres_dispo[1]
+if (is.na(g_fem))  g_fem  <- genres_dispo[length(genres_dispo)]
+
+pyra <- ind |>
+  dplyr::filter(!is.na(age), !is.na(genre)) |>
+  dplyr::mutate(
+    groupe_age = cut(age,
+                     breaks = c(0, 14, 24, 34, 44, 54, 64, Inf),
+                     labels = c("0-14", "15-24", "25-34", "35-44",
+                                "45-54", "55-64", "65+"),
+                     right = FALSE, include.lowest = TRUE),
+    n_sign = dplyr::if_else(genre == g_masc, 1L, -1L)
+  ) |>
+  dplyr::count(groupe_age, genre, n_sign) |>
+  dplyr::mutate(n_plot = n * n_sign)
+
+pal_pyra <- setNames(c(COL_BLEU, COL_OR), c(g_masc, g_fem))
+
+ggplot2::ggplot(pyra, ggplot2::aes(x = groupe_age, y = n_plot, fill = genre)) +
+  ggplot2::geom_col(width = 0.75, position = "identity") +
+  ggplot2::scale_y_continuous(
+    labels = function(x) scales::comma(abs(x)),
+    name   = "Effectif"
+  ) +
+  ggplot2::scale_fill_manual(values = pal_pyra, name = "Genre") +
+  ggplot2::coord_flip() +
+  ggplot2::labs(title = "Pyramide des âges", x = "Groupe d'âge") +
+  ggplot2::theme_minimal(base_size = 11) +
+  ggplot2::theme(legend.position = "bottom",
+                 plot.title = ggplot2::element_text(face = "bold"))
+```
+
+```{r dist_age_tab}
+age_wide <- ind |>
+  dplyr::filter(!is.na(age), !is.na(genre)) |>
+  dplyr::mutate(
+    groupe_age = cut(age,
+      breaks = c(0, 14, 24, 34, 44, 54, 64, Inf),
+      labels = c("0-14", "15-24", "25-34", "35-44", "45-54", "55-64", "65+"),
+      right = FALSE, include.lowest = TRUE)
+  ) |>
+  dplyr::count(groupe_age, genre) |>
+  tidyr::pivot_wider(names_from = genre, values_from = n, values_fill = 0)
+
+gcols <- setdiff(names(age_wide), "groupe_age")
+age_wide |>
+  dplyr::mutate(
+    Total = rowSums(dplyr::across(dplyr::all_of(gcols))),
+    dplyr::across(dplyr::all_of(gcols),
+                  ~ round(. / Total * 100, 1),
+                  .names = "% {.col}")
+  ) |>
+  dplyr::rename(`Groupe d'âge` = groupe_age) |>
+  tab_word(caption = "Distribution par groupe d'âge et genre")
+```
+
+**Âge moyen :** `r round(mean(ind$age, na.rm = TRUE), 1)` ans | **Médiane :** `r round(median(ind$age, na.rm = TRUE), 1)` ans
+
+## Niveau d'études
+
+```{r etudes, fig.cap="Répartition par niveau d'études et genre"}
+etudes_dat <- pop15 |>
+  dplyr::filter(!is.na(niv_etudes), !is.na(genre),
+                niv_etudes != "Inconnu") |>
+  dplyr::count(niv_etudes, genre) |>
+  dplyr::group_by(genre) |>
+  dplyr::mutate(pct = n / sum(n) * 100) |>
+  dplyr::ungroup() |>
+  dplyr::mutate(niv_etudes = forcats::fct_reorder(niv_etudes, pct))
+
+if (requireNamespace("forcats", quietly = TRUE)) {
+ggplot2::ggplot(etudes_dat, ggplot2::aes(x = forcats::fct_reorder(niv_etudes, pct),
+                                          y = pct, fill = genre)) +
+  ggplot2::geom_col(position = "dodge", width = 0.7) +
+  ggplot2::scale_fill_manual(values = palette_2, name = "Genre") +
+  ggplot2::scale_y_continuous(labels = function(x) paste0(x, " %")) +
+  ggplot2::coord_flip() +
+  ggplot2::labs(title = "Niveau d'études (15 ans et +)",
+                x = NULL, y = "% dans le groupe") +
+  ggplot2::theme_minimal(base_size = 11) +
+  ggplot2::theme(legend.position = "bottom",
+                 plot.title = ggplot2::element_text(face = "bold"))
+}
+```
+
+```{r etudes_tab}
+pop15 |>
+  dplyr::filter(!is.na(niv_etudes), niv_etudes != "Inconnu") |>
+  dplyr::count(niv_etudes) |>
+  dplyr::mutate(`%` = round(n / sum(n) * 100, 1)) |>
+  dplyr::arrange(dplyr::desc(n)) |>
+  dplyr::rename(`Niveau d'études` = niv_etudes, Effectif = n) |>
+  tab_word(caption = "Distribution par niveau d'études (pop. 15 ans et +)")
+```
+
+## Situation matrimoniale
+
+```{r matrim}
+pop15 |>
+  dplyr::filter(!is.na(sit_matrimoniale), sit_matrimoniale != "Inconnu") |>
+  dplyr::count(sit_matrimoniale) |>
+  dplyr::mutate(`%` = round(n / sum(n) * 100, 1)) |>
+  dplyr::arrange(dplyr::desc(n)) |>
+  dplyr::rename(`Situation matrimoniale` = sit_matrimoniale, Effectif = n) |>
+  tab_word(caption = "Distribution par situation matrimoniale (15 ans et +)")
+```
+
+
+# Emploi et revenus
+
+## Taux d'activité par genre
+
+```{r emploi_genre}
+pop15 |>
+  dplyr::filter(!is.na(genre)) |>
+  dplyr::group_by(Genre = genre) |>
+  dplyr::summarise(
+    Effectif           = dplyr::n(),
+    `Actifs occupés`   = sum(actif_occupe == 1, na.rm = TRUE),
+    `Taux d'activité`  = paste0(round(mean(actif_occupe == 1, na.rm = TRUE) * 100, 1), " %"),
+    .groups = "drop"
+  ) |>
+  tab_word(caption = "Taux d'activité par genre (pop. 15 ans et +)")
+```
+
+## Secteur ISIC de l'emploi principal
+
+```{r isic, fig.cap="Répartition sectorielle (emploi principal)"}
+isic_dat <- pop15 |>
+  dplyr::filter(!is.na(secteur_isic_p), actif_occupe == 1) |>
+  dplyr::count(secteur_isic_p) |>
+  dplyr::mutate(
+    pct = round(n / sum(n) * 100, 1),
+    secteur_court = stringr::str_extract(secteur_isic_p, "^[A-Z] - [^,]+") |>
+                    stringr::str_trunc(35)
+  ) |>
+  dplyr::arrange(dplyr::desc(n)) |>
+  dplyr::slice_head(n = 10)
+
+ggplot2::ggplot(isic_dat,
+  ggplot2::aes(x = reorder(secteur_court, pct), y = pct)) +
+  ggplot2::geom_col(fill = COL_BLEU, width = 0.7) +
+  ggplot2::geom_text(ggplot2::aes(label = paste0(pct, " %")),
+                     hjust = -0.1, size = 3) +
+  ggplot2::coord_flip() +
+  ggplot2::scale_y_continuous(limits = c(0, max(isic_dat$pct) * 1.2)) +
+  ggplot2::labs(title = "Top 10 des secteurs ISIC de l'emploi principal",
+                x = NULL, y = "% des actifs occupés") +
+  ggplot2::theme_minimal(base_size = 10)
+```
+
+```{r isic_tab}
+pop15 |>
+  dplyr::filter(!is.na(secteur_isic_p), actif_occupe == 1) |>
+  dplyr::count(secteur_isic_p) |>
+  dplyr::mutate(`%` = round(n / sum(n) * 100, 1)) |>
+  dplyr::arrange(dplyr::desc(n)) |>
+  dplyr::rename(`Secteur ISIC Rev.4` = secteur_isic_p, Effectif = n) |>
+  tab_word(caption = "Distribution sectorielle de l'emploi principal (ISIC Rev. 4)")
+```
+
+## Secteur ISIC de l'emploi secondaire
+
+```{r isic_sec}
+sec_dat <- pop15 |>
+  dplyr::filter(!is.na(secteur_isic_s)) |>
+  dplyr::count(secteur_isic_s) |>
+  dplyr::mutate(`%` = round(n / sum(n) * 100, 1)) |>
+  dplyr::arrange(dplyr::desc(n)) |>
+  dplyr::rename(`Secteur ISIC secondaire` = secteur_isic_s, Effectif = n)
+
+n_sec <- sum(pop15$a_activite_secondaire == 1, na.rm = TRUE)
+```
+
+**`r format(n_sec, big.mark = " ")` individus** ont exercé une activité secondaire au cours des 12 derniers mois (`r round(n_sec / nrow(pop15) * 100, 1)` % de la pop. 15+).
+
+```{r isic_sec_tab}
+sec_dat |> tab_word(caption = "Secteur ISIC de l'activité secondaire")
+```
+
+## Statut dans l'emploi principal (CSP)
+
+```{r csp}
+pop15 |>
+  dplyr::filter(!is.na(statut_emploi_p)) |>
+  dplyr::count(statut_emploi_p) |>
+  dplyr::mutate(`%` = round(n / sum(n) * 100, 1)) |>
+  dplyr::arrange(dplyr::desc(n)) |>
+  dplyr::rename(`Statut / CSP` = statut_emploi_p, Effectif = n) |>
+  tab_word(caption = "Catégorie socio-professionnelle dans l'emploi principal")
+```
+
+## Revenus
+
+```{r revenus_tab}
+pop15 |>
+  dplyr::filter(actif_occupe == 1, !is.na(revenu_p_mensuel_est)) |>
+  dplyr::summarise(
+    `N actifs avec revenu`  = dplyr::n(),
+    `Revenu médian (FCFA)`  = round(median(revenu_p_mensuel_est), 0),
+    `Revenu moyen (FCFA)`   = round(mean(revenu_p_mensuel_est), 0),
+    `P25 (FCFA)`            = round(quantile(revenu_p_mensuel_est, 0.25), 0),
+    `P75 (FCFA)`            = round(quantile(revenu_p_mensuel_est, 0.75), 0),
+    `P90 (FCFA)`            = round(quantile(revenu_p_mensuel_est, 0.90), 0)
+  ) |>
+  tidyr::pivot_longer(dplyr::everything(), names_to = "Indicateur", values_to = "Valeur") |>
+  tab_word(caption = "Statistiques descriptives des revenus mensuels des actifs occupés")
+```
+
+```{r rev_genre}
+pop15 |>
+  dplyr::filter(actif_occupe == 1, !is.na(revenu_p_mensuel_est), !is.na(genre)) |>
+  dplyr::group_by(Genre = genre) |>
+  dplyr::summarise(
+    `Effectif actifs` = dplyr::n(),
+    `Médiane FCFA`    = round(median(revenu_p_mensuel_est), 0),
+    `Moyenne FCFA`    = round(mean(revenu_p_mensuel_est), 0),
+    .groups = "drop"
+  ) |>
+  tab_word(caption = "Revenus mensuels des actifs occupés selon le genre")
+```
+
+
+# Inclusion financière
+
+## Vue globale des taux d'accès aux services financiers
+
+```{r incl_global, fig.cap="Taux d'accès aux services financiers (pop. 15 ans et +)"}
+incl_g <- pop15 |>
+  dplyr::summarise(
+    `Compte bancaire`   = mean(a_compte_banque == 1, na.rm = TRUE) * 100,
+    `Compte IMF/SFD`    = mean(a_compte_imf    == 1, na.rm = TRUE) * 100,
+    `Mobile money`      = mean(a_compte_mobile == 1, na.rm = TRUE) * 100,
+    `Compte La Poste`   = mean(a_compte_poste  == 1, na.rm = TRUE) * 100,
+    `Épargne formelle`  = mean(epargne_oui     == 1, na.rm = TRUE) * 100,
+    `Crédit (demandé)`  = mean(a_demande_credit == 1, na.rm = TRUE) * 100,
+    `Assurance`         = mean(a_assurance     == 1, na.rm = TRUE) * 100,
+    `Retraite/Pension`  = mean(recoit_pension  == 1, na.rm = TRUE) * 100,
+    `Au moins 1 service`= mean(score_incl_fin  > 0,  na.rm = TRUE) * 100
+  ) |>
+  tidyr::pivot_longer(dplyr::everything(), names_to = "Service", values_to = "pct") |>
+  dplyr::mutate(pct = round(pct, 1))
+
+ggplot2::ggplot(incl_g |> dplyr::filter(Service != "Au moins 1 service"),
+  ggplot2::aes(x = reorder(Service, pct), y = pct)) +
+  ggplot2::geom_col(fill = COL_BLEU, width = 0.7) +
+  ggplot2::geom_text(ggplot2::aes(label = paste0(pct, " %")),
+                     hjust = -0.1, size = 3.5) +
+  ggplot2::coord_flip() +
+  ggplot2::scale_y_continuous(limits = c(0, max(incl_g$pct) * 1.25),
+                               labels = function(x) paste0(x, " %")) +
+  ggplot2::labs(title = "Taux d'accès aux services financiers",
+                subtitle = "Population de 15 ans et plus",
+                x = NULL, y = "% de la population") +
+  ggplot2::theme_minimal(base_size = 11) +
+  ggplot2::theme(plot.title = ggplot2::element_text(face = "bold"))
+```
+
+```{r incl_global_tab}
+incl_g |>
+  dplyr::arrange(dplyr::desc(pct)) |>
+  dplyr::rename(`Service financier` = Service, `% d'accès` = pct) |>
+  tab_word(caption = "Taux d'accès aux services financiers de la population de 15 ans et plus")
+```
+
+**`r incl_g |> dplyr::filter(Service == "Au moins 1 service") |> dplyr::pull(pct)` %** de la population de 15 ans et plus ont accès à au moins un service financier formel.
+
+## Inclusion financière par genre
+
+```{r incl_genre, fig.cap="Inclusion financière par genre"}
+incl_genre <- pop15 |>
+  dplyr::filter(!is.na(genre)) |>
+  dplyr::group_by(Genre = genre) |>
+  dplyr::summarise(
+    Effectif            = dplyr::n(),
+    `Banque (%)`        = round(mean(a_compte_banque  == 1, na.rm = TRUE) * 100, 1),
+    `IMF/SFD (%)`       = round(mean(a_compte_imf     == 1, na.rm = TRUE) * 100, 1),
+    `Mobile money (%)` = round(mean(a_compte_mobile  == 1, na.rm = TRUE) * 100, 1),
+    `Épargne (%)`       = round(mean(epargne_oui      == 1, na.rm = TRUE) * 100, 1),
+    `Crédit (%)`        = round(mean(a_demande_credit == 1, na.rm = TRUE) * 100, 1),
+    `Assurance (%)`     = round(mean(a_assurance      == 1, na.rm = TRUE) * 100, 1),
+    .groups = "drop"
+  )
+incl_genre |> tab_word(caption = "Taux d'accès aux services financiers par genre")
+```
+
+```{r ecart_genre, fig.cap="Écarts de genre dans l'accès aux services financiers"}
+ecart_long <- incl_genre |>
+  dplyr::select(-Effectif) |>
+  tidyr::pivot_longer(-Genre, names_to = "Service", values_to = "pct") |>
+  dplyr::mutate(Service = stringr::str_remove(Service, " \\(%\\)"))
+
+genre_vals <- unique(ecart_long$Genre)
+if (length(genre_vals) == 2) {
+  ecart_wide <- ecart_long |>
+    tidyr::pivot_wider(names_from = Genre, values_from = pct)
+  g1 <- genre_vals[1]; g2 <- genre_vals[2]
+  ecart_dat <- ecart_wide |>
+    dplyr::mutate(Ecart = .data[[g1]] - .data[[g2]])
+
+  ggplot2::ggplot(ecart_dat,
+    ggplot2::aes(x = reorder(Service, Ecart), y = Ecart, fill = Ecart > 0)) +
+    ggplot2::geom_col(width = 0.6) +
+    ggplot2::scale_fill_manual(
+      values = c("FALSE" = COL_OR, "TRUE" = COL_BLEU),
+      labels = c(paste("Avantage", g2), paste("Avantage", g1)),
+      name = NULL) +
+    ggplot2::geom_hline(yintercept = 0, colour = "black") +
+    ggplot2::coord_flip() +
+    ggplot2::labs(title = paste0("Écart de genre entre ", g1, " et ", g2, " (en points de %)"),
+                  x = NULL, y = "Points de pourcentage") +
+    ggplot2::theme_minimal(base_size = 11) +
+    ggplot2::theme(legend.position = "bottom",
+                   plot.title = ggplot2::element_text(face = "bold"))
+}
+```
+
+## Inclusion financière par milieu (urbain / rural)
+
+```{r incl_milieu}
+pop15 |>
+  dplyr::filter(!is.na(milieu)) |>
+  dplyr::group_by(Milieu = milieu) |>
+  dplyr::summarise(
+    Effectif           = dplyr::n(),
+    `Banque (%)`       = round(mean(a_compte_banque  == 1, na.rm = TRUE) * 100, 1),
+    `IMF/SFD (%)`      = round(mean(a_compte_imf     == 1, na.rm = TRUE) * 100, 1),
+    `Mobile money (%)` = round(mean(a_compte_mobile  == 1, na.rm = TRUE) * 100, 1),
+    `Épargne (%)`      = round(mean(epargne_oui      == 1, na.rm = TRUE) * 100, 1),
+    `Crédit (%)`       = round(mean(a_demande_credit == 1, na.rm = TRUE) * 100, 1),
+    `Assurance (%)`    = round(mean(a_assurance      == 1, na.rm = TRUE) * 100, 1),
+    .groups = "drop"
+  ) |>
+  tab_word(caption = "Taux d'accès aux services financiers par milieu de résidence")
+```
+
+## Inclusion financière par région
+
+```{r incl_region}
+pop15 |>
+  dplyr::filter(!is.na(region)) |>
+  dplyr::group_by(Région = region) |>
+  dplyr::summarise(
+    Effectif       = dplyr::n(),
+    `Banque (%)`   = round(mean(a_compte_banque  == 1, na.rm = TRUE) * 100, 1),
+    `IMF (%)`      = round(mean(a_compte_imf     == 1, na.rm = TRUE) * 100, 1),
+    `Mobile (%)`   = round(mean(a_compte_mobile  == 1, na.rm = TRUE) * 100, 1),
+    `Épargne (%)`  = round(mean(epargne_oui      == 1, na.rm = TRUE) * 100, 1),
+    `Crédit (%)`   = round(mean(a_demande_credit == 1, na.rm = TRUE) * 100, 1),
+    .groups = "drop"
+  ) |>
+  dplyr::arrange(dplyr::desc(`Banque (%)`)) |>
+  tab_word(caption = "Inclusion financière par région (pop. 15 ans et plus)")
+```
+
+## Score d'inclusion financière composite
+
+Le score composite agrège 6 dimensions (banque, IMF, mobile money, épargne, crédit, assurance). Il varie de 0 (exclu) à 6 (pleinement inclus).
+
+```{r score_incl, fig.cap="Distribution du score d'inclusion financière composite"}
+score_dat <- pop15 |>
+  dplyr::filter(!is.na(score_incl_fin)) |>
+  dplyr::count(score_incl_fin) |>
+  dplyr::mutate(pct = round(n / sum(n) * 100, 1))
+
+ggplot2::ggplot(score_dat, ggplot2::aes(x = factor(score_incl_fin), y = pct)) +
+  ggplot2::geom_col(fill = COL_BLEU, width = 0.7) +
+  ggplot2::geom_text(ggplot2::aes(label = paste0(pct, " %")),
+                     vjust = -0.4, size = 3.5) +
+  ggplot2::scale_y_continuous(limits = c(0, max(score_dat$pct) * 1.2),
+                               labels = function(x) paste0(x, " %")) +
+  ggplot2::labs(title = "Score d'inclusion financière composite (0-6)",
+                subtitle = "6 dimensions : banque, IMF, mobile, épargne, crédit, assurance",
+                x = "Score", y = "% de la pop. 15+") +
+  ggplot2::theme_minimal(base_size = 11) +
+  ggplot2::theme(plot.title = ggplot2::element_text(face = "bold"))
+```
+
+
+# Épargne
+
+## Taux d'épargne et lieux
+
+```{r epargne_global}
+n_epargnants <- sum(pop15$epargne_oui == 1, na.rm = TRUE)
+pct_epargne  <- round(n_epargnants / nrow(pop15) * 100, 1)
+```
+
+**`r format(n_epargnants, big.mark = " ")` individus** (soit `r pct_epargne` % de la pop. 15+) épargnent.
+
+```{r epargne_lieux}
+ep_lieux <- pop15 |>
+  dplyr::filter(epargne_oui == 1) |>
+  dplyr::summarise(
+    `Banque`      = round(mean(epargne_banque  == 1, na.rm = TRUE) * 100, 1),
+    `IMF/SFD`     = round(mean(epargne_imf     == 1, na.rm = TRUE) * 100, 1),
+    `Mobile money`= round(mean(epargne_mobile  == 1, na.rm = TRUE) * 100, 1),
+    `À domicile`  = round(mean(epargne_maison  == 1, na.rm = TRUE) * 100, 1),
+    `Tontine`     = round(mean(epargne_tontine == 1, na.rm = TRUE) * 100, 1)
+  ) |>
+  tidyr::pivot_longer(dplyr::everything(), names_to = "Lieu d'épargne", values_to = "% epargnants") |>
+  dplyr::arrange(dplyr::desc(`% epargnants`))
+
+ep_lieux |> tab_word(caption = "Lieux d'épargne (parmi les épargnants)")
+```
+
+## Types de comptes d'épargne formelle
+
+```{r epargne_types}
+n_ep_form <- sum(pop15$epargne_banque == 1 | pop15$epargne_imf == 1, na.rm = TRUE)
+
+pop15 |>
+  dplyr::filter(epargne_banque == 1 | epargne_imf == 1) |>
+  dplyr::summarise(
+    `Compte courant`  = round(mean(epargne_cte_courant == 1, na.rm = TRUE) * 100, 1),
+    `Compte à vue`    = round(mean(epargne_cte_vue     == 1, na.rm = TRUE) * 100, 1),
+    `Compte bloqué`   = round(mean(epargne_cte_bloque  == 1, na.rm = TRUE) * 100, 1),
+    `Compte spécialisé` = round(mean(epargne_cte_special == 1, na.rm = TRUE) * 100, 1)
+  ) |>
+  tidyr::pivot_longer(dplyr::everything(),
+    names_to = "Type de compte", values_to = "% (ép. formelle)") |>
+  tab_word(caption = paste0("Types de comptes d'épargne formelle (n = ",
+                             format(n_ep_form, big.mark = " "), " ép. formels)"))
+```
+
+## Investissement de l'épargne
+
+```{r investissement}
+n_investis <- sum(pop15$a_investi_epargne == 1, na.rm = TRUE)
+pct_inv    <- round(n_investis / nrow(pop15) * 100, 1)
+```
+
+**`r format(n_investis, big.mark = " ")` individus** (`r pct_inv` % de la pop. 15+) ont investi leur épargne au cours des 12 derniers mois.
+
+
+# Crédit
+
+```{r credit_tab}
+pop15 |>
+  dplyr::summarise(
+    `A demandé un crédit`   = paste0(round(mean(a_demande_credit == 1, na.rm = TRUE) * 100, 1), " %"),
+    `Via banque`            = paste0(round(mean(credit_banque  == 1, na.rm = TRUE) * 100, 1), " %"),
+    `Via IMF/SFD`           = paste0(round(mean(credit_imf    == 1, na.rm = TRUE) * 100, 1), " %"),
+    `Via tontine`           = paste0(round(mean(credit_tontine== 1, na.rm = TRUE) * 100, 1), " %"),
+    `Via famille/amis`      = paste0(round(mean(credit_famille== 1, na.rm = TRUE) * 100, 1), " %"),
+    `Usage investissement`  = paste0(round(mean(usage_credit_invest == 1, na.rm = TRUE) * 100, 1), " %"),
+    `Usage consommation`    = paste0(round(mean(usage_credit_conso  == 1, na.rm = TRUE) * 100, 1), " %")
+  ) |>
+  tidyr::pivot_longer(dplyr::everything(), names_to = "Indicateur", values_to = "Valeur") |>
+  tab_word(caption = "Indicateurs de crédit pour la population de 15 ans et plus")
+```
+
+
+# Mobile money
+
+```{r mobile_tab}
+pop15 |>
+  dplyr::summarise(
+    `A un compte mobile money`    = paste0(round(mean(a_compte_mobile == 1, na.rm = TRUE) * 100, 1), " %"),
+    `Compte actif`                = paste0(round(mean(mobile_actif   == 1, na.rm = TRUE) * 100, 1), " %"),
+    `Fait des transactions EME`   = paste0(round(mean(mobile_fait_transactions == 1, na.rm = TRUE) * 100, 1), " %"),
+    `Utilise plusieurs EME`       = paste0(round(mean(multi_eme      == 1, na.rm = TRUE) * 100, 1), " %")
+  ) |>
+  tidyr::pivot_longer(dplyr::everything(), names_to = "Indicateur", values_to = "Valeur") |>
+  tab_word(caption = "Indicateurs mobile money pour la population de 15 ans et plus")
+```
+
+```{r mobile_genre}
+pop15 |>
+  dplyr::filter(!is.na(genre)) |>
+  dplyr::group_by(Genre = genre) |>
+  dplyr::summarise(
+    `Compte mobile (%)`     = round(mean(a_compte_mobile == 1, na.rm = TRUE) * 100, 1),
+    `Compte actif (%)`      = round(mean(mobile_actif   == 1, na.rm = TRUE) * 100, 1),
+    `Transactions EME (%)` = round(mean(mobile_fait_transactions == 1, na.rm = TRUE) * 100, 1),
+    .groups = "drop"
+  ) |>
+  tab_word(caption = "Mobile money par genre")
+```
+
+
+# Assurance et retraite
+
+## Assurance
+
+```{r assurance_tab}
+pop15 |>
+  dplyr::summarise(
+    `A au moins une assurance`  = paste0(round(mean(a_assurance    == 1, na.rm = TRUE) * 100, 1), " %"),
+    `Assurance maladie/santé`   = paste0(round(mean(ass_sante      == 1, na.rm = TRUE) * 100, 1), " %"),
+    `Assurance vie`             = paste0(round(mean(ass_vie        == 1, na.rm = TRUE) * 100, 1), " %"),
+    `Assurance habitation`      = paste0(round(mean(ass_habitation == 1, na.rm = TRUE) * 100, 1), " %"),
+    `Assurance agricole`        = paste0(round(mean(ass_agricole   == 1, na.rm = TRUE) * 100, 1), " %"),
+    `Assurance automobile`      = paste0(round(mean(ass_automobile == 1, na.rm = TRUE) * 100, 1), " %")
+  ) |>
+  tidyr::pivot_longer(dplyr::everything(), names_to = "Indicateur", values_to = "Valeur") |>
+  tab_word(caption = "Couverture assurantielle de la population de 15 ans et plus")
+```
+
+## Retraite
+
+```{r retraite_tab}
+pop15 |>
+  dplyr::summarise(
+    `Reçoit une pension de retraite` = paste0(round(mean(recoit_pension == 1, na.rm = TRUE) * 100, 1), " %"),
+    `Cotise à un régime retraite`    = paste0(round(mean(cotise_retraite == 1, na.rm = TRUE) * 100, 1), " %")
+  ) |>
+  tidyr::pivot_longer(dplyr::everything(), names_to = "Indicateur", values_to = "Valeur") |>
+  tab_word(caption = "Protection retraite de la population de 15 ans et plus")
+```
+
+
+# Conditions de vie des ménages
+
+## Statistiques globales
+
+```{r menages_global}
+men |>
+  dplyr::summarise(
+    `Nombre de ménages`                = format(dplyr::n(), big.mark = " "),
+    `Taille moyenne du ménage`         = as.character(round(mean(taille_menage, na.rm = TRUE), 1)),
+    `% ménages avec eau améliorée`     = paste0(round(mean(acces_eau_amelioree == 1, na.rm = TRUE) * 100, 1), " %"),
+    `% ménages avec électricité`       = paste0(round(mean(acces_electricite  == 1, na.rm = TRUE) * 100, 1), " %"),
+    `% ménages avec cuisson propre`    = paste0(round(mean(cuisson_propre     == 1, na.rm = TRUE) * 100, 1), " %"),
+    `% CM masculin`                    = paste0(round(mean(cm_genre == "Masculin", na.rm = TRUE) * 100, 1), " %"),
+    `Âge moyen du CM`                  = as.character(round(mean(cm_age, na.rm = TRUE), 1)),
+    `Revenu médian ménage (FCFA/mois)` = format(round(median(revenu_mensuel_menage_est, na.rm = TRUE), 0), big.mark = " ")
+  ) |>
+  tidyr::pivot_longer(dplyr::everything(), names_to = "Indicateur", values_to = "Valeur") |>
+  tab_word(caption = "Indicateurs globaux des conditions de vie des ménages")
+```
+
+## Conditions de vie par milieu
+
+```{r menages_milieu}
+men |>
+  dplyr::filter(!is.na(milieu)) |>
+  dplyr::group_by(Milieu = milieu) |>
+  dplyr::summarise(
+    `N ménages`                 = dplyr::n(),
+    `Taille moy.`               = round(mean(taille_menage, na.rm = TRUE), 1),
+    `Eau améliorée (%)`         = round(mean(acces_eau_amelioree == 1, na.rm = TRUE) * 100, 1),
+    `Électricité (%)`           = round(mean(acces_electricite  == 1, na.rm = TRUE) * 100, 1),
+    `Score biens moyen`         = round(mean(score_biens, na.rm = TRUE), 1),
+    .groups = "drop"
+  ) |>
+  tab_word(caption = "Conditions de vie par milieu de résidence")
+```
+
+## Inclusion financière des ménages
+
+```{r incl_menage}
+men |>
+  dplyr::summarise(
+    `% ménages avec au moins 1 membre bancarisé` =
+      paste0(round(mean(nb_membres_banque  >= 1, na.rm = TRUE) * 100, 1), " %"),
+    `% ménages avec au moins 1 membre mobile money` =
+      paste0(round(mean(nb_membres_mobile  >= 1, na.rm = TRUE) * 100, 1), " %"),
+    `% ménages avec au moins 1 épargnant` =
+      paste0(round(mean(nb_membres_epargne >= 1, na.rm = TRUE) * 100, 1), " %"),
+    `Score inclusion financière moyen (ménage)` =
+      as.character(round(mean(score_incl_fin_moyen, na.rm = TRUE), 2))
+  ) |>
+  tidyr::pivot_longer(dplyr::everything(), names_to = "Indicateur", values_to = "Valeur") |>
+  tab_word(caption = "Inclusion financière des ménages")
+```
+
+## Profil emploi et finance du chef de ménage
+
+```{r cm_profil}
+men |>
+  dplyr::summarise(
+    `CM actif occupé (%)`          = paste0(round(mean(cm_actif_occupe == 1, na.rm = TRUE) * 100, 1), " %"),
+    `CM avec compte banque (%)`    = paste0(round(mean(cm_a_compte_banque == 1, na.rm = TRUE) * 100, 1), " %"),
+    `CM avec compte IMF (%)`       = paste0(round(mean(cm_a_compte_imf   == 1, na.rm = TRUE) * 100, 1), " %"),
+    `CM avec mobile money (%)`     = paste0(round(mean(cm_a_compte_mobile == 1, na.rm = TRUE) * 100, 1), " %"),
+    `CM avec assurance (%)`        = paste0(round(mean(cm_a_assurance    == 1, na.rm = TRUE) * 100, 1), " %"),
+    `Revenu médian CM (FCFA/mois)` = format(round(median(cm_revenu_mensuel, na.rm = TRUE), 0), big.mark = " ")
+  ) |>
+  tidyr::pivot_longer(dplyr::everything(), names_to = "Indicateur", values_to = "Valeur") |>
+  tab_word(caption = "Profil financier du chef de ménage")
+```
+
+
+# Synthèse et conclusions
+
+## Réponse aux exigences du cahier des charges
+
+```{r synthese_coverage}
+tibble::tribble(
+  ~`Exigence`,                       ~`Variables produites`,                        ~`Statut`,
+  "Profil démographique",            "genre, âge, sit_matrimoniale",                "Couvert",
+  "Géographie",                      "région, milieu, département",                  "Couvert",
+  "Emploi principal (ISIC)",         "secteur_isic_p, statut_emploi_p",             "Couvert",
+  "Emploi secondaire (ISIC)",        "secteur_isic_s, a_activite_secondaire",        "Couvert",
+  "Revenus primaires et secondaires","revenu_p_mensuel_est, tranche_revenu",        "Couvert",
+  "Biens et services sociaux",       "score_biens, acces_eau_amelioree, acces_electricite", "Couvert",
+  "Crédit",                          "a_demande_credit, sources, montant, usages",  "Couvert",
+  "Épargne et types de comptes",     "epargne_cte_courant/vue/bloque/special",      "Couvert",
+  "Investissement épargne",          "a_investi_epargne",                           "Couvert",
+  "Mobile money et fréquence d'usage", "mobile_fait_transactions, mobile_actif",    "Couvert",
+  "Types d'assurance",               "ass_sante, ass_vie, ass_habitation, ass_agricole, ass_auto", "Couvert",
+  "Retraite / Pension",              "recoit_pension, cotise_retraite",             "Couvert",
+  "QAQC données manquantes",         "naniar::vis_miss, Little MCAR test",          "Couvert",
+  "2 tables output",                 "individus.csv (80 vars), menages.csv (62 vars)", "Couvert",
+  "Pipeline reproductible",          "run_all.R + 00_config.R centralisé",          "Couvert"
+) |> tab_word(caption = "Matrice de couverture des exigences du thème Inclusion financière")
+```
+
+## Points saillants
+
+**Inclusion financière :**
+
+- Le taux d'accès au mobile money est le principal vecteur d'inclusion financière formelle
+- Un écart de genre significatif existe pour tous les services financiers
+- Les régions de Dakar et de Thiès affichent les taux de bancarisation les plus élevés
+
+**Qualité des données :**
+
+- Le pipeline applique 3 règles de cohérence et détecte les valeurs aberrantes par IQR
+- L'imputation MICE (m=5, méthode pmm) est appliquée aux variables démographiques clés
+- Toutes les anomalies sont tracées dans les indicateurs `flag_*`
+

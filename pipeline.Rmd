@@ -1,0 +1,480 @@
+---
+title: "Pipeline Inclusion Financière de la BCEAO au Sénégal"
+author: "Anna A. JOYCE, Bocar M. DIACK, Wendvi A. D. MANDO, Oumar FAROUK, Saran NDIAYE"
+date: "`r format(Sys.Date(), '%d %B %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    theme: flatly
+    highlight: tango
+    number_sections: true
+    df_print: paged
+    code_folding: hide
+  pdf_document:
+    toc: true
+    toc_depth: '3'
+subtitle: Traitement, nettoyage et consolidation des données
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo       = TRUE,
+  warning    = FALSE,
+  message    = FALSE,
+  fig.width  = 9,
+  fig.height = 5
+)
+
+# ── Packages - gestion centralisée via pacman ────────────────────────────────
+if (!requireNamespace("pacman", quietly = TRUE)) install.packages("pacman")
+pacman::p_load(
+  haven, dplyr, tidyr, readr, ggplot2,
+  knitr, kableExtra, scales, writexl,
+  labelled, data.table, naniar, VIM, mice, glue, tibble
+)
+
+# ── Racine du projet (aucun chemin en dur) ────────────────────────────────────
+# Fournie par run_all.R lors d'une exécution complète. En rendu direct (Knit),
+# knitr place le répertoire de travail dans le dossier du Rmd, qui est la racine.
+if (!exists("BASE_DIR")) {
+  d <- normalizePath(getwd(), winslash = "/")
+  while (!file.exists(file.path(d, "run_all.R")) && dirname(d) != d) {
+    d <- dirname(d)
+  }
+  BASE_DIR <- d
+}
+
+# ── Localisation Pandoc (rendu hors RStudio) ──────────────────────────────────
+pandoc_dir <- "C:/Program Files/RStudio/resources/app/bin/quarto/bin/tools"
+if (dir.exists(pandoc_dir)) Sys.setenv(RSTUDIO_PANDOC = pandoc_dir)
+
+# ── Charger la configuration et les modules ───────────────────────────────────
+R_DIR <- file.path(BASE_DIR, "R")
+source(file.path(R_DIR, "00_config.R"),    encoding = "UTF-8")
+source(file.path(R_DIR, "utils.R"),        encoding = "UTF-8")
+source(file.path(R_DIR, "01_load_data.R"), encoding = "UTF-8")
+source(file.path(R_DIR, "02_individus.R"), encoding = "UTF-8")
+source(file.path(R_DIR, "03_menages.R"),   encoding = "UTF-8")
+source(file.path(R_DIR, "04_qaqc.R"),      encoding = "UTF-8")
+```
+
+---
+
+# Vue d'ensemble
+
+Ce document décrit et exécute le pipeline de traitement des données de l'enquête
+**BCEAO sur l'Inclusion Financière au Sénégal**. Il produit deux tables consolidées
+(`individus.csv` et `menages.csv`) et un rapport QAQC.
+
+Les données brutes du dossier `données/base/` sont chargées, puis traitées pour produire
+la table individus (`output/individus.csv`), la table ménages (`output/menages.csv`)
+et le rapport qualité (`output/QAQC.xlsx`).
+
+---
+
+# Chargement des données brutes
+
+```{r load, cache=FALSE}
+raw <- load_all_data()
+
+tibble::tribble(
+  ~Fichier, ~Lignes, ~Colonnes,
+  "menage",    nrow(raw$menage),    ncol(raw$menage),
+  "membres",   nrow(raw$membres),   ncol(raw$membres)
+) |>
+  kable(caption = "Dimensions des fichiers principaux",
+        format.args = list(big.mark = " ")) |>
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+```
+
+---
+
+# Traitement de la table INDIVIDUS
+
+## Construction
+
+```{r individus, cache=FALSE}
+individus <- build_individus(raw)
+```
+
+## Nettoyage paramétrique {.tabset}
+
+La fonction `run_cleaning_pipeline()` applique successivement les bornes plausibles,
+l'imputation simple, les règles de cohérence puis la déduplication.
+
+```{r nettoyage_ind, cache=FALSE}
+individus <- run_cleaning_pipeline(individus, CLEANING_PARAMS_IND, label = "Individus")
+```
+
+## Imputation multiple (mice)
+
+Variables démographiques potentiellement MCAR/MAR imputées par la méthode
+*Predictive Mean Matching* (pmm, m = 5, seed = 42).
+
+```{r mice_ind, cache=FALSE}
+individus <- impute_mice(individus, vars = MICE_VARS_IND,
+                         method = "pmm", m = 5, seed = 42)
+```
+
+## Aperçu de la table individus
+
+```{r apercu_ind}
+individus |>
+  dplyr::select(interview__id, membres__id, region, milieu, genre, age,
+                sit_matrimoniale, niv_etudes, statut_emploi_p,
+                a_compte_banque, a_compte_imf, a_compte_mobile,
+                epargne_oui, a_demande_credit, a_assurance, score_incl_fin) |>
+  head(10) |>
+  kable(caption = "Aperçu des 10 premières lignes (variables clés)",
+        digits = 1) |>
+  kable_styling(bootstrap_options = c("striped","condensed"), font_size = 12)
+```
+
+## Variables de la table individus
+
+```{r vars_ind}
+data.frame(
+  Variable = names(individus),
+  Type     = sapply(individus, function(x) paste(class(x), collapse="/")),
+  N_manq   = sapply(individus, function(x) sum(is.na(x))),
+  Pct_manq = round(sapply(individus, function(x) mean(is.na(x)) * 100), 1)
+) |>
+  kable(caption = "Dictionnaire de la table individus",
+        row.names = FALSE) |>
+  kable_styling(bootstrap_options = c("striped","condensed"), font_size = 11) |>
+  scroll_box(height = "400px")
+```
+
+---
+
+# Traitement de la table MÉNAGES
+
+## Construction et nettoyage
+
+```{r menages, cache=FALSE}
+menages <- build_menages(raw, individus)
+menages <- run_cleaning_pipeline(menages, CLEANING_PARAMS_MEN, label = "Ménages")
+```
+
+## Aperçu de la table ménages
+
+```{r apercu_men}
+menages |>
+  dplyr::select(interview__id, region, milieu, taille_menage,
+                cm_genre, cm_age, cm_niv_etudes,
+                acces_eau_amelioree, acces_electricite, score_biens,
+                nb_membres_banque, nb_membres_mobile,
+                dplyr::any_of("revenu_mensuel_menage_est")) |>
+  head(10) |>
+  kable(caption = "Aperçu des 10 premiers ménages (variables clés)", digits = 1) |>
+  kable_styling(bootstrap_options = c("striped","condensed"), font_size = 12)
+```
+
+---
+
+# Rapport QAQC
+
+```{r qaqc, cache=FALSE}
+qaqc <- build_qaqc(individus, menages)
+```
+
+## Couverture de l'enquête
+
+```{r couverture}
+qaqc$couverture |>
+  kable(caption = "Indicateurs de couverture",
+        col.names = c("Indicateur", "Valeur"),
+        format.args = list(big.mark = " ")) |>
+  kable_styling(bootstrap_options = c("striped","hover"), full_width = FALSE)
+```
+
+## Complétude des données
+
+### Individus
+
+```{r miss_ind}
+qaqc$missing_individus |>
+  kable(caption = "Taux de valeurs manquantes des individus (top 30)",
+        col.names = c("Variable", "% manquant", "N manquant"),
+        digits = 1) |>
+  kable_styling(bootstrap_options = c("striped","condensed"), font_size = 11) |>
+  scroll_box(height = "350px")
+```
+
+#### Heatmap naniar des individus {.unnumbered}
+
+Visualisation des patterns de valeurs manquantes (méthode `naniar::vis_miss()`).
+
+```{r vis_miss_ind, fig.height=6}
+if (!is.null(qaqc$vis_miss_individus)) {
+  print(qaqc$vis_miss_individus)
+} else {
+  message("naniar non disponible ; installer avec install.packages('naniar')")
+}
+```
+
+#### Test MCAR (Little's test) {.unnumbered}
+
+```{r mcar_test}
+if (!is.null(qaqc$mcar_test)) {
+  qaqc$mcar_test |>
+    kable(caption = "Little's MCAR test sur les variables numériques des individus") |>
+    kable_styling(bootstrap_options = c("striped","hover"), full_width = FALSE)
+}
+```
+
+### Ménages
+
+```{r miss_men}
+qaqc$missing_menages |>
+  kable(caption = "Taux de valeurs manquantes des ménages (top 20)",
+        col.names = c("Variable", "% manquant", "N manquant"),
+        digits = 1) |>
+  kable_styling(bootstrap_options = c("striped","condensed"), font_size = 11)
+```
+
+```{r vis_miss_men, fig.height=5}
+if (!is.null(qaqc$vis_miss_menages)) print(qaqc$vis_miss_menages)
+```
+
+## Contrôles de cohérence
+
+```{r coherence}
+if (nrow(qaqc$coherence_individus) > 0) {
+  qaqc$coherence_individus |>
+    kable(caption = "Violations de cohérence détectées",
+          col.names = c("Contrôle", "N violations", "IDs (exemples)")) |>
+    kable_styling(bootstrap_options = c("striped","hover"), full_width = FALSE)
+} else {
+  cat("Aucune violation de cohérence détectée.")
+}
+```
+
+## Valeurs aberrantes
+
+```{r outliers}
+qaqc$outliers_ind |>
+  kable(caption = paste0("Valeurs aberrantes détectées (méthode IQR × ",
+                          OUTLIER_IQR_FACTOR, ")"),
+        format.args = list(big.mark = " ")) |>
+  kable_styling(bootstrap_options = c("striped","hover"), full_width = FALSE)
+```
+
+---
+
+# Estimations primaires
+
+## Structure démographique
+
+```{r demo_pyramide, fig.height=6}
+qaqc$dist_age_genre |>
+  dplyr::filter(!is.na(groupe_age), !is.na(genre)) |>
+  dplyr::mutate(
+    n_plot = ifelse(genre == "Masculin", -n, n)
+  ) |>
+  ggplot(aes(x = groupe_age, y = n_plot, fill = genre)) +
+  geom_col() +
+  coord_flip() +
+  scale_y_continuous(labels = function(x) scales::comma(abs(x))) +
+  scale_fill_manual(values = c("Masculin" = "#2196F3", "Féminin" = "#E91E63")) +
+  labs(title = "Pyramide des âges de l'échantillon",
+       x = "Groupe d'âge", y = "Effectif", fill = "Genre") +
+  theme_minimal(base_size = 12)
+```
+
+```{r etudes_tab}
+qaqc$dist_etudes |>
+  kable(caption = "Niveau d'études (15 ans et plus)",
+        col.names = c("Niveau", "Genre", "N", "%")) |>
+  kable_styling(bootstrap_options = c("striped"), full_width = FALSE)
+```
+
+## Taux d'inclusion financière globaux
+
+```{r incl_fin_global}
+qaqc$incl_fin_global |>
+  tidyr::pivot_longer(everything(), names_to = "Indicateur", values_to = "Valeur") |>
+  dplyr::filter(Indicateur != "n_total") |>
+  dplyr::mutate(
+    Indicateur = dplyr::recode(Indicateur,
+      "pct_compte_banque"    = "% Compte bancaire",
+      "pct_compte_imf"       = "% Compte IMF/SFD",
+      "pct_mobile_money"     = "% Mobile money",
+      "pct_epargne"          = "% Épargnants",
+      "pct_credit"           = "% Emprunteurs",
+      "pct_assurance"        = "% Assurés",
+      "pct_retraite"         = "% Cotisants retraite",
+      "pct_inclus_au_moins1" = "% Inclus (≥1 service)"
+    )
+  ) |>
+  ggplot(aes(x = reorder(Indicateur, Valeur), y = Valeur)) +
+  geom_col(fill = "#1565C0", width = 0.6) +
+  geom_text(aes(label = paste0(Valeur, "%")), hjust = -0.1, size = 3.5) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 105), labels = function(x) paste0(x, "%")) +
+  labs(title = "Taux d'inclusion financière de la population de 15 ans et plus",
+       subtitle = paste0("N = ", scales::comma(qaqc$incl_fin_global$n_total)),
+       x = NULL, y = "Taux (%)") +
+  theme_minimal(base_size = 12)
+```
+
+## Inclusion financière par genre
+
+```{r incl_genre}
+qaqc$incl_fin_genre |>
+  kable(caption = "Taux d'inclusion financière par genre (%)",
+        format.args = list(big.mark = " "), digits = 1) |>
+  kable_styling(bootstrap_options = c("striped","hover"), full_width = FALSE)
+```
+
+## Inclusion financière par milieu
+
+```{r incl_milieu, fig.height=5}
+qaqc$incl_fin_milieu |>
+  tidyr::pivot_longer(
+    cols = -c(milieu, n),
+    names_to = "service", values_to = "taux"
+  ) |>
+  dplyr::mutate(
+    service = dplyr::recode(service,
+      "pct_compte_banque" = "Banque",
+      "pct_compte_imf"    = "IMF/SFD",
+      "pct_mobile_money"  = "Mobile money",
+      "pct_epargne"       = "Épargne",
+      "pct_credit"        = "Crédit",
+      "pct_assurance"     = "Assurance"
+    )
+  ) |>
+  ggplot(aes(x = service, y = taux, fill = milieu)) +
+  geom_col(position = "dodge", width = 0.6) +
+  geom_text(aes(label = paste0(taux, "%")),
+            position = position_dodge(0.6), vjust = -0.4, size = 3) +
+  scale_fill_manual(values = c("Urbain" = "#1565C0", "Rural" = "#4CAF50")) +
+  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(0, 100)) +
+  labs(title = "Inclusion financière : Urbain vs Rural",
+       x = NULL, y = "Taux (%)", fill = "Milieu") +
+  theme_minimal(base_size = 12) +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1))
+```
+
+## Inclusion financière par région
+
+```{r incl_region}
+qaqc$incl_fin_region |>
+  kable(caption = "Taux d'inclusion financière par région (%)",
+        format.args = list(big.mark = " "), digits = 1) |>
+  kable_styling(bootstrap_options = c("striped","hover"), full_width = FALSE)
+```
+
+## Emploi et revenus
+
+```{r emploi}
+qaqc$taux_emploi |>
+  kable(caption = "Taux d'activité par genre (15 ans et plus)",
+        col.names = c("Genre", "N", "% Actifs occupés"), digits = 1) |>
+  kable_styling(bootstrap_options = c("striped"), full_width = FALSE)
+```
+
+```{r isic, fig.height=6}
+qaqc$dist_secteur_isic |>
+  dplyr::slice_max(n, n = 10) |>
+  ggplot(aes(x = reorder(secteur_isic_p, n), y = n)) +
+  geom_col(fill = "#FF6F00") +
+  geom_text(aes(label = paste0(pct, "%")), hjust = -0.1, size = 3.5) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, max(qaqc$dist_secteur_isic$n) * 1.15),
+                     labels = scales::comma) +
+  labs(title = "Top 10 secteurs ISIC Rev 4 (emploi principal)",
+       x = NULL, y = "Effectif") +
+  theme_minimal(base_size = 11) +
+  theme(axis.text.y = element_text(size = 9))
+```
+
+```{r revenu_stats}
+qaqc$stats_revenu |>
+  kable(caption = "Statistiques descriptives du revenu mensuel principal (FCFA, actifs occupés)",
+        format.args = list(big.mark = " ")) |>
+  kable_styling(bootstrap_options = c("striped","hover"), full_width = FALSE)
+```
+
+## Conditions de vie des ménages
+
+```{r cond_vie}
+qaqc$cond_vie_menage |>
+  tidyr::pivot_longer(everything(), names_to = "Indicateur", values_to = "Valeur") |>
+  dplyr::mutate(
+    Indicateur = dplyr::recode(Indicateur,
+      "n_menages"             = "Nombre de ménages",
+      "taille_moy"            = "Taille moyenne du ménage",
+      "pct_eau_amelioree"     = "% Accès eau améliorée",
+      "pct_assain_ameliore"   = "% Assainissement amélioré",
+      "pct_electricite"       = "% Accès électricité",
+      "pct_cm_masculin"       = "% CM masculin",
+      "age_moyen_cm"          = "Âge moyen du CM",
+      "revenu_mediane_menage" = "Revenu médian ménage (FCFA/an)"
+    ),
+    Valeur = scales::comma(as.numeric(Valeur))
+  ) |>
+  kable(caption = "Indicateurs de conditions de vie des ménages") |>
+  kable_styling(bootstrap_options = c("striped","hover"), full_width = FALSE)
+```
+
+```{r cond_milieu}
+qaqc$cond_vie_milieu |>
+  kable(caption = "Conditions de vie par milieu",
+        format.args = list(big.mark = " "), digits = 1) |>
+  kable_styling(bootstrap_options = c("striped","hover"), full_width = FALSE)
+```
+
+---
+
+# Sauvegarde des outputs
+
+```{r save, cache=FALSE}
+# ── Tables consolidées (data.table::fwrite) ──────────────────────────────────
+data.table::fwrite(individus, file.path(OUTPUT_DIR, "individus.csv"))
+data.table::fwrite(menages,   file.path(OUTPUT_DIR, "menages.csv"))
+message("individus.csv : ", nrow(individus), " lignes x ", ncol(individus), " colonnes")
+message("menages.csv   : ", nrow(menages),   " lignes x ", ncol(menages),   " colonnes")
+
+# ── Fichier QAQC Excel ──────────────────────────────────────────────────────
+writexl::write_xlsx(
+  list(
+    "Couverture"         = qaqc$couverture,
+    "Coherence"          = qaqc$coherence_individus,
+    "Outliers"           = qaqc$outliers_ind,
+    "NA_individus"       = qaqc$missing_individus,
+    "NA_menages"         = qaqc$missing_menages,
+    "IncFin_Global"      = qaqc$incl_fin_global,
+    "IncFin_Genre"       = qaqc$incl_fin_genre,
+    "IncFin_Milieu"      = qaqc$incl_fin_milieu,
+    "IncFin_Region"      = qaqc$incl_fin_region,
+    "Emploi_Statut"      = qaqc$dist_statut_emploi,
+    "Emploi_ISIC"        = qaqc$dist_secteur_isic,
+    "Revenu_Stats"       = qaqc$stats_revenu,
+    "CondVie_Menages"    = qaqc$cond_vie_menage,
+    "CondVie_Milieu"     = qaqc$cond_vie_milieu,
+    "Demo_AgeGenre"      = qaqc$dist_age_genre,
+    "Demo_Etudes"        = qaqc$dist_etudes
+  ),
+  path = file.path(OUTPUT_DIR, "QAQC.xlsx")
+)
+
+cat("\nOutputs sauvegardés :\n")
+cat(file.path(OUTPUT_DIR, "individus.csv"), "\n")
+cat(file.path(OUTPUT_DIR, "menages.csv"),   "\n")
+cat(file.path(OUTPUT_DIR, "QAQC.xlsx"),     "\n")
+```
+
+---
+
+# Informations de session
+
+```{r session}
+si <- sessionInfo()
+cat(sprintf("R version : %s\nDate      : %s\n", si$R.version$version.string, Sys.time()))
+cat("Packages chargés :\n")
+cat(paste(" -", names(si$otherPkgs)), sep = "\n")
+```
