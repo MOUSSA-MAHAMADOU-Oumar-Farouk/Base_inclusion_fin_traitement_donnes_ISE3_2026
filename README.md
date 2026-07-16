@@ -4,7 +4,7 @@
 Traitement des données de l'enquête BCEAO sur l'inclusion financière.  
 Produit deux tables consolidées (individus et ménages) et un fichier QAQC.
 
-**Auteurs :** Anna A. JOYCE, Bocar M. DIACK, Wendvi A. D. MANDO, Oumar FAROUK, Saran NDIAYE
+**Auteurs :** Anna A. JOYCE, Bocar M. DIACK, Wendvi A. D. MANDO, Oumar Farouk MOUSSA MAHAMADOU, Saran NDIAYE
 
 ---
 
